@@ -1,0 +1,71 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.wavetopsheet.test" >
+4
+5    <uses-sdk
+5-->C:\Asendi App\ASENDI\TopSheet\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest918865150510017185.xml:5:5-74
+6        android:minSdkVersion="21"
+6-->C:\Asendi App\ASENDI\TopSheet\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest918865150510017185.xml:5:15-41
+7        android:targetSdkVersion="34" />
+7-->C:\Asendi App\ASENDI\TopSheet\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest918865150510017185.xml:5:42-71
+8
+9    <instrumentation
+9-->C:\Asendi App\ASENDI\TopSheet\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest918865150510017185.xml:11:5-15:71
+10        android:name="android.test.InstrumentationTestRunner"
+10-->C:\Asendi App\ASENDI\TopSheet\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest918865150510017185.xml:11:22-75
+11        android:functionalTest="false"
+11-->C:\Asendi App\ASENDI\TopSheet\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest918865150510017185.xml:14:22-52
+12        android:handleProfiling="false"
+12-->C:\Asendi App\ASENDI\TopSheet\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest918865150510017185.xml:13:22-53
+13        android:label="Tests for com.wavetopsheet.test"
+13-->C:\Asendi App\ASENDI\TopSheet\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest918865150510017185.xml:15:22-69
+14        android:targetPackage="com.wavetopsheet.test" />
+14-->C:\Asendi App\ASENDI\TopSheet\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest918865150510017185.xml:12:22-67
+15
+16    <application
+16-->C:\Asendi App\ASENDI\TopSheet\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest918865150510017185.xml:7:5-9:19
+17        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+17-->[androidx.core:core:1.8.0] C:\Users\eddyh\.gradle\caches\8.9\transforms\ea7ed8643f1d57c2c42e02d0e80b4e19\transformed\core-1.8.0\AndroidManifest.xml:24:18-86
+18        android:debuggable="true"
+19        android:extractNativeLibs="true" >
+20        <uses-library android:name="android.test.runner" />
+20-->C:\Asendi App\ASENDI\TopSheet\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest918865150510017185.xml:8:9-60
+20-->C:\Asendi App\ASENDI\TopSheet\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest918865150510017185.xml:8:23-57
+21
+22        <provider
+22-->[androidx.emoji2:emoji2:1.2.0] C:\Users\eddyh\.gradle\caches\8.9\transforms\a3c0541f03878fef4ff02f26a38a959d\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+23            android:name="androidx.startup.InitializationProvider"
+23-->[androidx.emoji2:emoji2:1.2.0] C:\Users\eddyh\.gradle\caches\8.9\transforms\a3c0541f03878fef4ff02f26a38a959d\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+24            android:authorities="com.wavetopsheet.test.androidx-startup"
+24-->[androidx.emoji2:emoji2:1.2.0] C:\Users\eddyh\.gradle\caches\8.9\transforms\a3c0541f03878fef4ff02f26a38a959d\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+25            android:exported="false" >
+25-->[androidx.emoji2:emoji2:1.2.0] C:\Users\eddyh\.gradle\caches\8.9\transforms\a3c0541f03878fef4ff02f26a38a959d\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+26            <meta-data
+26-->[androidx.emoji2:emoji2:1.2.0] C:\Users\eddyh\.gradle\caches\8.9\transforms\a3c0541f03878fef4ff02f26a38a959d\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+27                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+27-->[androidx.emoji2:emoji2:1.2.0] C:\Users\eddyh\.gradle\caches\8.9\transforms\a3c0541f03878fef4ff02f26a38a959d\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+28                android:value="androidx.startup" />
+28-->[androidx.emoji2:emoji2:1.2.0] C:\Users\eddyh\.gradle\caches\8.9\transforms\a3c0541f03878fef4ff02f26a38a959d\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+29            <meta-data
+29-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\eddyh\.gradle\caches\8.9\transforms\14d5deae524c953832c5330cf5335455\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+30                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+30-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\eddyh\.gradle\caches\8.9\transforms\14d5deae524c953832c5330cf5335455\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+31                android:value="androidx.startup" />
+31-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\eddyh\.gradle\caches\8.9\transforms\14d5deae524c953832c5330cf5335455\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+32        </provider>
+33
+34        <uses-library
+34-->[androidx.window:window:1.0.0] C:\Users\eddyh\.gradle\caches\8.9\transforms\a01dea586cdbcdb6e99c4d13634f3a2e\transformed\window-1.0.0\AndroidManifest.xml:25:9-27:40
+35            android:name="androidx.window.extensions"
+35-->[androidx.window:window:1.0.0] C:\Users\eddyh\.gradle\caches\8.9\transforms\a01dea586cdbcdb6e99c4d13634f3a2e\transformed\window-1.0.0\AndroidManifest.xml:26:13-54
+36            android:required="false" />
+36-->[androidx.window:window:1.0.0] C:\Users\eddyh\.gradle\caches\8.9\transforms\a01dea586cdbcdb6e99c4d13634f3a2e\transformed\window-1.0.0\AndroidManifest.xml:27:13-37
+37        <uses-library
+37-->[androidx.window:window:1.0.0] C:\Users\eddyh\.gradle\caches\8.9\transforms\a01dea586cdbcdb6e99c4d13634f3a2e\transformed\window-1.0.0\AndroidManifest.xml:28:9-30:40
+38            android:name="androidx.window.sidecar"
+38-->[androidx.window:window:1.0.0] C:\Users\eddyh\.gradle\caches\8.9\transforms\a01dea586cdbcdb6e99c4d13634f3a2e\transformed\window-1.0.0\AndroidManifest.xml:29:13-51
+39            android:required="false" />
+39-->[androidx.window:window:1.0.0] C:\Users\eddyh\.gradle\caches\8.9\transforms\a01dea586cdbcdb6e99c4d13634f3a2e\transformed\window-1.0.0\AndroidManifest.xml:30:13-37
+40    </application>
+41
+42</manifest>

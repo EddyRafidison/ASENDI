@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:background="@color/primary"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<ScrollView
+	android:layout_width="@dimen/scrollview_size"
+	android:layout_height="match_parent"
+	android:fillViewport="true"
+	android:layout_centerHorizontal="true"
+    tools:ignore="UselessParent">
+
+	<com.elyeproj.loaderviewlibrary.LoaderTextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/textdata"
+		android:textSize="14sp"
+		app:width_weight="1"
+		app:height_weight="1"
+		app:custom_color="#D2F5FFFB"
+		app:use_gradient="true"
+		app:corners="4"
+		android:textColor="#FFFFFF"
+		android:padding="8dp"
+/>
+
+</ScrollView>
+
+</RelativeLayout>

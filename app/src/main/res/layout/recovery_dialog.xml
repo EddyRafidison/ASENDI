@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:paddingBottom="8dp"
+	android:gravity="center_horizontal"
+	android:paddingLeft="16dp"
+	android:paddingRight="16dp">
+
+	<TextView
+		android:id="@+id/t1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:paddingTop="8dp"
+		android:paddingBottom="8dp"
+		android:singleLine="true"
+		android:text="@string/recovery_title"
+		android:textColor="#43A047"
+		android:textSize="16sp"
+		android:textStyle="bold" />
+
+	<TextView
+		android:id="@+id/t2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/t1"
+		android:layout_centerHorizontal="true"
+		android:paddingTop="8dp"
+		android:paddingBottom="8dp"
+		android:text="@string/notice_forgotten_pswd"
+		android:textColor="#0277BD"
+		android:textSize="14sp" />
+
+	<LinearLayout
+		android:id="@+id/l1"
+		android:layout_width="@dimen/field_size"
+		android:layout_height="56dp"
+		android:layout_below="@id/t2"
+		android:layout_centerInParent="true"
+		android:background="@drawable/edt_bg"
+		android:gravity="center_vertical"
+		android:orientation="horizontal">
+
+		<EditText
+			android:id="@+id/skDialog"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_margin="4dp"
+			android:background="@android:color/transparent"
+			android:ems="10"
+			android:gravity="center_vertical|center|center_horizontal|start"
+			android:inputType="textPassword"
+			android:lines="1"
+			android:textColor="#ffffffff"
+			android:textSize="15sp"
+			tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck" />
+
+	</LinearLayout>
+
+</RelativeLayout>
+

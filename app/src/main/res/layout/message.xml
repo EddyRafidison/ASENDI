@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/primary"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<LinearLayout
+		android:id="@+id/rel_"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginTop="2dp"
+		android:orientation="vertical"
+		android:padding="8dp"
+        tools:ignore="NotSibling">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/note_msg"
+			android:textColor="#82B1FF"
+			android:textSize="14sp"
+			tools:ignore="VisualLintLongText" />
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="56dp"
+			android:background="@drawable/edt_bg"
+			android:layout_marginTop="10dp">
+
+			<EditText
+				android:id="@+id/subject"
+				android:layout_width="@dimen/field_size"
+				android:layout_height="match_parent"
+				android:layout_centerInParent="true"
+				android:layout_margin="4dp"
+				android:layout_toStartOf="@id/scan_button"
+				android:layout_toEndOf="@id/key_icon"
+				android:background="@android:color/transparent"
+				android:ems="10"
+				android:gravity="start|center_vertical"
+				android:hint="@string/subject"
+				android:inputType="textEmailSubject"
+				android:lines="1"
+				android:singleLine="true"
+				android:textColor="#ffffffff"
+				android:textColorHint="#64B5F6"
+				android:textSize="15sp"
+				tools:ignore="Autofill" />
+
+		</RelativeLayout>
+
+		<LinearLayout
+			android:layout_width="300dp"
+			android:layout_height="250dp"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="10dp"
+			android:gravity="center_vertical"
+			android:orientation="horizontal"
+			android:background="@drawable/edt_bg">
+
+			<EditText
+				android:id="@+id/message"
+				android:layout_width="@dimen/field_size"
+				android:layout_height="match_parent"
+				android:layout_margin="4dp"
+				android:background="@android:color/transparent"
+				android:ems="10"
+				android:gravity="start"
+				android:hint="@string/message_here"
+				android:inputType="textMultiLine"
+				android:singleLine="true"
+				android:textColor="#ffffffff"
+				android:textColorHint="#64B5F6"
+				android:textSize="15sp"
+				tools:ignore="Autofill,VisualLintBounds" />
+
+		</LinearLayout>
+
+		<Button
+			android:id="@+id/sendmsg"
+			android:layout_width="wrap_content"
+			android:layout_height="50dp"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="10dp"
+			android:padding="5dp"
+			android:text="@string/send_msg"
+			android:textAllCaps="false"
+			android:textColor="#ffffffff"
+			android:textSize="15sp"
+			tools:ignore="TextContrastCheck" />
+
+	</LinearLayout>
+
+</RelativeLayout>
+

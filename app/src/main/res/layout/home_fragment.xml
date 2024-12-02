@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:background="@color/primary">
+
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="center"
+		android:orientation="vertical">
+
+		<ScrollView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:fillViewport="true">
+
+			<RelativeLayout
+				android:id="@+id/rel_parent"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+                tools:ignore="ScrollViewSize">
+
+				<RelativeLayout
+					android:id="@+id/rel_head"
+					android:layout_centerHorizontal="true"
+					android:layout_width="match_parent"
+					android:layout_height="50dp"
+                    tools:ignore="UselessParent">
+
+					<RelativeLayout
+						android:id="@+id/rel_container"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_marginEnd="50dp"
+						android:layout_marginStart="50dp"
+						android:background="@drawable/stock_bg"
+						android:padding="5dp">
+
+						<ImageView
+							android:id="@+id/imgv"
+							android:layout_width="28dp"
+							android:layout_height="28dp"
+							android:layout_centerVertical="true"
+							android:adjustViewBounds="true"
+							android:background="@android:color/transparent"
+                            android:contentDescription="@string/app_name"
+                            android:scaleType="fitCenter"
+							app:srcCompat="@drawable/asendi_money"/>
+
+						<com.elyeproj.loaderviewlibrary.LoaderTextView
+							android:id="@+id/balance"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:layout_toEndOf="@id/imgv"
+							android:gravity="center_vertical"
+							android:lines="1"
+							android:paddingStart="8dp"
+							android:paddingEnd="4dp"
+							android:textColor="#ff7dfd84"
+							android:textSize="25sp"
+							android:textStyle="bold"
+							app:corners="4"
+							app:custom_color="#D2F5FFFB"
+							app:height_weight="1"
+							app:use_gradient="true"
+							app:width_weight="1"/>
+
+					</RelativeLayout>
+
+				</RelativeLayout>
+
+				<ListView
+					android:id="@+id/history_list"
+					android:layout_width="@dimen/scrollview_size"
+					android:layout_height="match_parent"
+					android:layout_marginLeft="5dp"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="1dp"
+					android:layout_marginRight="5dp"
+					android:background="@android:color/transparent"
+					android:divider="#676767"
+					android:dividerHeight="1dp"
+                    tools:ignore="NestedScrolling" />
+
+			</RelativeLayout>
+
+		</ScrollView>
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginLeft="5dp"
+			android:layout_marginTop="52dp"
+			android:layout_marginRight="5dp"
+			android:layout_marginBottom="52dp"
+			android:background="@drawable/history_bg">
+
+			<LinearLayout
+				android:id="@+id/filter_lin"
+				android:layout_width="match_parent"
+				android:layout_height="60dp"
+				android:layout_centerHorizontal="true"
+				android:layout_marginLeft="5dp"
+				android:layout_marginTop="5dp"
+				android:layout_marginRight="5dp"
+				android:background="@drawable/spinner_bg_">
+
+				<Spinner
+					android:id="@+id/filter_history"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_margin="5dp"
+					android:prompt="@string/filter" />
+
+			</LinearLayout>
+
+			<RelativeLayout
+				android:id="@+id/empty_data_layout"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_below="@id/filter_lin"
+				android:layout_centerInParent="true"
+				android:padding="5dp"
+				android:visibility="invisible">
+
+				<ImageView
+					android:id="@+id/iview"
+					android:layout_width="130dp"
+					android:layout_height="130dp"
+					android:layout_centerInParent="true"
+					android:contentDescription="@string/app_name"
+					android:scaleType="fitCenter"
+					app:srcCompat="@drawable/empty" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/iview"
+					android:layout_centerHorizontal="true"
+					android:text="@string/empty"
+					android:textColor="#ffadadad"
+					android:textSize="14sp" />
+
+			</RelativeLayout>
+
+		</RelativeLayout>
+
+		<FrameLayout
+			android:id="@+id/top_sheet"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layout_behavior="@string/top_sheet_behavior"
+			android:background="@drawable/topsheet_bg"
+			android:clickable="true"
+			android:focusable="true"
+			app:behavior_hideable="false"
+			app:behavior_peekHeight="50dp"
+			app:elevation="4dp">
+
+			<include
+				layout="@layout/main_info"/>
+
+		</FrameLayout>
+
+		<FrameLayout
+			android:id="@+id/design_bottom_sheet"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layout_behavior="@string/bottom_sheet_behavior"
+			android:background="@drawable/bottomsheet_bg"
+			android:clickable="true"
+			android:focusable="true"
+			app:behavior_hideable="false"
+			app:behavior_peekHeight="50dp"
+			app:elevation="4dp">
+
+			<include
+				layout="@layout/transfer"/>
+
+		</FrameLayout>
+
+	</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="52dp"
+		android:layout_alignParentBottom="true"
+		android:layout_marginLeft="52dp"
+		android:layout_marginRight="52dp"
+		android:background="@android:color/transparent">
+
+		<ImageView
+			android:layout_width="match_parent"
+			android:layout_height="28dp"
+			android:layout_centerInParent="true"
+			android:adjustViewBounds="true"
+			android:background="@android:color/transparent"
+			android:contentDescription="@string/app_name"
+			android:scaleType="fitCenter"
+			app:srcCompat="@drawable/asendi_text"
+			tools:ignore="ImageContrastCheck" />
+
+	</RelativeLayout>
+
+</RelativeLayout>
+

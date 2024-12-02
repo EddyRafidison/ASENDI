@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<RelativeLayout
+		android:id="@+id/rel2"
+		android:layout_width="match_parent"
+		android:layout_height="50dp"
+		android:layout_alignParentTop="true"
+		android:background="@android:color/transparent"
+		android:orientation="horizontal"
+		android:padding="8dp">
+
+		<ImageView
+			android:id="@+id/bottomsheet_arrow"
+			android:layout_width="23dp"
+			android:layout_height="23dp"
+			android:layout_centerVertical="true"
+			android:background="@android:color/transparent"
+			android:contentDescription="@string/app_name"
+			android:scaleType="fitCenter"
+			android:src="@drawable/arrow_up"
+			tools:ignore="ImageContrastCheck" />
+
+		<ImageView
+			android:id="@+id/bottomsheet_send"
+			android:layout_width="23dp"
+			android:layout_height="23dp"
+			android:layout_alignParentEnd="true"
+			android:layout_centerVertical="true"
+			android:background="@android:color/transparent"
+			android:contentDescription="@string/app_name"
+			android:scaleType="fitCenter"
+			android:src="@drawable/transfer"
+			tools:ignore="ImageContrastCheck" />
+
+	</RelativeLayout>
+
+	<LinearLayout
+		android:id="@+id/rel_"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@id/rel2"
+		android:gravity="center_horizontal"
+		android:layout_marginTop="2dp"
+		android:background="@drawable/background"
+		android:orientation="vertical"
+		android:padding="8dp">
+
+		<RelativeLayout
+			android:layout_width="@dimen/field_size"
+			android:layout_height="56dp"
+			android:layout_margin="0dp">
+
+			<ImageView
+				android:id="@+id/user_imgv"
+				android:layout_width="50dp"
+				android:layout_height="match_parent"
+				android:layout_centerVertical="true"
+				android:adjustViewBounds="true"
+				android:background="@android:color/transparent"
+                android:contentDescription="@string/app_name"
+                android:padding="7dp"
+				android:scaleType="fitCenter"
+				android:src="@drawable/name_"/>
+
+			<ImageButton
+				android:id="@+id/scan_button"
+				android:layout_width="50dp"
+				android:layout_height="match_parent"
+				android:layout_alignParentEnd="true"
+				android:layout_centerVertical="true"
+				android:adjustViewBounds="true"
+				android:contentDescription="@string/app_name"
+				android:scaleType="fitCenter"
+				android:src="@drawable/scan"
+				tools:ignore="DuplicateSpeakableTextCheck" />
+
+			<EditText
+				android:id="@+id/user_id_dest"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_centerVertical="true"
+				android:layout_margin="4dp"
+				android:layout_toStartOf="@id/scan_button"
+				android:layout_toEndOf="@id/user_imgv"
+				android:background="@drawable/edt_bg"
+				android:ems="10"
+				android:inputType="textCapCharacters"
+				android:gravity="center_vertical|center|center_horizontal"
+				android:hint="JULES-1111"
+				android:lines="1"
+				android:singleLine="true"
+				android:textColor="#ffffffff"
+				android:textSize="18sp"
+                tools:ignore="Autofill,HardcodedText" />
+
+		</RelativeLayout>
+
+		<LinearLayout
+			android:layout_width="@dimen/field_size"
+			android:layout_height="56dp"
+			android:layout_marginTop="10dp"
+			android:gravity="center_vertical"
+			android:orientation="horizontal"
+			android:paddingLeft="51dp"
+			android:paddingRight="51dp">
+
+			<EditText
+				android:id="@+id/value"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_margin="4dp"
+                android:background="@drawable/edt_bg"
+				android:ems="10"
+				android:gravity="center_vertical|center|center_horizontal"
+				android:hint="@string/min_am"
+				android:inputType="numberDecimal"
+				android:lines="1"
+				android:singleLine="true"
+				android:textColor="#ffffffff"
+				android:textSize="18sp"
+                tools:ignore="Autofill" />
+
+		</LinearLayout>
+
+		<Button
+			android:id="@+id/sendbutton"
+			android:layout_width="wrap_content"
+			android:layout_height="50dp"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="10dp"
+			android:padding="5dp"
+			android:text="@string/send"
+			android:textAllCaps="false"
+			android:textColor="#ffffffff"
+			android:textSize="16sp"
+			tools:ignore="TextContrastCheck" />
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginTop="10dp"
+			android:background="@drawable/white_bg"
+			android:orientation="vertical">
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical|center|center_horizontal"
+				android:padding="8dp"
+				android:text="@string/scan_qr_send"
+				android:textColor="#ff0a140e"
+				android:textSize="14sp"/>
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:padding="6dp">
+
+				<ImageView
+					android:id="@+id/dest_qr"
+					android:layout_width="180dp"
+					android:layout_height="180dp"
+					android:layout_centerInParent="true"
+					android:adjustViewBounds="true"
+					android:background="@android:color/transparent"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter"/>
+
+			</RelativeLayout>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</RelativeLayout>

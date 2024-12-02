@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        tools:ignore="UselessParent">
+
+        <com.razzaghimahdi78.dotsloading.linear.LoadingScaly
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:dots_color="#CEBDEF"
+            app:dots_count="4"
+			android:layout_centerHorizontal="true"
+            app:dots_duration="400"
+            app:dots_size="5dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" tools:showIn="navigation_view">
+
+    <group android:id="@+id/g1" android:checkableBehavior="single">
+        <item android:id="@+id/dashboard" android:icon="@drawable/home" android:title="@string/home"/>
+    </group>
+    <group android:id="@+id/g2" android:checkableBehavior="single">
+        <item android:id="@+id/modpassword" android:icon="@drawable/lock" android:title="@string/modpassword"/>
+        <item android:id="@+id/modkeysecret" android:icon="@drawable/key" android:title="@string/modsecretkey"/>
+    </group>
+    <group android:id="@+id/g3" android:checkableBehavior="single">
+        <item android:id="@+id/terms" android:icon="@drawable/terms" android:title="@string/terms"/>
+        <item android:id="@+id/privacy" android:icon="@drawable/privacy" android:title="@string/privacy"/>
+    </group>
+    <group android:id="@+id/g4" android:checkableBehavior="single">
+        <item android:id="@+id/mail_us" android:icon="@drawable/mail" android:title="@string/mail_us"/>
+    </group>
+    <group android:id="@+id/g5" android:checkableBehavior="single">
+        <item android:id="@+id/off" android:icon="@drawable/off" android:title="@string/off"/>
+        <item android:id="@+id/delete" android:icon="@drawable/delete" android:title="@string/delete"/>
+    </group>
+
+</menu>

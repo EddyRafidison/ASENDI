@@ -1,0 +1,25 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav" app:startDestination="@id/home">
+
+    <fragment android:id="@+id/home" android:name="com.wave.HomeContentFragment" android:label="@string/home" tools:layout="@layout/home_fragment">
+        <argument android:name="text_" android:defaultValue="@string/home" app:argType="reference" />
+    </fragment>
+    <fragment android:id="@+id/terms" android:name="com.wave.Terms" android:label="@string/terms" tools:layout="@layout/textlayout">
+        <argument android:name="text_" android:defaultValue="@string/terms" app:argType="reference" />
+    </fragment>
+    <fragment android:id="@+id/privacy" android:name="com.wave.Privacy" android:label="@string/privacy" tools:layout="@layout/textlayout">
+        <argument android:name="text_" android:defaultValue="@string/privacy" app:argType="reference" />
+    </fragment>
+    <fragment android:id="@+id/modpassword" android:name="com.wave.ChangePswd" android:label="@string/modpassword" tools:layout="@layout/password">
+        <argument android:name="text_" android:defaultValue="@string/modpassword" app:argType="reference" />
+    </fragment>
+    <fragment android:id="@+id/modkeysecret" android:name="com.wave.ChangeSK" android:label="@string/modsecretkey" tools:layout="@layout/secretkey">
+        <argument android:name="text_" android:defaultValue="@string/modsecretkey" app:argType="reference" />
+    </fragment>
+    <fragment android:id="@+id/deleteAct" android:name="com.wave.DeleteAct" android:label="@string/delete" tools:layout="@layout/delete_acct">
+        <argument android:name="text_" android:defaultValue="@string/delete" app:argType="reference" />
+    </fragment>
+    <fragment android:id="@+id/msg" android:name="com.wave.Message" android:label="@string/mail_us" tools:layout="@layout/message">
+        <argument android:name="text_" android:defaultValue="@string/mail_us" app:argType="reference" />
+    </fragment>
+
+</navigation>
