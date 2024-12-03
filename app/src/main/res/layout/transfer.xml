@@ -151,7 +151,8 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical|center|center_horizontal"
-				android:padding="8dp"
+				android:paddingStart="8dp"
+				android:paddingEnd="8dp"
 				android:text="@string/scan_qr_send"
 				android:textColor="#ff0a140e"
 				android:textSize="14sp"/>
@@ -165,7 +166,7 @@
 					android:layout_width="150dp"
 					android:layout_height="150dp"
 					android:adjustViewBounds="true"
-					android:layout_centerHorizontal="true"
+					android:layout_centerInParent="true"
 					android:background="@android:color/transparent"
 					android:contentDescription="@string/app_name"
 					android:scaleType="fitCenter" />

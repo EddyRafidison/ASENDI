@@ -325,7 +325,7 @@ public class Utils {
         }
         TextView snackbarText = view.findViewById(R.id.snackbar_text);
         snackbarText.setTextColor(Color.WHITE);
-        snackbarText.setMaxLines(3);
+        snackbarText.setMaxLines(4);
         snackbarText.setGravity(Gravity.CENTER);
         snackbar.setAction("Ok", v1 -> snackbar.dismiss());
         snackbar.setActionTextColor(Color.YELLOW);
