@@ -57,7 +57,7 @@
 
 			<ImageView
 				android:id="@+id/user_imgv"
-				android:layout_width="50dp"
+				android:layout_width="46dp"
 				android:layout_height="match_parent"
 				android:layout_centerVertical="true"
 				android:adjustViewBounds="true"
