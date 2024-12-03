@@ -6,12 +6,13 @@
 
     <LinearLayout
         android:id="@+id/rel_"
-        android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/field_size"
         android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="2dp"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="8dp"
+        tools:ignore="TextSizeCheck">
 
         <TextView
             android:layout_width="match_parent"
@@ -42,7 +43,7 @@
 
             <EditText
                 android:id="@+id/pswd_"
-                android:layout_width="@dimen/field_size"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="4dp"
                 android:background="@android:color/transparent"

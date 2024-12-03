@@ -27,7 +27,7 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
     private Button switchFlashlightButton;
     private ViewfinderView viewfinderView;
 
-    @SuppressLint("ResourceType")
+    @SuppressLint({"ResourceType", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +38,7 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
 
         switchFlashlightButton = findViewById(R.id.switch_flashlight);
 
-        viewfinderView = findViewById(2131231366);
+        viewfinderView = findViewById(R.id.zxing_viewfinder_view);
 
         // if the device does not have flashlight in its camera,
         // then remove the switch flashlight button...

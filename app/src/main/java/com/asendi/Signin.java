@@ -229,7 +229,7 @@ public class Signin extends AppCompatActivity {
                                 Color.GREEN), 0, ssb_.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                             myapp.setText(ssb_, TextView.BufferType.SPANNABLE);
                         } else {
-                            boolean fd = apkf.delete();
+                            apkf.delete();
                             Utils.saveLastDldedApp(getApplicationContext(), ""+versionCode);
                             processApk(response, versionCode);
                         }
@@ -260,7 +260,7 @@ public class Signin extends AppCompatActivity {
                     File apkF = new File(getFilesDir(), "Asendi.apk");
                     Utils.saveLastDldedApp(getApplicationContext(), ""+v);
                     if (apkF.exists()) {
-                        boolean fd = apkF.delete();
+                        apkF.delete();
                     }
                 }
 
@@ -686,6 +686,11 @@ public class Signin extends AppCompatActivity {
                                 String msg = response.getString("msg");
                                 String tkn = response.getString("ua");
                                 if (msg.equals("1") || msg.equals("2")) {
+                                    if (msg.equals("1")) {
+                                        Utils.saveCategory(getApplicationContext(), "B");
+                                    } else {
+                                        Utils.saveCategory(getApplicationContext(), "C");
+                                    }
                                     Utils.saveCredentials(getApplicationContext(), acct, psd);
                                     Utils.setPswdChangedStatus(getApplicationContext(), false);
                                     intent.putExtra("act", acct);

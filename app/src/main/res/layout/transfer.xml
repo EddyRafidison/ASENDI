@@ -158,18 +158,17 @@
 
 			<RelativeLayout
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:padding="6dp">
+				android:layout_height="match_parent">
 
 				<ImageView
 					android:id="@+id/dest_qr"
-					android:layout_width="180dp"
-					android:layout_height="180dp"
-					android:layout_centerInParent="true"
+					android:layout_width="150dp"
+					android:layout_height="150dp"
 					android:adjustViewBounds="true"
+					android:layout_centerHorizontal="true"
 					android:background="@android:color/transparent"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="fitCenter"/>
+					android:contentDescription="@string/app_name"
+					android:scaleType="fitCenter" />
 
 			</RelativeLayout>
 
