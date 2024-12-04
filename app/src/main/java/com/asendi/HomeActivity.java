@@ -431,7 +431,7 @@ implements NavigationView.OnNavigationItemSelectedListener, DrawerLayout.DrawerL
                     isYesClicked = true;
                     arg0.cancel();
                 });
-                alertDialogBuilder.setNeutralButton(HtmlCompat.fromHtml("<font color='red'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
+                alertDialogBuilder.setNeutralButton(HtmlCompat.fromHtml("<font color='#848482'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
                     isYesClicked = false;
                     dialog.cancel();
                 });

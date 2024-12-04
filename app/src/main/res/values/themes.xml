@@ -50,4 +50,10 @@
         <item name="windowNoTitle">?android:windowNoTitle</item>
     </style>
 
+    <style name="buttonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/accent</item>
+        <item name="rippleColor">@color/grey</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="strokeColor">@color/black</item>
+    </style>
 </resources>

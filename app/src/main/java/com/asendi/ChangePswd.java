@@ -1,23 +1,24 @@
 package com.asendi;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import androidx.core.graphics.drawable.DrawableCompat;
+
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.button.MaterialButton;
+
 import org.json.JSONException;
 
 public class ChangePswd extends Fragment {
     private EditText curpswd,
     newpswd1,
     newpswd2;
-    private Button change;
+    private MaterialButton change;
     private String user,
     pswd;
 
@@ -35,7 +36,6 @@ public class ChangePswd extends Fragment {
         assert bundle != null;
         pswd = bundle.getString("psd");
         user = bundle.getString("act");
-        DrawableCompat.setTint(change.getBackground(), Color.parseColor("#D32F2F"));
         change.setOnClickListener(v -> {
             final String e1 = curpswd.getText().toString();
             final String e2 = newpswd1.getText().toString();

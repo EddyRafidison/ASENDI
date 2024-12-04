@@ -312,7 +312,7 @@ public class Signin extends AppCompatActivity {
             }
 
         });
-        builder.setNeutralButton(HtmlCompat.fromHtml("<font color='red'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY),
+        builder.setNeutralButton(HtmlCompat.fromHtml("<font color='#848482'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY),
                 (dialog, which) -> dialog.cancel());
         AlertDialog dialogRecovery = builder.create();
         dialogRecovery.show();
@@ -541,7 +541,7 @@ public class Signin extends AppCompatActivity {
                     readPermission, writePermission
                 }, REQUEST_STORAGE_PERMISSIONS);
             })
-            .setNeutralButton(HtmlCompat.fromHtml("<font color='red'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
+            .setNeutralButton(HtmlCompat.fromHtml("<font color='#848482'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
                 dialog.dismiss();
                 // Handle the case where the user cancels the permission request.
             })
@@ -563,7 +563,7 @@ public class Signin extends AppCompatActivity {
             Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, Uri.parse("package:com.asendi"));
             getPermResult.launch(intent);
         })
-        .setNeutralButton(HtmlCompat.fromHtml("<font color='red'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
+        .setNeutralButton(HtmlCompat.fromHtml("<font color='#848482'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
             dialog.dismiss();
             // Handle the case where the user cancels the permission request.
         })
@@ -720,7 +720,7 @@ public class Signin extends AppCompatActivity {
             }
 
         });
-        builder.setNeutralButton(HtmlCompat.fromHtml("<font color='red'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY),
+        builder.setNeutralButton(HtmlCompat.fromHtml("<font color='#848482'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY),
                 (dialog, which) -> dialog.cancel());
         AlertDialog adialog = builder.create();
         adialog.show();

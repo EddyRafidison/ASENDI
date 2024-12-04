@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -33,6 +32,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import com.elyeproj.loaderviewlibrary.LoaderTextView;
+import com.google.android.material.button.MaterialButton;
 import com.wavetopsheet.TopSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.zxing.client.android.Intents;
@@ -127,9 +127,7 @@ public class HomeContentFragment extends Fragment {
         filter_history.setSelection(0);
         bottomsheet_arrow = layout.findViewById(R.id.bottomsheet_arrow);
         bottomsheet_transfer = layout.findViewById(R.id.bottomsheet_send);
-        Button send = layout.findViewById(R.id.sendbutton);
-        DrawableCompat.setTint(send.getBackground(),
-            Color.parseColor("#D32F2F"));
+        MaterialButton send = layout.findViewById(R.id.sendbutton);
         ImageButton scan_but = layout.findViewById(R.id.scan_button);
         DrawableCompat.setTint(scan_but.getBackground(),
                 getResources().getColor(R.color.primary));
@@ -566,7 +564,7 @@ public class HomeContentFragment extends Fragment {
 
 
             });
-            builder.setNeutralButton(HtmlCompat.fromHtml("<font color='red'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY),
+            builder.setNeutralButton(HtmlCompat.fromHtml("<font color='#848482'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY),
                     (dialog, which) -> dialog.cancel());
             AlertDialog dialogpswd = builder.create();
             dialogpswd.show();

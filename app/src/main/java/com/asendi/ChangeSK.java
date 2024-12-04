@@ -1,21 +1,22 @@
 package com.asendi;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import androidx.core.graphics.drawable.DrawableCompat;
+
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.button.MaterialButton;
+
 import org.json.JSONException;
 
 public class ChangeSK extends Fragment {
     private EditText pswd,
     newSk;
-    private Button change;
+    private MaterialButton change;
     private String user,
     pswd_;
 
@@ -32,7 +33,6 @@ public class ChangeSK extends Fragment {
         assert bundle != null;
         user = bundle.getString("act");
         pswd_ = bundle.getString("psd");
-        DrawableCompat.setTint(change.getBackground(), Color.parseColor("#D32F2F"));
         change.setOnClickListener(v -> {
             final String e1 = pswd.getText().toString();
             final String e2 = newSk.getText().toString();

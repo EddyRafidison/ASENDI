@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-	android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<RelativeLayout
 		android:id="@+id/rel2"
@@ -97,7 +97,7 @@
 				android:lines="1"
 				android:singleLine="true"
 				android:textColor="#ffffffff"
-				android:textSize="18sp"
+				android:textSize="16sp"
                 tools:ignore="Autofill,HardcodedText" />
 
 		</RelativeLayout>
@@ -124,14 +124,16 @@
 				android:lines="1"
 				android:singleLine="true"
 				android:textColor="#ffffffff"
-				android:textSize="18sp"
+				android:textSize="16sp"
                 tools:ignore="Autofill" />
 
 		</LinearLayout>
 
-		<Button
+		<com.google.android.material.button.MaterialButton
+			style="@style/buttonStyle"
+			app:cornerRadius="15dp"
 			android:id="@+id/sendbutton"
-			android:layout_width="wrap_content"
+			android:layout_width="250dp"
 			android:layout_height="50dp"
 			android:layout_gravity="center_horizontal"
 			android:layout_marginTop="10dp"
@@ -139,7 +141,7 @@
 			android:text="@string/send"
 			android:textAllCaps="false"
 			android:textColor="#ffffffff"
-			android:textSize="16sp"
+			android:textSize="15sp"
 			tools:ignore="TextContrastCheck" />
 
 		<LinearLayout

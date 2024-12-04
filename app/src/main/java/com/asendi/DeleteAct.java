@@ -1,20 +1,21 @@
 package com.asendi;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import androidx.core.graphics.drawable.DrawableCompat;
+
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.button.MaterialButton;
+
 import org.json.JSONException;
 
 public class DeleteAct extends Fragment {
     private EditText pswd;
-    private Button delete;
+    private MaterialButton delete;
     private String user,
     pswd_;
     @Override
@@ -28,7 +29,6 @@ public class DeleteAct extends Fragment {
         assert bundle != null;
         pswd_ = bundle.getString("psd");
         user = bundle.getString("act");
-        DrawableCompat.setTint(delete.getBackground(), Color.parseColor("#D32F2F"));
         delete.setOnClickListener(v -> {
             final String pswdt = pswd.getText().toString();
             if (!pswdt.isEmpty()) {
