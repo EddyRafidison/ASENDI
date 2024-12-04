@@ -18,6 +18,6 @@ public class Terms extends Fragment {
         // Inflate the layout for this fragment
         text = layout.findViewById(R.id.textdata);
         //load data here
-        Utils.requestTP(getActivity(), "terms"+"&l="+ ASENDI.LANG , text);
+        Utils.requestTP(getActivity(), "terms"+"&l="+ ASENDI.TPLANG, text);
         return layout;
     }}

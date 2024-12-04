@@ -16,6 +16,6 @@ public class Privacy extends Fragment {
         // Inflate the layout for this fragment
         LoaderTextView text = layout.findViewById(R.id.textdata);
         //load data here
-        Utils.requestTP(getActivity(), "privacy"+"&l="+ ASENDI.LANG , text);
+        Utils.requestTP(getActivity(), "privacy"+"&l="+ ASENDI.TPLANG, text);
         return layout;
     }}

@@ -4,7 +4,7 @@ import java.util.Locale;
 import java.util.Timer;
 
 public class ASENDI {
-	public static Locale LANG = Locale.ENGLISH;
+	public static Locale TPLANG = Locale.ENGLISH;
 	public static boolean isNetworkConnected = false;
 	public static String PSWD = "", ID = "";
 	public static String BASE_URL = "http://127.0.0.1:5555";

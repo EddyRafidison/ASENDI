@@ -50,6 +50,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,6 +85,11 @@ public class Signin extends AppCompatActivity {
             w.setNavigationBarColor(R.color.primary);
         }
         setContentView(R.layout.signin);
+        Locale langForTP = Locale.getDefault();
+        String lang = langForTP.getLanguage();
+        if(lang.startsWith("fr")){
+            ASENDI.TPLANG = Locale.FRENCH;
+        }
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         CheckNetwork network_ = new CheckNetwork(getApplicationContext());

@@ -110,10 +110,10 @@ public class Signup extends AppCompatActivity {
                 Intent browserIntent;
                 if (string.equals(strs[0])) {
                     //show terms of use
-                    browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(ASENDI.INFO + "?r=terms" + "&l=" + ASENDI.LANG));
+                    browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(ASENDI.INFO + "?r=terms" + "&l=" + ASENDI.TPLANG));
                 } else {
                     //show policy
-                    browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(ASENDI.INFO + "?r=privacy" + "&l=" + ASENDI.LANG));
+                    browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(ASENDI.INFO + "?r=privacy" + "&l=" + ASENDI.TPLANG));
                 }
                 startActivity(browserIntent);
             },
