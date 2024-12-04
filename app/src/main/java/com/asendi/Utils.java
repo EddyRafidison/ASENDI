@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInstaller;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -200,6 +201,7 @@ public class Utils {
         int w = v.getWidth();
         listPopupWindow.setWidth(w);
         listPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        listPopupWindow.setBackgroundDrawable(new ColorDrawable(ctx.getResources().getColor(R.color.primary)));
         listPopupWindow.setModal(true);
         listPopupWindow.setPromptPosition(ListPopupWindow.POSITION_PROMPT_BELOW);
         listPopupWindow.setOnItemClickListener(null);

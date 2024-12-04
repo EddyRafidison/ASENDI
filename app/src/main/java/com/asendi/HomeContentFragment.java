@@ -132,7 +132,7 @@ public class HomeContentFragment extends Fragment {
             Color.parseColor("#D32F2F"));
         ImageButton scan_but = layout.findViewById(R.id.scan_button);
         DrawableCompat.setTint(scan_but.getBackground(),
-            Color.TRANSPARENT);
+                getResources().getColor(R.color.primary));
         stock = layout.findViewById(R.id.balance);
         Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(),
             "fonts/SuperstarM54.ttf");

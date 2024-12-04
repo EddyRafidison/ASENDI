@@ -145,7 +145,8 @@ implements NavigationView.OnNavigationItemSelectedListener, DrawerLayout.DrawerL
                 "0000000",
                 "00000000",
                 "000000000",
-                "0000000000"
+                "0000000000", "1111", "2222", "3333",
+                    "4444", "5555", "6666", "7777", "8888", "9999"
             };
             for (String p: vuln_pswd) {
                 assert ASENDI.PSWD != null;

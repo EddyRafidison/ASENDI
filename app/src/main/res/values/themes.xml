@@ -45,6 +45,7 @@
     <style name="AppTheme.Dialog" parent="Theme.AppCompat.Dialog.MinWidth">
         <item name="android:dialogTheme">@style/AppTheme.Dialog</item>
         <item name="android:windowBackground">@drawable/dialog__window_background</item>
+        <item name="android:background">#04683B</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowNoTitle">?android:windowNoTitle</item>
     </style>

@@ -18,9 +18,10 @@
 		android:paddingBottom="8dp"
 		android:singleLine="true"
 		android:text="@string/recovery_title"
-		android:textColor="#43A047"
+		android:textColor="#F8EE96"
 		android:textSize="16sp"
-		android:textStyle="bold" />
+		android:textStyle="bold"
+		tools:ignore="TextContrastCheck" />
 
 	<TextView
 		android:id="@+id/t2"
@@ -31,8 +32,9 @@
 		android:paddingTop="8dp"
 		android:paddingBottom="8dp"
 		android:text="@string/notice_forgotten_pswd"
-		android:textColor="#0277BD"
-		android:textSize="14sp" />
+		android:textColor="#DDE0E0"
+		android:textSize="14sp"
+		tools:ignore="TextContrastCheck" />
 
 	<LinearLayout
 		android:id="@+id/l1"

@@ -16,7 +16,7 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:text="@string/confirm_login"
-        android:textColor="#B2FF59"
+        android:textColor="#DDE0E0"
         android:textSize="14sp"
         tools:ignore="TextContrastCheck,TextSizeCheck" />
 
