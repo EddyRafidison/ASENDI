@@ -2,6 +2,8 @@
 
     <string name="app_name" translatable="false">Asendi</string>
     <string name="off">Esci da questo dispositivo</string>
+    <string name="unsupported_country">Paese non ancora supportato</string>
+    <string name="country_null">Posizione non trovata</string>
     <string name="delete">Elimina account</string>
     <string name="fees">Tariffe: 100</string>
     <string name="punct">.</string>

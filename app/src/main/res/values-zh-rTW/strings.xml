@@ -2,6 +2,8 @@
 
     <string name="app_name" translatable="false">Asendi</string>
     <string name="off">退出該設備</string>
+    <string name="unsupported_country">尚不支持的國家/地區</string>
+    <string name="country_null">未找到位置</string>
     <string name="delete">刪除帳戶</string>
     <string name="fees">費用：100</string>
     <string name="punct">。</string>

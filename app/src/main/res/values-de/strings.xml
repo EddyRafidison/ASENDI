@@ -2,6 +2,8 @@
 
     <string name="app_name" translatable="false">Asendi</string>
     <string name="off">Dieses Gerät verlassen</string>
+    <string name="unsupported_country">Land wird noch nicht unterstützt</string>
+    <string name="country_null">Standort nicht gefunden</string>
     <string name="error_file">Dateifehler</string>
     <string name="delete">Konto löschen</string>
     <string name="fees">Gebühren: 100</string>

@@ -198,6 +198,10 @@ public class Signup extends AppCompatActivity {
                                                                                         Utils.showMessage(getApplicationContext(), signup, getString(R.string.check_signup_mail), true);
                                                                                     } else if (msg.equals("retry")) {
                                                                                         Toast.makeText(getApplicationContext(), getString(R.string.retry_signup), Toast.LENGTH_SHORT).show();
+                                                                                    } else if(msg.contains("unsupported")){
+                                                                                        Toast.makeText(getApplicationContext(), getString(R.string.unsupported_country), Toast.LENGTH_SHORT).show();
+                                                                                    } else if (msg.contains("what")) {
+                                                                                        Toast.makeText(getApplicationContext(), getString(R.string.country_null), Toast.LENGTH_SHORT).show();
                                                                                     } else {
                                                                                         Toast.makeText(getApplicationContext(), getString(R.string.failed), Toast.LENGTH_SHORT).show();
                                                                                     }
