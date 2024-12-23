@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.view.View;
 
 import com.elyeproj.loaderviewlibrary.LoaderTextView;
+
 import androidx.fragment.app.Fragment;
 
 public class Terms extends Fragment {
@@ -13,11 +14,12 @@ public class Terms extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-        Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.textlayout, container, false);
         // Inflate the layout for this fragment
         text = layout.findViewById(R.id.textdata);
         //load data here
-        Utils.requestTP(getActivity(), "terms"+"&l="+ ASENDI.TPLANG, text);
+        Utils.requestTP(getActivity(), "terms" + "&l=" + ASENDI.TPLANG, text);
         return layout;
-    }}
+    }
+}

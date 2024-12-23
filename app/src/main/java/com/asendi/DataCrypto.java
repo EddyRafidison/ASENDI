@@ -1,6 +1,7 @@
 package com.asendi;
 
 import android.util.Base64;
+
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -9,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -35,13 +37,13 @@ public class DataCrypto {
     }
 
     private String encrypt(String data) throws UnsupportedEncodingException,
-    NoSuchAlgorithmException,
-    NoSuchPaddingException,
-    InvalidAlgorithmParameterException,
-    InvalidKeyException,
-    InvalidKeySpecException,
-    BadPaddingException,
-    IllegalBlockSizeException {
+            NoSuchAlgorithmException,
+            NoSuchPaddingException,
+            InvalidAlgorithmParameterException,
+            InvalidKeyException,
+            InvalidKeySpecException,
+            BadPaddingException,
+            IllegalBlockSizeException {
         if (data == null) return null;
         SecretKey secretKey = getSecretKey(hashTheKey(mBuilder.getKey()));
         byte[] dataBytes = data.getBytes(mBuilder.getCharsetName());
@@ -85,19 +87,19 @@ public class DataCrypto {
     private SecretKey getSecretKey(char[] key) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeySpecException {
         SecretKeyFactory factory = SecretKeyFactory.getInstance(mBuilder.getSecretKeyType());
         KeySpec spec = new PBEKeySpec(key,
-            mBuilder.getSalt().getBytes(mBuilder.getCharsetName()),
-            mBuilder.getIterationCount(),
-            mBuilder.getKeyLength());
+                mBuilder.getSalt().getBytes(mBuilder.getCharsetName()),
+                mBuilder.getIterationCount(),
+                mBuilder.getKeyLength());
         SecretKey tmp = factory.generateSecret(spec);
         return new SecretKeySpec(tmp.getEncoded(),
-            mBuilder.getKeyAlgorithm());
+                mBuilder.getKeyAlgorithm());
     }
 
     private char[] hashTheKey(String key) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         MessageDigest messageDigest = MessageDigest.getInstance(mBuilder.getDigestAlgorithm());
         messageDigest.update(key.getBytes(mBuilder.getCharsetName()));
         return Base64.encodeToString(messageDigest.digest(),
-            Base64.NO_PADDING).toCharArray();
+                Base64.NO_PADDING).toCharArray();
     }
 
     private static class Builder {
@@ -118,21 +120,21 @@ public class DataCrypto {
         private IvParameterSpec mIvParameterSpec;
 
         public static Builder getDefaultBuilder(String key,
-            String salt,
-            byte[] iv) {
+                                                String salt,
+                                                byte[] iv) {
             return new Builder()
-            .setIv(iv)
-            .setKey(key)
-            .setSalt(salt)
-            .setKeyLength(128)
-            .setKeyAlgorithm()
-            .setCharsetName()
-            .setIterationCount(1)
-            .setDigestAlgorithm("SHA1")
-            .setBase64Mode()
-            .setAlgorithm()
-            .setSecureRandomAlgorithm("SHA1PRNG")
-            .setSecretKeyType();
+                    .setIv(iv)
+                    .setKey(key)
+                    .setSalt(salt)
+                    .setKeyLength(128)
+                    .setKeyAlgorithm()
+                    .setCharsetName()
+                    .setIterationCount(1)
+                    .setDigestAlgorithm("SHA1")
+                    .setBase64Mode()
+                    .setAlgorithm()
+                    .setSecureRandomAlgorithm("SHA1PRNG")
+                    .setSecretKeyType();
         }
 
         private DataCrypto build() throws NoSuchAlgorithmException {
@@ -265,4 +267,5 @@ public class DataCrypto {
             return this;
         }
 
-    }}
+    }
+}

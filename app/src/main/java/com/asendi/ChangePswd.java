@@ -16,15 +16,15 @@ import org.json.JSONException;
 
 public class ChangePswd extends Fragment {
     private EditText curpswd,
-    newpswd1,
-    newpswd2;
+            newpswd1,
+            newpswd2;
     private MaterialButton change;
     private String user,
-    pswd;
+            pswd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-        Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.password, container, false);
         // Inflate the layout for this fragment
         curpswd = layout.findViewById(R.id.current_pswd);
@@ -47,10 +47,10 @@ public class ChangePswd extends Fragment {
                             Utils.showNoConnectionAlert(requireContext(), change);
                         } else {
                             if (e1.equals(pswd)) {
-                                Utils.connectToServer(getActivity(), ASENDI.MPC, new String[] {
-                                    "user", "pswd1", "pswd2", "tkn"
-                                }, new String[] {
-                                    user, e1, e2, Utils.getTkn(requireContext())
+                                Utils.connectToServer(getActivity(), ASENDI.MPC, new String[]{
+                                        "user", "pswd1", "pswd2", "tkn"
+                                }, new String[]{
+                                        user, e1, e2, Utils.getTkn(requireContext())
                                 }, true, response -> {
                                     try {
                                         String auth = response.getString("auth");
@@ -90,7 +90,7 @@ public class ChangePswd extends Fragment {
                                         } else {
                                             Utils.showMessage(getContext(), change, requireActivity().getString(R.string.failed_update), false);
                                         }
-                                    }catch(JSONException je) {
+                                    } catch (JSONException je) {
                                         Toast.makeText(getContext(), requireActivity().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
                                     }
                                 });
@@ -100,7 +100,7 @@ public class ChangePswd extends Fragment {
                         }
                     } else {
                         Toast.makeText(getActivity(), requireActivity().getString(R.string.tooShortPswd), Toast.LENGTH_SHORT)
-                        .show();
+                                .show();
                     }
                 } else {
                     Toast.makeText(getActivity(), requireActivity().getString(R.string.not_matched_pswd), Toast.LENGTH_SHORT).show();

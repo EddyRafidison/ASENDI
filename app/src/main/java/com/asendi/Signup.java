@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -33,10 +34,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.text.HtmlCompat;
+
 import com.developer.filepicker.model.DialogConfigs;
 import com.developer.filepicker.model.DialogProperties;
 import com.developer.filepicker.view.FilePickerDialog;
+
 import java.io.File;
+
 import org.json.JSONException;
 
 public class Signup extends AppCompatActivity {
@@ -47,20 +51,20 @@ public class Signup extends AppCompatActivity {
     private final String writePermission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private FilePickerDialog filePickerDialog;
     private EditText fullname,
-    birthdate,
-    address,
-    cin,
-    email,
-    pswd1,
-    pswd2,
-    sk;
+            birthdate,
+            address,
+            cin,
+            email,
+            pswd1,
+            pswd2,
+            sk;
     private ImageButton cin1,
-    cin2;
+            cin2;
     private CheckBox check;
     private Button signup;
     private int cin_code = 0;
     private String cin_bytes_1 = "",
-    cin_bytes_2 = "";
+            cin_bytes_2 = "";
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -68,7 +72,8 @@ public class Signup extends AppCompatActivity {
         Window w = getWindow();
         try {
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
-        }catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             w.setDecorFitsSystemWindows(false);
         } else {
@@ -96,11 +101,11 @@ public class Signup extends AppCompatActivity {
         fullname.requestFocus();
         fullname.setAllCaps(true);
 
-        String[] strs = new String[] {
-            getString(R.string.terms).toLowerCase(),
-            getString(R.string.privacy).toLowerCase()};
+        String[] strs = new String[]{
+                getString(R.string.terms).toLowerCase(),
+                getString(R.string.privacy).toLowerCase()};
         final String t = getString(R.string.notice_terms_policy);
-		final String tlc = t.toLowerCase();
+        final String tlc = t.toLowerCase();
         SpannableStringBuilder ss = new SpannableStringBuilder(t);
         for (int i = 0; i < strs.length; i++) {
             String s = strs[i];
@@ -117,7 +122,7 @@ public class Signup extends AppCompatActivity {
                 }
                 startActivity(browserIntent);
             },
-                Color.MAGENTA), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    Color.MAGENTA), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         textCheck.setText(ss, TextView.BufferType.SPANNABLE);
@@ -129,14 +134,14 @@ public class Signup extends AppCompatActivity {
         properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
         properties.offset = new File(DialogConfigs.DEFAULT_DIR);
         //If you want to view files with specific type of extensions the pass string array to properties.extensions
-        properties.extensions = new String[] {
-            "png", "jpg", "webp", "jpeg"
+        properties.extensions = new String[]{
+                "png", "jpg", "webp", "jpeg"
         };
         properties.show_hidden_files = false;
         filePickerDialog = new FilePickerDialog(this, properties);
         filePickerDialog.setTitle(getString(R.string.select_file));
-        filePickerDialog.setPositiveBtnName(HtmlCompat.fromHtml("<font color='green'>"+getString(R.string.selection)+"</font>",
-            HtmlCompat.FROM_HTML_MODE_LEGACY));
+        filePickerDialog.setPositiveBtnName(HtmlCompat.fromHtml("<font color='green'>" + getString(R.string.selection) + "</font>",
+                HtmlCompat.FROM_HTML_MODE_LEGACY));
         filePickerDialog.setCancelable(true);
         filePickerDialog.setNegativeBtnName(getString(R.string.cancel));
         filePickerDialog.setDialogSelectionListener(files -> {
@@ -183,33 +188,34 @@ public class Signup extends AppCompatActivity {
                                                                     Utils.showNoConnectionAlert(getApplicationContext(), signup);
                                                                 } else {
                                                                     //process signup
-                                                                    Utils.connectToServer(Signup.this, ASENDI.SIGNUP, new String[] {
-                                                                        "email", "birth", "addr", "name", "cin", "pswd",
-                                                                        "sk", "cinimg1", "cinimg2"
-                                                                    },
-                                                                        new String[] {
-                                                                            mailAd, birth, addrs, fulln, Cin, psd1, secretkey, cin_bytes_1, cin_bytes_2
-                                                                        }, true, response -> {
-                                                                            if (response != null) {
-                                                                                try {
-                                                                                    String msg = response.getString("msg");
-                                                                                    if (msg.equals("ok")) {
-                                                                                        signup.setClickable(false);
-                                                                                        Utils.showMessage(getApplicationContext(), signup, getString(R.string.check_signup_mail), true);
-                                                                                    } else if (msg.equals("retry")) {
-                                                                                        Toast.makeText(getApplicationContext(), getString(R.string.retry_signup), Toast.LENGTH_SHORT).show();
-                                                                                    } else if(msg.contains("unsupported")){
-                                                                                        Toast.makeText(getApplicationContext(), getString(R.string.unsupported_country), Toast.LENGTH_SHORT).show();
-                                                                                    } else if (msg.contains("what")) {
-                                                                                        Toast.makeText(getApplicationContext(), getString(R.string.country_null), Toast.LENGTH_SHORT).show();
-                                                                                    } else {
-                                                                                        Toast.makeText(getApplicationContext(), getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                                                    Utils.connectToServer(Signup.this, ASENDI.SIGNUP, new String[]{
+                                                                                    "email", "birth", "addr", "name", "cin", "pswd",
+                                                                                    "sk", "cinimg1", "cinimg2"
+                                                                            },
+                                                                            new String[]{
+                                                                                    mailAd, birth, addrs, fulln, Cin, psd1, secretkey, cin_bytes_1, cin_bytes_2
+                                                                            }, true, response -> {
+                                                                                if (response != null) {
+                                                                                    try {
+                                                                                        String msg = response.getString("msg");
+                                                                                        if (msg.equals("ok")) {
+                                                                                            signup.setClickable(false);
+                                                                                            Utils.showMessage(getApplicationContext(), signup, getString(R.string.check_signup_mail), true);
+                                                                                        } else if (msg.equals("retry")) {
+                                                                                            Toast.makeText(getApplicationContext(), getString(R.string.retry_signup), Toast.LENGTH_SHORT).show();
+                                                                                        } else if (msg.contains("unsupported")) {
+                                                                                            Toast.makeText(getApplicationContext(), getString(R.string.unsupported_country), Toast.LENGTH_SHORT).show();
+                                                                                        } else if (msg.contains("what")) {
+                                                                                            Toast.makeText(getApplicationContext(), getString(R.string.country_null), Toast.LENGTH_SHORT).show();
+                                                                                        } else {
+                                                                                            Toast.makeText(getApplicationContext(), getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                                                                        }
+                                                                                    } catch (
+                                                                                            JSONException je) {
+                                                                                        Toast.makeText(getApplicationContext(), getString(R.string.data_error), Toast.LENGTH_SHORT).show();
                                                                                     }
-                                                                                }catch(JSONException je) {
-                                                                                    Toast.makeText(getApplicationContext(), getString(R.string.data_error), Toast.LENGTH_SHORT).show();
                                                                                 }
-                                                                            }
-                                                                        });
+                                                                            });
                                                                 }
                                                             }
                                                         } else {
@@ -259,6 +265,7 @@ public class Signup extends AppCompatActivity {
             checkPermissions();
         });
     }
+
     private void checkPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             //As the device is Android 13 and above so I want the permission of accessing Audio, Images, Videos
@@ -266,31 +273,33 @@ public class Signup extends AppCompatActivity {
             String imagesPermission = android.Manifest.permission.READ_MEDIA_IMAGES;
             //Check for permissions and request them if needed
             if (
-                ContextCompat.checkSelfPermission(this, imagesPermission) == PackageManager.PERMISSION_GRANTED) {
+                    ContextCompat.checkSelfPermission(this, imagesPermission) == PackageManager.PERMISSION_GRANTED) {
                 // You have the permissions, you can proceed with your media file operations.
                 //Showing dialog when Show Dialog button is clicked.
                 filePickerDialog.show();
             } else {
                 // You don't have the permissions. Request them.
-                ActivityCompat.requestPermissions(this, new String[] {
-                    imagesPermission
+                ActivityCompat.requestPermissions(this, new String[]{
+                        imagesPermission
                 }, REQUEST_MEDIA_PERMISSIONS);
             }
         } else {
             //Android version is below 13 so we are asking normal read and write storage permissions
             // Check for permissions and request them if needed
             if (ContextCompat.checkSelfPermission(this, readPermission) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, writePermission) == PackageManager.PERMISSION_GRANTED) {
+                    ContextCompat.checkSelfPermission(this, writePermission) == PackageManager.PERMISSION_GRANTED) {
                 // You have the permissions, you can proceed with your file operations.
                 // Show the file picker dialog when needed
                 filePickerDialog.show();
             } else {
                 // You don't have the permissions. Request them.
-                ActivityCompat.requestPermissions(this, new String[] {
-                    readPermission, writePermission
+                ActivityCompat.requestPermissions(this, new String[]{
+                        readPermission, writePermission
                 }, REQUEST_STORAGE_PERMISSIONS);
             }
-        }}
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -331,7 +340,7 @@ public class Signup extends AppCompatActivity {
 
 
     private boolean areAllPermissionsGranted(int[] grantResults) {
-        for (int result: grantResults) {
+        for (int result : grantResults) {
             if (result != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
@@ -341,47 +350,48 @@ public class Signup extends AppCompatActivity {
 
     private void showRationaleDialog() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, readPermission) ||
-            ActivityCompat.shouldShowRequestPermissionRationale(this, writePermission)) {
+                ActivityCompat.shouldShowRequestPermissionRationale(this, writePermission)) {
             // Show a rationale dialog explaining why the permissions are necessary.
             new AlertDialog.Builder(this)
-            .setTitle(getString(R.string.requestPermTitle))
-            .setMessage(getString(R.string.requestPermText))
-            .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"+"Ok"+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
-                // Request permissions when the user clicks OK.
-                ActivityCompat.requestPermissions(this, new String[] {
-                    readPermission, writePermission
-                }, REQUEST_STORAGE_PERMISSIONS);
-            })
-            .setNeutralButton(HtmlCompat.fromHtml("<font color='red'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
-                dialog.dismiss();
-                // Handle the case where the user cancels the permission request.
-            })
-            .show();
+                    .setTitle(getString(R.string.requestPermTitle))
+                    .setMessage(getString(R.string.requestPermText))
+                    .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>" + "Ok" + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
+                        // Request permissions when the user clicks OK.
+                        ActivityCompat.requestPermissions(this, new String[]{
+                                readPermission, writePermission
+                        }, REQUEST_STORAGE_PERMISSIONS);
+                    })
+                    .setNeutralButton(HtmlCompat.fromHtml("<font color='red'>" + getString(R.string.cancel) + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
+                        dialog.dismiss();
+                        // Handle the case where the user cancels the permission request.
+                    })
+                    .show();
         } else {
             // Request permissions directly if no rationale is needed.
-            ActivityCompat.requestPermissions(this, new String[] {
-                readPermission, writePermission
+            ActivityCompat.requestPermissions(this, new String[]{
+                    readPermission, writePermission
             }, REQUEST_STORAGE_PERMISSIONS);
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void accessAllFilesPermissionDialog() {
         new AlertDialog.Builder(Signup.this)
-        .setTitle(getString(R.string.requestPermTitle))
-        .setMessage(getString(R.string.requestPermText))
-        .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"+"Ok"+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
-            // Request permissions when the user clicks OK.
-            Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, Uri.parse("package:com.asendi"));
-            getPermResult.launch(intent);
-        })
-        .setNeutralButton(HtmlCompat.fromHtml("<font color='red'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
-            dialog.dismiss();
-            // Handle the case where the user cancels the permission request.
-        })
-        .show();
+                .setTitle(getString(R.string.requestPermTitle))
+                .setMessage(getString(R.string.requestPermText))
+                .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>" + "Ok" + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
+                    // Request permissions when the user clicks OK.
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, Uri.parse("package:com.asendi"));
+                    getPermResult.launch(intent);
+                })
+                .setNeutralButton(HtmlCompat.fromHtml("<font color='red'>" + getString(R.string.cancel) + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
+                    dialog.dismiss();
+                    // Handle the case where the user cancels the permission request.
+                })
+                .show();
     }
 
-    private final ActivityResultLauncher < Intent > getPermResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+    private final ActivityResultLauncher<Intent> getPermResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {

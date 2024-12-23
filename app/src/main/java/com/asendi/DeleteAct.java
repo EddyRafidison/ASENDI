@@ -17,10 +17,11 @@ public class DeleteAct extends Fragment {
     private EditText pswd;
     private MaterialButton delete;
     private String user,
-    pswd_;
+            pswd_;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-        Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.delete_acct, container, false);
         // Inflate the layout for this fragment
         pswd = layout.findViewById(R.id.pswd_);
@@ -36,10 +37,10 @@ public class DeleteAct extends Fragment {
                     Utils.showNoConnectionAlert(requireContext(), delete);
                 } else {
                     if (pswdt.equals(pswd_)) {
-                        Utils.connectToServer(getActivity(), ASENDI.DLTACC, new String[] {
-                            "user", "pswd", "tkn"
-                        }, new String[] {
-                            user, pswdt, Utils.getTkn(requireContext())
+                        Utils.connectToServer(getActivity(), ASENDI.DLTACC, new String[]{
+                                "user", "pswd", "tkn"
+                        }, new String[]{
+                                user, pswdt, Utils.getTkn(requireContext())
                         }, true, response -> {
                             try {
                                 String auth = response.getString("auth");
@@ -64,17 +65,18 @@ public class DeleteAct extends Fragment {
                                 } else {
                                     Utils.showMessage(getContext(), delete, requireActivity().getString(R.string.failed), false);
                                 }
-                            }
-                            catch(JSONException je) {
+                            } catch (JSONException je) {
                                 Toast.makeText(getContext(), requireActivity().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else {
                         Toast.makeText(getContext(), requireActivity().getString(R.string.error_pswd), Toast.LENGTH_SHORT).show();
                     }
-                }} else {
+                }
+            } else {
                 Toast.makeText(getActivity(), requireActivity().getString(R.string.pswd_required), Toast.LENGTH_SHORT).show();
             }
         });
         return layout;
-    }}
+    }
+}

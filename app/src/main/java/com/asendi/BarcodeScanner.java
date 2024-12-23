@@ -18,8 +18,8 @@ import com.journeyapps.barcodescanner.ViewfinderView;
 import java.util.Random;
 
 /**
-* Custom Scanner Activity extending from Activity to display a custom layout form scanner view.
-*/
+ * Custom Scanner Activity extending from Activity to display a custom layout form scanner view.
+ */
 public class BarcodeScanner extends Activity implements DecoratedBarcodeView.TorchListener {
 
     private CaptureManager capture;
@@ -85,9 +85,10 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
     }
 
     /**
-    * Check if the device's camera has a Flashlight.
-    * @return true if there is Flashlight, otherwise false.
-    */
+     * Check if the device's camera has a Flashlight.
+     *
+     * @return true if there is Flashlight, otherwise false.
+     */
     private boolean hasFlash() {
         return getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
@@ -120,7 +121,7 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-        @NonNull int[] grantResults) {
+                                           @NonNull int[] grantResults) {
         capture.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 

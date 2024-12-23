@@ -1,5 +1,6 @@
 package com.asendi;
 //modified from github
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 
 public class CheckNetwork {
     Context context;
+
     public CheckNetwork(Context context) {
         this.context = context;
     }
@@ -20,19 +22,21 @@ public class CheckNetwork {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback() {
-                    @Override
-                    public void onAvailable(@NonNull Network network) {
-                        ASENDI.isNetworkConnected = true;
-                    }
-                    @Override
-                    public void onLost(@NonNull Network network) {
-                        ASENDI.isNetworkConnected = false;
-                    }
-                }
+                                                                       @Override
+                                                                       public void onAvailable(@NonNull Network network) {
+                                                                           ASENDI.isNetworkConnected = true;
+                                                                       }
+
+                                                                       @Override
+                                                                       public void onLost(@NonNull Network network) {
+                                                                           ASENDI.isNetworkConnected = false;
+                                                                       }
+                                                                   }
 
                 );
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             ASENDI.isNetworkConnected = false;
-        }}
+        }
+    }
 }

@@ -61,13 +61,13 @@ public class Signin extends AppCompatActivity {
     private final String readPermission = android.Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String writePermission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private EditText account,
-    pswd;
+            pswd;
     private Button login;
     private TextView myapp;
     private String vers = "";
     private int dld = 0;
     private boolean isDownloading = false,
-    doubleBackToExitPressedOnce = false;
+            doubleBackToExitPressedOnce = false;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -76,7 +76,8 @@ public class Signin extends AppCompatActivity {
         Window w = getWindow();
         try {
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
-        }catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             w.setDecorFitsSystemWindows(false);
             w.setNavigationBarColor(color.primary);
@@ -87,7 +88,7 @@ public class Signin extends AppCompatActivity {
         setContentView(R.layout.signin);
         Locale langForTP = Locale.getDefault();
         String lang = langForTP.getLanguage();
-        if(lang.startsWith("fr")){
+        if (lang.startsWith("fr")) {
             ASENDI.TPLANG = Locale.FRENCH;
         }
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -123,41 +124,41 @@ public class Signin extends AppCompatActivity {
             }
         };
         getOnBackPressedDispatcher().addCallback(this, onback);
-        if (Utils.isConnectionAvailable(getApplicationContext())==false) {
+        if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
             Utils.showNoConnectionAlert(getApplicationContext(), login);
         } else {
             PackageManager manager = getPackageManager();
             try {
                 PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
                 final int versionCode = (int) PackageInfoCompat.getLongVersionCode(info);
-                Utils.connectToServer(Signin.this, ASENDI.CHECKAPP, new String[] {}, new String[] {}, true, response -> {
+                Utils.connectToServer(Signin.this, ASENDI.CHECKAPP, new String[]{}, new String[]{}, true, response -> {
                     try {
                         processApk(response, versionCode);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 });
-            }
-            catch (PackageManager.NameNotFoundException e) {
+            } catch (PackageManager.NameNotFoundException e) {
                 Toast.makeText(getApplicationContext(),
-                    getString(R.string.check_vers_failed),
-                    Toast.LENGTH_SHORT).show();
+                        getString(R.string.check_vers_failed),
+                        Toast.LENGTH_SHORT).show();
             }
 
         }
         DrawableCompat.setTint(recover_pswd.getBackground(),
-            Color.TRANSPARENT);
+                Color.TRANSPARENT);
         DrawableCompat.setTint(login.getBackground(),
-            Color.parseColor("#4AA1FF"));
+                Color.parseColor("#4AA1FF"));
         DrawableCompat.setTint(signup.getBackground(),
-            Color.parseColor("#D32F2F"));
+                Color.parseColor("#D32F2F"));
         login.setOnClickListener(this::onClick);
         signup.setOnClickListener(c -> {
             if (!isDownloading) {
                 startActivity(new Intent(getApplicationContext(), Signup.class));
             } else {
                 Toast.makeText(getApplicationContext(), getString(string.app_busy), Toast.LENGTH_SHORT).show();
-            }});
+            }
+        });
         recover_pswd.setOnClickListener(c -> {
             String loginId = account.getText().toString();
             if (!loginId.isEmpty()) {
@@ -168,6 +169,7 @@ public class Signin extends AppCompatActivity {
         });
 
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onStart() {
@@ -199,79 +201,81 @@ public class Signin extends AppCompatActivity {
                         if (v == Dv) {
                             final String strrr = getString(string.install);
                             SpannableStringBuilder ssb_ = new SpannableStringBuilder(strrr);
-                            ssb_.setSpan(new Clickables(myapp, new String[] {
-                                strrr
+                            ssb_.setSpan(new Clickables(myapp, new String[]{
+                                    strrr
                             }, 0, string -> {
                                 if (string.equals(strrr)) {
-                                    try{
-                                    Utils.copyApkFromPrivateToPublic(getApplicationContext());
-                                    final File appfile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + "Asendi.apk");
-                                    if(appfile.exists()){
-                                    try{
-                                        Uri apkUri;
-                                        Intent intent;
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                            apkUri = FileProvider.getUriForFile(Signin.this, "com.asendi.fileprovider", appfile);
-                                            intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-                                        intent.setData(apkUri);
-                                        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                    try {
+                                        Utils.copyApkFromPrivateToPublic(getApplicationContext());
+                                        final File appfile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + "Asendi.apk");
+                                        if (appfile.exists()) {
+                                            try {
+                                                Uri apkUri;
+                                                Intent intent;
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                                    apkUri = FileProvider.getUriForFile(Signin.this, "com.asendi.fileprovider", appfile);
+                                                    intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                                                    intent.setData(apkUri);
+                                                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                                } else {
+                                                    apkUri = Uri.fromFile(appfile);
+                                                    intent = new Intent(Intent.ACTION_VIEW);
+                                                    intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                }
+                                                startActivity(intent);
+                                            } catch (Exception e) {
+                                                Utils.installUpdate(getApplicationContext());
+                                            }
                                         } else {
-                                            apkUri = Uri.fromFile(appfile);
-                                            intent = new Intent(Intent.ACTION_VIEW);
-                                        intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        }
-                                        startActivity(intent);
-                                    }catch(Exception e){
-                                            Utils.installUpdate(getApplicationContext());
-                                        }}else{
                                             Toast.makeText(getApplicationContext(), getString(R.string.error_file), Toast.LENGTH_SHORT).show();
                                         }
-                                    }catch(Exception e){
+                                    } catch (Exception e) {
                                         Toast.makeText(getApplicationContext(), getString(R.string.error_file), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             },
-                                Color.GREEN), 0, ssb_.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                    Color.GREEN), 0, ssb_.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                             myapp.setText(ssb_, TextView.BufferType.SPANNABLE);
                         } else {
                             apkf.delete();
-                            Utils.saveLastDldedApp(getApplicationContext(), ""+versionCode);
+                            Utils.saveLastDldedApp(getApplicationContext(), "" + versionCode);
                             processApk(response, versionCode);
                         }
                     } else {
                         final String strr1 = getString(string.app_update_available);
-                        final String strr2 = getString(string.download_vers) + " "+ vers+" (~" + fs+"MB)";
+                        final String strr2 = getString(string.download_vers) + " " + vers + " (~" + fs + "MB)";
                         SpannableStringBuilder ssb = new SpannableStringBuilder(strr1);
-                        ssb.setSpan(new Clickables(myapp, new String[] {
-                            strr1
+                        ssb.setSpan(new Clickables(myapp, new String[]{
+                                strr1
                         }, 0, string -> {
                             if (string.equals(strr1)) {
                                 SpannableStringBuilder ssb1 = new SpannableStringBuilder(strr2);
-                                ssb1.setSpan(new Clickables(myapp, new String[] {
-                                    strr2
+                                ssb1.setSpan(new Clickables(myapp, new String[]{
+                                        strr2
                                 }, 0, string1 -> {
                                     if (string1.equals(strr2)) {
                                         checkPermissions();
                                     }
                                 },
-                                    Color.GREEN), 0, ssb1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                        Color.GREEN), 0, ssb1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                                 myapp.setText(ssb1, TextView.BufferType.SPANNABLE);
                             }
                         },
-                            Color.GREEN), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                Color.GREEN), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                         myapp.setText(ssb, TextView.BufferType.SPANNABLE);
 
-                    }} else if (v == versionCode) {
+                    }
+                } else if (v == versionCode) {
                     File apkF = new File(getFilesDir(), "Asendi.apk");
-                    Utils.saveLastDldedApp(getApplicationContext(), ""+v);
+                    Utils.saveLastDldedApp(getApplicationContext(), "" + v);
                     if (apkF.exists()) {
                         apkF.delete();
                     }
                 }
 
             }
-        }catch(JSONException je) {
+        } catch (JSONException je) {
             Toast.makeText(getApplicationContext(), getString(string.data_error), Toast.LENGTH_SHORT).show();
         }
     }
@@ -283,7 +287,7 @@ public class Signin extends AppCompatActivity {
         builder.setCancelable(false);
         final EditText edtSk = customLayout.findViewById(R.id.skDialog);
         edtSk.requestFocus();
-        builder.setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"+"Ok"+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (arg0, arg1) -> {
+        builder.setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>" + "Ok" + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (arg0, arg1) -> {
             final String sk = edtSk.getText().toString();
             final String acc = account.getText().toString();
             if (!sk.isEmpty()) {
@@ -291,10 +295,10 @@ public class Signin extends AppCompatActivity {
                     Utils.showNoConnectionAlert(getApplicationContext(), login);
                 } else {
                     arg0.dismiss();
-                    Utils.connectToServer(Signin.this, ASENDI.REACC, new String[] {
-                        "user", "sk"
-                    }, new String[] {
-                        acc, sk
+                    Utils.connectToServer(Signin.this, ASENDI.REACC, new String[]{
+                            "user", "sk"
+                    }, new String[]{
+                            acc, sk
                     }, true, response -> {
                         try {
                             String status = response.getString("auth");
@@ -306,8 +310,7 @@ public class Signin extends AppCompatActivity {
                             } else {
                                 Utils.showMessage(getApplicationContext(), login, getString(string.failed), false);
                             }
-                        }
-                        catch(JSONException je) {
+                        } catch (JSONException je) {
                             Toast.makeText(getApplicationContext(), getString(string.data_error), Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -318,174 +321,180 @@ public class Signin extends AppCompatActivity {
             }
 
         });
-        builder.setNeutralButton(HtmlCompat.fromHtml("<font color='#848482'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY),
+        builder.setNeutralButton(HtmlCompat.fromHtml("<font color='#848482'>" + getString(R.string.cancel) + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY),
                 (dialog, which) -> dialog.cancel());
         AlertDialog dialogRecovery = builder.create();
         dialogRecovery.show();
     }
 
     private void downloadApp(String url_) {
-		isDownloading = true;
-		myapp.setTextColor(Color.GREEN);
-		final String strd = getString(R.string.downloading);
-		myapp.setText(strd);
-		
-		new AsyncTaskV2<Void, Integer, Void>() {
-			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-			}
-			
-			@SuppressLint("SuspiciousIndentation")
+        isDownloading = true;
+        myapp.setTextColor(Color.GREEN);
+        final String strd = getString(R.string.downloading);
+        myapp.setText(strd);
+
+        new AsyncTaskV2<Void, Integer, Void>() {
             @Override
-			protected Void doInBackground(Void unused) {
-					try {
-						InputStream input = null;
-						OutputStream output = null;
-						HttpURLConnection connection = null;
-						try {
-							URL url = new URL(url_);
-							connection = (HttpURLConnection) url.openConnection();
-							connection.connect();
-							int fileLength = connection.getContentLength();
-							// download the file
-							input = connection.getInputStream();
-							output = new FileOutputStream(new File(getFilesDir(), "Asendi.apk"));
-							byte[] data = new byte[4096];
-							long total = 0;
-							int count;
-							
-							while ((count = input.read(data)) != -1) {
-								total += count;
-								if (fileLength > 0){
-									dld = (int) (total * 100 / fileLength);
-									publishProgress(dld);							
-									output.write(data, 0, count);
-								}
-							}
-							} catch (Exception e) {
-							isDownloading = false;
-							myapp.setTextColor(Color.RED);
-							myapp.setText(getString(R.string.download_failed));
-							} finally {
-							try {
-								if (output != null){
-								output.close();}
-								if (input != null){
-								input.close();	}
-								} catch (IOException ignored) {
-								isDownloading = false;
-								myapp.setTextColor(Color.RED);
-								myapp.setText(getString(R.string.download_failed));
-							}
-							
-							if (connection != null) {
-                                connection.disconnect();
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @SuppressLint("SuspiciousIndentation")
+            @Override
+            protected Void doInBackground(Void unused) {
+                try {
+                    InputStream input = null;
+                    OutputStream output = null;
+                    HttpURLConnection connection = null;
+                    try {
+                        URL url = new URL(url_);
+                        connection = (HttpURLConnection) url.openConnection();
+                        connection.connect();
+                        int fileLength = connection.getContentLength();
+                        // download the file
+                        input = connection.getInputStream();
+                        output = new FileOutputStream(new File(getFilesDir(), "Asendi.apk"));
+                        byte[] data = new byte[4096];
+                        long total = 0;
+                        int count;
+
+                        while ((count = input.read(data)) != -1) {
+                            total += count;
+                            if (fileLength > 0) {
+                                dld = (int) (total * 100 / fileLength);
+                                publishProgress(dld);
+                                output.write(data, 0, count);
                             }
-						}
-						}catch(Exception e) {
-						isDownloading = false;
-						myapp.setTextColor(Color.RED);
-						myapp.setText(getString(R.string.download_failed));
-					}
-				return null;
-			}
-			
-			@SuppressLint({"SetTextI18n", "SuspiciousIndentation"})
+                        }
+                    } catch (Exception e) {
+                        isDownloading = false;
+                        myapp.setTextColor(Color.RED);
+                        myapp.setText(getString(R.string.download_failed));
+                    } finally {
+                        try {
+                            if (output != null) {
+                                output.close();
+                            }
+                            if (input != null) {
+                                input.close();
+                            }
+                        } catch (IOException ignored) {
+                            isDownloading = false;
+                            myapp.setTextColor(Color.RED);
+                            myapp.setText(getString(R.string.download_failed));
+                        }
+
+                        if (connection != null) {
+                            connection.disconnect();
+                        }
+                    }
+                } catch (Exception e) {
+                    isDownloading = false;
+                    myapp.setTextColor(Color.RED);
+                    myapp.setText(getString(R.string.download_failed));
+                }
+                return null;
+            }
+
+            @SuppressLint({"SetTextI18n", "SuspiciousIndentation"})
             @Override
-			protected void onProgressUpdate(Integer integer) {
-				super.onProgressUpdate(integer);
-				if(integer <= 99){
-				myapp.setText(strd +"  "+ integer +"%"); } else {
-					if (isDownloading) {
-						isDownloading = false;
-						Utils.saveLastDldedApp(getApplicationContext(), vers);
-						final String strr = getString(R.string.install);
-						SpannableStringBuilder ssb = new SpannableStringBuilder(strr);
-						ssb.setSpan(new Clickables(myapp, new String[] {
-							strr
-							}, 0, string -> {
-								if (string.equals(strr)) {
-									try{
-										Utils.copyApkFromPrivateToPublic(getApplicationContext());
-										final File appfile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + "Asendi.apk");
-										if(appfile.exists()){
-											try{
-                                                Uri apkUri;
-                                                Intent intent;
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                                    apkUri = FileProvider.getUriForFile(Signin.this, "com.asendi.fileprovider", appfile);
-                                                    intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-													intent.setData(apkUri);
-													intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                                } else {
-                                                    apkUri = Uri.fromFile(appfile);
-                                                    intent = new Intent(Intent.ACTION_VIEW);
-													intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
-													intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                }
-                                                startActivity(intent);
-                                            }catch(Exception e){
-												Utils.installUpdate(getApplicationContext());
-											}}else{
-											Toast.makeText(getApplicationContext(), getString(R.string.error_file), Toast.LENGTH_SHORT).show();
-										}
-										}catch(Exception e){
-										Toast.makeText(getApplicationContext(), getString(R.string.error_file), Toast.LENGTH_SHORT).show();
-									}
-								}
-							},
-						Color.GREEN), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-						myapp.setText(ssb, TextView.BufferType.SPANNABLE);
-					}
-				}
-			}
-			
-			@Override
-			protected void onPostExecute(Void unused) {
-				super.onPostExecute(unused);
-			}
-		}.execute(null);
-        
+            protected void onProgressUpdate(Integer integer) {
+                super.onProgressUpdate(integer);
+                if (integer <= 99) {
+                    myapp.setText(strd + "  " + integer + "%");
+                } else {
+                    if (isDownloading) {
+                        isDownloading = false;
+                        Utils.saveLastDldedApp(getApplicationContext(), vers);
+                        final String strr = getString(R.string.install);
+                        SpannableStringBuilder ssb = new SpannableStringBuilder(strr);
+                        ssb.setSpan(new Clickables(myapp, new String[]{
+                                strr
+                        }, 0, string -> {
+                            if (string.equals(strr)) {
+                                try {
+                                    Utils.copyApkFromPrivateToPublic(getApplicationContext());
+                                    final File appfile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + "Asendi.apk");
+                                    if (appfile.exists()) {
+                                        try {
+                                            Uri apkUri;
+                                            Intent intent;
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                                apkUri = FileProvider.getUriForFile(Signin.this, "com.asendi.fileprovider", appfile);
+                                                intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                                                intent.setData(apkUri);
+                                                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                            } else {
+                                                apkUri = Uri.fromFile(appfile);
+                                                intent = new Intent(Intent.ACTION_VIEW);
+                                                intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            }
+                                            startActivity(intent);
+                                        } catch (Exception e) {
+                                            Utils.installUpdate(getApplicationContext());
+                                        }
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), getString(R.string.error_file), Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (Exception e) {
+                                    Toast.makeText(getApplicationContext(), getString(R.string.error_file), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },
+                                Color.GREEN), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        myapp.setText(ssb, TextView.BufferType.SPANNABLE);
+                    }
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Void unused) {
+                super.onPostExecute(unused);
+            }
+        }.execute(null);
+
     }
 
     private void checkPermissions() {
-		if(Build.VERSION.SDK_INT  >= Build.VERSION_CODES.O){
-			if(!getPackageManager().canRequestPackageInstalls()){
-				Intent inst = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).setData(Uri.parse("package:com.asendi"));
-				getInstallPermResult.launch(inst);
-			}
-		}
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (!getPackageManager().canRequestPackageInstalls()) {
+                Intent inst = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).setData(Uri.parse("package:com.asendi"));
+                getInstallPermResult.launch(inst);
+            }
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             //As the device is Android 13 and above so I want the permission of accessing Audio, Images, Videos
             //You can ask permission according to your requirements what you want to access.
             String filesPermission = android.Manifest.permission.MANAGE_EXTERNAL_STORAGE;
             //Check for permissions and request them if needed
             if (
-                ContextCompat.checkSelfPermission(this, filesPermission) == PackageManager.PERMISSION_GRANTED) {
+                    ContextCompat.checkSelfPermission(this, filesPermission) == PackageManager.PERMISSION_GRANTED) {
                 // You have the permissions, you can proceed with your media file operations.
                 //Showing dialog when Show Dialog button is clicked.
                 downloadApp(ASENDI.LATEST_APK);
             } else {
                 // You don't have the permissions. Request them.
-                ActivityCompat.requestPermissions(this, new String[] {
-                    filesPermission
+                ActivityCompat.requestPermissions(this, new String[]{
+                        filesPermission
                 }, REQUEST_FILE_PERMISSIONS);
             }
         } else {
             //Android version is below 13 so we are asking normal read and write storage permissions
             //Check for permissions and request them if needed
             if (ContextCompat.checkSelfPermission(this, readPermission) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, writePermission) == PackageManager.PERMISSION_GRANTED) {
+                    ContextCompat.checkSelfPermission(this, writePermission) == PackageManager.PERMISSION_GRANTED) {
                 // You have the permissions, you can proceed with your file operations.
                 downloadApp(ASENDI.LATEST_APK);
             } else {
                 // You don't have the permissions. Request them.
-                ActivityCompat.requestPermissions(this, new String[] {
-                    readPermission, writePermission
+                ActivityCompat.requestPermissions(this, new String[]{
+                        readPermission, writePermission
                 }, REQUEST_STORAGE_PERMISSIONS);
             }
-        }}
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -526,7 +535,7 @@ public class Signin extends AppCompatActivity {
 
 
     private boolean areAllPermissionsGranted(int[] grantResults) {
-        for (int result: grantResults) {
+        for (int result : grantResults) {
             if (result != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
@@ -536,56 +545,57 @@ public class Signin extends AppCompatActivity {
 
     private void showRationaleDialog() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, readPermission) ||
-            ActivityCompat.shouldShowRequestPermissionRationale(this, writePermission)) {
+                ActivityCompat.shouldShowRequestPermissionRationale(this, writePermission)) {
             // Show a rationale dialog explaining why the permissions are necessary.
             new AlertDialog.Builder(this)
-            .setTitle(getString(R.string.requestPermTitle))
-            .setMessage(getString(R.string.requestPermText))
-            .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"+"Ok"+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
-                // Request permissions when the user clicks OK.
-                ActivityCompat.requestPermissions(this, new String[] {
-                    readPermission, writePermission
-                }, REQUEST_STORAGE_PERMISSIONS);
-            })
-            .setNeutralButton(HtmlCompat.fromHtml("<font color='#848482'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
-                dialog.dismiss();
-                // Handle the case where the user cancels the permission request.
-            })
-            .show();
+                    .setTitle(getString(R.string.requestPermTitle))
+                    .setMessage(getString(R.string.requestPermText))
+                    .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>" + "Ok" + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
+                        // Request permissions when the user clicks OK.
+                        ActivityCompat.requestPermissions(this, new String[]{
+                                readPermission, writePermission
+                        }, REQUEST_STORAGE_PERMISSIONS);
+                    })
+                    .setNeutralButton(HtmlCompat.fromHtml("<font color='#848482'>" + getString(R.string.cancel) + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
+                        dialog.dismiss();
+                        // Handle the case where the user cancels the permission request.
+                    })
+                    .show();
         } else {
             // Request permissions directly if no rationale is needed.
-            ActivityCompat.requestPermissions(this, new String[] {
-                readPermission, writePermission
+            ActivityCompat.requestPermissions(this, new String[]{
+                    readPermission, writePermission
             }, REQUEST_STORAGE_PERMISSIONS);
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void accessAllFilesPermissionDialog() {
         new AlertDialog.Builder(Signin.this)
-        .setTitle(getString(R.string.requestPermTitle))
-        .setMessage(getString(R.string.requestPermText))
-        .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"+"Ok"+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
-            // Request permissions when the user clicks OK.
-            Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, Uri.parse("package:com.asendi"));
-            getPermResult.launch(intent);
-        })
-        .setNeutralButton(HtmlCompat.fromHtml("<font color='#848482'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
-            dialog.dismiss();
-            // Handle the case where the user cancels the permission request.
-        })
-        .show();
+                .setTitle(getString(R.string.requestPermTitle))
+                .setMessage(getString(R.string.requestPermText))
+                .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>" + "Ok" + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
+                    // Request permissions when the user clicks OK.
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, Uri.parse("package:com.asendi"));
+                    getPermResult.launch(intent);
+                })
+                .setNeutralButton(HtmlCompat.fromHtml("<font color='#848482'>" + getString(R.string.cancel) + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (dialog, which) -> {
+                    dialog.dismiss();
+                    // Handle the case where the user cancels the permission request.
+                })
+                .show();
     }
 
-    private final ActivityResultLauncher < Intent > getPermResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+    private final ActivityResultLauncher<Intent> getPermResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     downloadApp(ASENDI.LATEST_APK);
                 }
             });
-		private final ActivityResultLauncher < Intent > getInstallPermResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
+    private final ActivityResultLauncher<Intent> getInstallPermResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
 
-                });
+            });
 
     private void onClick(View c) {
         if (!isDownloading) {
@@ -601,20 +611,20 @@ public class Signin extends AppCompatActivity {
                     final int status = Utils.OfflineStatusCode(getApplicationContext(), acc, psd);
                     if (status == 2) {
                         boolean pstat = Utils.getPswdChangedStatus(getApplicationContext());
-                        if(pstat == false) {
+                        if (pstat == false) {
                             intent.putExtra("act", acc);
                             intent.putExtra("psd", psd);
                             startActivity(intent);
-                        }else{
+                        } else {
                             showLoginConfirm(acc, psd, intent);
                         }
                     } else {
                         if (Acc.isEmpty()) {
                             //check if credentials correct
                             Utils.connectToServer(Signin.this, ASENDI.SIGNIN, new String[]{
-                                "user", "pswd", "tkn", "recon", "sk"
+                                    "user", "pswd", "tkn", "recon", "sk"
                             }, new String[]{
-                                acc, psd, Utils.getTkn(getApplicationContext()), "0", "no"
+                                    acc, psd, Utils.getTkn(getApplicationContext()), "0", "no"
                             }, true, response -> {
                                 if (response != null) {
                                     try {
@@ -629,18 +639,19 @@ public class Signin extends AppCompatActivity {
                                             } else {
                                                 Utils.saveCategory(getApplicationContext(), "C");
                                             }
-                                            if(!tkn.isEmpty()) {
+                                            if (!tkn.isEmpty()) {
                                                 Utils.saveTkn(getApplicationContext(), tkn);
                                                 startActivity(intent);
                                             }
                                         } else if (msg.equals("incorrect auth")) {
                                             Utils.showMessage(getApplicationContext(), login, getString(string.error_pswd), false);
                                         } else {
-                                            if(msg.contains("forbidden")){
+                                            if (msg.contains("forbidden")) {
                                                 showLoginConfirm(acc, psd, intent);
-                                            }else{
-                                            Utils.showMessage(getApplicationContext(), login, getString(string.account_null), false);
-                                        }}
+                                            } else {
+                                                Utils.showMessage(getApplicationContext(), login, getString(string.account_null), false);
+                                            }
+                                        }
                                     } catch (JSONException je) {
                                         Toast.makeText(getApplicationContext(), getString(string.data_error), Toast.LENGTH_SHORT).show();
                                     }
@@ -649,7 +660,7 @@ public class Signin extends AppCompatActivity {
                         } else {
                             if (status == 0) {
                                 Toast.makeText(getApplicationContext(), getString(string.notValidAccount),
-                                    Toast.LENGTH_SHORT).show();
+                                        Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getApplicationContext(), getString(string.error_pswd),
                                                 Toast.LENGTH_SHORT)
@@ -668,6 +679,7 @@ public class Signin extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), getString(string.app_busy), Toast.LENGTH_SHORT).show();
         }
     }
+
     private void showLoginConfirm(final String acct, final String psd, final Intent intent) {
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AppTheme_Dialog));
         final View customLayout = getLayoutInflater().inflate(R.layout.entersk, null, false);
@@ -675,7 +687,7 @@ public class Signin extends AppCompatActivity {
         builder.setCancelable(false);
         final EditText edtSk = customLayout.findViewById(R.id.skEdt);
         edtSk.requestFocus();
-        builder.setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"+"Ok"+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (arg0, arg1) -> {
+        builder.setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>" + "Ok" + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY), (arg0, arg1) -> {
             final String sk = edtSk.getText().toString();
             if (!sk.isEmpty()) {
                 if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
@@ -701,15 +713,15 @@ public class Signin extends AppCompatActivity {
                                     Utils.setPswdChangedStatus(getApplicationContext(), false);
                                     intent.putExtra("act", acct);
                                     intent.putExtra("psd", psd);
-                                    if(!tkn.isEmpty()) {
+                                    if (!tkn.isEmpty()) {
                                         Utils.saveTkn(getApplicationContext(), tkn);
                                         startActivity(intent);
                                     }
                                 } else if (msg.contains("incorrect")) {
-                                    if(msg.contains("secret word")){
+                                    if (msg.contains("secret word")) {
                                         Utils.showMessage(getApplicationContext(), login, getString(string.error_sk), false);
-                                    }else{
-                                    Utils.showMessage(getApplicationContext(), login, getString(string.error_pswd), false);
+                                    } else {
+                                        Utils.showMessage(getApplicationContext(), login, getString(string.error_pswd), false);
                                     }
                                 } else {
                                     Utils.showMessage(getApplicationContext(), login, getString(string.account_null), false);
@@ -726,7 +738,7 @@ public class Signin extends AppCompatActivity {
             }
 
         });
-        builder.setNeutralButton(HtmlCompat.fromHtml("<font color='#848482'>"+getString(R.string.cancel)+"</font>", HtmlCompat.FROM_HTML_MODE_LEGACY),
+        builder.setNeutralButton(HtmlCompat.fromHtml("<font color='#848482'>" + getString(R.string.cancel) + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY),
                 (dialog, which) -> dialog.cancel());
         AlertDialog adialog = builder.create();
         adialog.show();

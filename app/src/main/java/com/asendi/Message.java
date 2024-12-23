@@ -15,14 +15,14 @@ import org.json.JSONException;
 
 public class Message extends Fragment {
     private EditText subject,
-    text;
+            text;
     private MaterialButton sendMsg;
     private String pswd,
-    user;
+            user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-        Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.message, container, false);
         // Inflate the layout for this fragment
         text = layout.findViewById(R.id.message);
@@ -39,10 +39,10 @@ public class Message extends Fragment {
                 if (Utils.isConnectionAvailable(requireContext()) == false) {
                     Utils.showNoConnectionAlert(requireContext(), sendMsg);
                 } else {
-                    Utils.connectToServer(getActivity(), ASENDI.CONTACT, new String[] {
-                        "user", "pswd", "subj", "msg", "tkn"
-                    }, new String[] {
-                        user, pswd, s, t, Utils.getTkn(requireContext())
+                    Utils.connectToServer(getActivity(), ASENDI.CONTACT, new String[]{
+                            "user", "pswd", "subj", "msg", "tkn"
+                    }, new String[]{
+                            user, pswd, s, t, Utils.getTkn(requireContext())
                     }, true, response -> {
                         try {
                             String status = response.getString("status");
@@ -53,14 +53,15 @@ public class Message extends Fragment {
                             } else {
                                 Utils.showMessage(getContext(), sendMsg, requireActivity().getString(R.string.failed_msg), false);
                             }
-                        }
-                        catch(JSONException je) {
+                        } catch (JSONException je) {
                             Toast.makeText(getContext(), requireActivity().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
                         }
                     });
-                }} else {
+                }
+            } else {
                 Toast.makeText(getActivity(), requireActivity().getString(R.string.check_entries), Toast.LENGTH_SHORT).show();
             }
         });
         return layout;
-    }}
+    }
+}
