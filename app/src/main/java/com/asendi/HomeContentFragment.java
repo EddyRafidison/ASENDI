@@ -251,13 +251,13 @@ public class HomeContentFragment extends Fragment {
                             String transfees = df.format(Double.parseDouble(obj.getString("fees")));
                             String Amoun = df.format(Double.parseDouble(amoun) * p);
 
-                                if (user.equals(sen)) {
-                                    user_ = rec;
-                                    type = "1";
-                                } else {
-                                    user_ = sen;
-                                    type = "0";
-                                }
+                            if (user.equals(sen)) {
+                                user_ = rec;
+                                type = "1";
+                            } else {
+                                user_ = sen;
+                                type = "0";
+                            }
 
 
                             history.add(new HistoryItem(getContext(), deliver_date + deliver_time, Amoun, type, user_, refer, transfees));
@@ -358,7 +358,7 @@ public class HomeContentFragment extends Fragment {
         copy.setOnClickListener(v2 -> {
             ClipboardManager clipboard = (ClipboardManager) requireActivity()
                     .getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("wave_user_id", user_id.getText().toString());
+            ClipData clip = ClipData.newPlainText("asendi_user_id", user_id.getText().toString());
             clipboard.setPrimaryClip(clip);
             Toast.makeText(getActivity(), getString(R.string.copy), Toast.LENGTH_SHORT).show();
         });
@@ -549,6 +549,9 @@ public class HomeContentFragment extends Fragment {
                                         break;
                                     case "unsupported":
                                         Utils.showMessage(getContext(), topSheet, requireActivity().getString(R.string.not_allowed), false);
+                                        break;
+                                    case "not yet allowed":
+                                        Utils.showMessage(getContext(), topSheet, requireActivity().getString(R.string.transfer_not_allowed), false);
                                         break;
                                     default:
                                         Utils.showMessage(getContext(), topSheet, requireActivity().getString(R.string.missing_balance), false);

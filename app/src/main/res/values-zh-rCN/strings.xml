@@ -121,6 +121,7 @@
     <string name="account_null">该帐户不存在</string>
     <string name="enter_Id_first">请先输入您的用户名</string>
     <string name="confirm_login">为了您的安全，请输入您的密码。</string>
+    <string name="transfer_not_allowed">此次转让将很快获准</string>
 
 </resources>
 

@@ -122,6 +122,7 @@
     <string name="account_null">該帳戶不存在</string>
     <string name="enter_Id_first">請先輸入您的用戶名</string>
     <string name="confirm_login">為了您的安全，請輸入您的密碼。</string>
+    <string name="transfer_not_allowed">此轉讓很快就會被允許</string>
 
 </resources>
 

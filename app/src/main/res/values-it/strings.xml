@@ -122,6 +122,7 @@
     <string name="account_null">Questo account non esiste</string>
     <string name="enter_Id_first">Inserisci prima il tuo nome utente</string>
     <string name="confirm_login">Per la tua sicurezza, inserisci la tua parola segreta.</string>
+    <string name="transfer_not_allowed">Questo trasferimento sarà presto consentito</string>
 
 </resources>
 
