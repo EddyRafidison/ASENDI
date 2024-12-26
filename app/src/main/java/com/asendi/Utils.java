@@ -195,6 +195,7 @@ public class Utils {
         if (list.isEmpty()) {
             list.add(ctx.getString(R.string.empty_list)); // here show default alert in list if list is empty
         }
+        //Supports also full direct link clickable eg: http://www.google.com with or without using href tag.
         ListPopupWindow listPopupWindow = new ListPopupWindow(ctx);
         listPopupWindow.setAdapter(new ArrayAdapter<>(ctx, R.layout.textview_item_two, R.id.textview_item, list));
         View v = ctx.findViewById(R.id.toolbar);
