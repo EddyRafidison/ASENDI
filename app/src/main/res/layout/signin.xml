@@ -165,10 +165,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/transferLinearLayout1"
+        android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:gravity="center_horizontal">
 
         <ImageView
@@ -186,7 +186,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/layoutLinearLayout1"
-        android:layout_below="@id/transferLinearLayout1"
+        android:layout_below="@id/LinearLayout1"
         android:layout_centerHorizontal="true"
         android:gravity="top|center_vertical|center|center_horizontal"
         android:lines="1"
