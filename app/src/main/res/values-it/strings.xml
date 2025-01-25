@@ -109,7 +109,7 @@
     <string name="signup_title">Iscrizione</string>
     <string name="successed_transfer">Inviato con successo</string>
     <string name="successed_msg">Messaggio inviato</string>
-    <string name="err_bal_dlt">Stiamo bloccando la richiesta di eliminazione del tuo account perché il tuo stock è pari o superiore a 1000 SU.</string>
+    <string name="err_bal_dlt">Stiamo bloccando la richiesta di eliminazione del tuo account perché il tuo stock è pari o superiore a 1000 AE.</string>
     <string name="failed_msg">Messaggio non inviato</string>
     <string name="failed_transfer">Trasferimento fallito.</string>
     <string name="missing_balance">Il tuo stock è insufficiente</string>

@@ -109,7 +109,7 @@
 	<string name="signup_title">Inscription</string>
 	<string name="successed_transfer">Sent successfully</string>
 	<string name="successed_msg">Message sent</string>
-	<string name="err_bal_dlt">We are blocking your account deletion request because your stock is equal to or greater than 1000 SU.</string>
+	<string name="err_bal_dlt">We are blocking your account deletion request because your stock is equal to or greater than 1000 AE.</string>
 	<string name="failed_msg">Message not sent</string>
 	<string name="failed_transfer">Transfer failed.</string>
 	<string name="missing_balance">Your stock is insufficient</string>

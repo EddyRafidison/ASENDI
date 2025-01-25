@@ -14,7 +14,7 @@ public class ASENDI {
     public static String CONTACT = BASE_URL + "/app/contact-asendi";
     public static String FEED = BASE_URL + "/app/feed";
     public static String BALANCE = BASE_URL + "/app/user-last-stock";
-    public static String TRANSFER = BASE_URL + "/app/su-transfer";
+    public static String TRANSFER = BASE_URL + "/app/transfer";
     public static String MPC = BASE_URL + "/app/modify-pin-or-password";
     public static String DLTACC = BASE_URL + "/app/delete-user";
     public static String REACC = BASE_URL + "/app/recover-account";

@@ -243,7 +243,7 @@ public class HomeContentFragment extends Fragment {
                             String rec = obj.getString("receiver");
                             String type;
                             String amoun = obj.getString("amount");
-                            String price = obj.getString("su_price");
+                            String price = obj.getString("unit_price");
                             final double p = Double.parseDouble(price);
                             String refer = obj.getString("reference");
                             String deliver_date = obj.getString("deliver_date");
@@ -615,7 +615,7 @@ public class HomeContentFragment extends Fragment {
                         String rec = obj.getString("receiver");
                         String type;
                         String amoun = obj.getString("amount");
-                        String price = obj.getString("su_price");
+                        String price = obj.getString("unit_price");
                         final double p = Double.parseDouble(price);
                         String refer = obj.getString("reference");
                         String deliver_date = obj.getString("deliver_date");

@@ -109,7 +109,7 @@
     <string name="signup_title">Inschrift</string>
     <string name="successed_transfer">Erfolgreich gesendet</string>
     <string name="successed_msg">Nachricht gesendet</string>
-    <string name="err_bal_dlt">Wir blockieren Ihre Anfrage zur Kontolöschung, da Ihr Bestand gleich oder größer als 1000 SU ist.</string>
+    <string name="err_bal_dlt">Wir blockieren Ihre Anfrage zur Kontolöschung, da Ihr Bestand gleich oder größer als 1000 AE ist.</string>
     <string name="failed_msg">Nachricht nicht gesendet</string>
     <string name="failed_transfer">Übertragung fehlgeschlagen.</string>
     <string name="missing_balance">Ihr Vorrat reicht nicht aus</string>

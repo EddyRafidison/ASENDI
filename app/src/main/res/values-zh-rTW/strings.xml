@@ -109,7 +109,7 @@
     <string name="signup_title">題詞</string>
     <string name="successed_transfer">發送成功</string>
     <string name="successed_msg">訊息已發送</string>
-    <string name="err_bal_dlt">我們正在封鎖您的帳戶刪除請求，因為您的庫存等於或大於 1000 SU。</string>
+    <string name="err_bal_dlt">我們正在封鎖您的帳戶刪除請求，因為您的庫存等於或大於 1000 AE。</string>
     <string name="failed_msg">訊息未發送</string>
     <string name="failed_transfer">轉移失敗。</string>
     <string name="missing_balance">您的庫存不足</string>

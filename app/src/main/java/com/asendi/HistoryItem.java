@@ -50,7 +50,7 @@ public class HistoryItem {
     }
 
     public CharSequence getDetail() {
-        //Note : SU = Scalable Unit
+        //Note : AE = ARIARY-EQUIVALENCE
         if (type.equals("1")) {
             return HtmlCompat.fromHtml("<b>" + amount + "</b>" + "&nbsp;" + ctx.getString(R.string.to) + "&nbsp;"
                     + receiver + (".&nbsp;").replace(".", ctx.getString(R.string.punct)) + ctx.getString(R.string.fees).replace("100", fees) + (".<br>").replace(".", ctx.getString(R.string.punct)) + "Id:&nbsp;" + reference, HtmlCompat.FROM_HTML_MODE_LEGACY);
