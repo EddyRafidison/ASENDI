@@ -49,7 +49,7 @@
 							android:background="@android:color/transparent"
                             android:contentDescription="@string/app_name"
                             android:scaleType="fitCenter"
-							app:srcCompat="@drawable/asendi_money"/>
+							app:srcCompat="@drawable/oneval_money"/>
 
 						<com.elyeproj.loaderviewlibrary.LoaderTextView
 							android:id="@+id/balance"
@@ -201,7 +201,7 @@
 			android:background="@android:color/transparent"
 			android:contentDescription="@string/app_name"
 			android:scaleType="fitCenter"
-			app:srcCompat="@drawable/asendi_text"
+			app:srcCompat="@drawable/oneval_text"
 			tools:ignore="ImageContrastCheck" />
 
 	</RelativeLayout>

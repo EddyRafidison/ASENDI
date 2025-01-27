@@ -167,7 +167,7 @@
     <LinearLayout
         android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:layout_marginTop="40dp"
         android:gravity="center_horizontal">
 
@@ -177,7 +177,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/app_name"
             android:scaleType="fitCenter"
-            android:src="@drawable/asendi_text"
+            android:src="@drawable/oneval_text"
             tools:ignore="ImageContrastCheck" />
     </LinearLayout>
 

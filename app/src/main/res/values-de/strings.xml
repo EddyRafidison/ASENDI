@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name" translatable="false">Asendi</string>
+    <string name="app_name" translatable="false">One-Val</string>
     <string name="off">Dieses Gerät verlassen</string>
     <string name="unsupported_country">Land wird noch nicht unterstützt</string>
     <string name="country_null">Standort nicht gefunden</string>
@@ -27,7 +27,7 @@
     <string name="modpassword">PIN-Code verwalten</string>
     <string name="modsecretkey">Geheimes Wort verwalten</string>
     <string name="terms">Nutzungsbedingungen"</string>
-    <string name="copyright" translatable="false">Asendi ©2024 - Version 1.0</string>
+    <string name="copyright" translatable="false">One-Val ©2024 - Version 1.0</string>
     <string name="privacy">Datenschutzrichtlinien</string>
     <string name="mail_us">Kontaktieren Sie uns</string>
     <string name="scan_qr">Oder scannen Sie den QR-Code, um Ihr Konto schneller aufzuladen</string>
@@ -92,7 +92,7 @@
     <string name="notValidAccount">Konto wird von diesem Gerät nicht erkannt</string>
     <string name="tooShortPswd">PIN: Mindestens 4 numerische Zeichen</string>
     <string name="requestPermTitle">Erlaubnis erforderlich</string>
-    <string name="requestPermText">Asendi erfordert Dateizugriff. Bitte akzeptieren Sie, um fortzufahren.</string>
+    <string name="requestPermText">One-Val erfordert Dateizugriff. Bitte akzeptieren Sie, um fortzufahren.</string>
     <string name="select_file">Wählen</string>
     <string name="fullName">Vollständiger Name</string>
     <string name="birthDate">Geburtsdatum (Beispiel: 31.12.1995)</string>

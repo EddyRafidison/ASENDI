@@ -1,0 +1,44 @@
+com.wavetopsheet.test.TopSheet-androidTest-0 C:\Asendi App\ASENDI\TopSheet\build\generated\res\resValues\androidTest\debug
+com.wavetopsheet.test.TopSheet-mergeDebugAndroidTestResources-1 C:\Asendi App\ASENDI\TopSheet\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.wavetopsheet.test.TopSheet-mergeDebugAndroidTestResources-2 C:\Asendi App\ASENDI\TopSheet\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.wavetopsheet.test.TopSheet-debugAndroidTest-3 C:\Asendi App\ASENDI\TopSheet\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources
+com.wavetopsheet.test.TopSheet-debug-4 C:\Asendi App\ASENDI\TopSheet\build\intermediates\packaged_res\debug\packageDebugResources
+com.wavetopsheet.test.TopSheet-lifecycle-livedata-core-ktx-2.6.2-5 C:\Users\eddyh\.gradle\caches\8.9\transforms\0b1ebec7a5b1c78e20b823f1a5cd09b9\transformed\lifecycle-livedata-core-ktx-2.6.2\res
+com.wavetopsheet.test.TopSheet-drawerlayout-1.1.1-6 C:\Users\eddyh\.gradle\caches\8.9\transforms\0f502e0b8b835dbb1b6f26efd1a62317\transformed\drawerlayout-1.1.1\res
+com.wavetopsheet.test.TopSheet-lifecycle-process-2.6.2-7 C:\Users\eddyh\.gradle\caches\8.9\transforms\101a99cbc2329ce4b2567c1ee4a2b87b\transformed\lifecycle-process-2.6.2\res
+com.wavetopsheet.test.TopSheet-appcompat-resources-1.6.1-8 C:\Users\eddyh\.gradle\caches\8.9\transforms\336171a852c5ddae49ec600089541ea6\transformed\appcompat-resources-1.6.1\res
+com.wavetopsheet.test.TopSheet-transition-1.5.0-9 C:\Users\eddyh\.gradle\caches\8.9\transforms\36c5ec91343febb991bb38bfc7f58c4c\transformed\transition-1.5.0\res
+com.wavetopsheet.test.TopSheet-lifecycle-runtime-2.6.2-10 C:\Users\eddyh\.gradle\caches\8.9\transforms\3b3644b3c553c82eadf15c6e5d01cf4d\transformed\lifecycle-runtime-2.6.2\res
+com.wavetopsheet.test.TopSheet-coordinatorlayout-1.1.0-11 C:\Users\eddyh\.gradle\caches\8.9\transforms\43a21389397008df984784051cd39a6b\transformed\coordinatorlayout-1.1.0\res
+com.wavetopsheet.test.TopSheet-cardview-1.0.0-12 C:\Users\eddyh\.gradle\caches\8.9\transforms\49ecf135d4e3d803ddc6d648e8e2d454\transformed\cardview-1.0.0\res
+com.wavetopsheet.test.TopSheet-savedstate-1.2.1-13 C:\Users\eddyh\.gradle\caches\8.9\transforms\510770be192f7f401a928fec8ebce385\transformed\savedstate-1.2.1\res
+com.wavetopsheet.test.TopSheet-viewpager2-1.0.0-14 C:\Users\eddyh\.gradle\caches\8.9\transforms\558180d172ab7d430cdbd77157ca9852\transformed\viewpager2-1.0.0\res
+com.wavetopsheet.test.TopSheet-emoji2-views-helper-1.2.0-15 C:\Users\eddyh\.gradle\caches\8.9\transforms\5a219a148bb48f1418c34748cdfd71f3\transformed\emoji2-views-helper-1.2.0\res
+com.wavetopsheet.test.TopSheet-appcompat-1.6.1-16 C:\Users\eddyh\.gradle\caches\8.9\transforms\5fb357593bf2e41df09357350faade82\transformed\appcompat-1.6.1\res
+com.wavetopsheet.test.TopSheet-lifecycle-runtime-ktx-2.6.2-17 C:\Users\eddyh\.gradle\caches\8.9\transforms\6170f92043c53ad3ead1326b8943cdbe\transformed\lifecycle-runtime-ktx-2.6.2\res
+com.wavetopsheet.test.TopSheet-startup-runtime-1.1.1-18 C:\Users\eddyh\.gradle\caches\8.9\transforms\63f4ce85fe2f0d3cf66579cfb10e44bb\transformed\startup-runtime-1.1.1\res
+com.wavetopsheet.test.TopSheet-core-ktx-1.13.0-19 C:\Users\eddyh\.gradle\caches\8.9\transforms\674cd163ff255b1647741b044d11b72c\transformed\core-ktx-1.13.0\res
+com.wavetopsheet.test.TopSheet-recyclerview-1.1.0-20 C:\Users\eddyh\.gradle\caches\8.9\transforms\6d4ea35faec5ef91dbb4f282b1b6ffbf\transformed\recyclerview-1.1.0\res
+com.wavetopsheet.test.TopSheet-navigation-ui-2.8.3-21 C:\Users\eddyh\.gradle\caches\8.9\transforms\6d97fc2dca47388d86dcefeff2675c52\transformed\navigation-ui-2.8.3\res
+com.wavetopsheet.test.TopSheet-material-1.12.0-22 C:\Users\eddyh\.gradle\caches\8.9\transforms\6df8cd1b45d23a4579db10a5888dffcb\transformed\material-1.12.0\res
+com.wavetopsheet.test.TopSheet-annotation-experimental-1.4.1-23 C:\Users\eddyh\.gradle\caches\8.9\transforms\7b52416ae3097dddf553fe61ef4a403d\transformed\annotation-experimental-1.4.1\res
+com.wavetopsheet.test.TopSheet-savedstate-ktx-1.2.1-24 C:\Users\eddyh\.gradle\caches\8.9\transforms\7c45326a8d9649a70068aeda8b7cd189\transformed\savedstate-ktx-1.2.1\res
+com.wavetopsheet.test.TopSheet-lifecycle-viewmodel-2.6.2-25 C:\Users\eddyh\.gradle\caches\8.9\transforms\8862448272d648364c0c2b537e506026\transformed\lifecycle-viewmodel-2.6.2\res
+com.wavetopsheet.test.TopSheet-activity-ktx-1.8.0-26 C:\Users\eddyh\.gradle\caches\8.9\transforms\894324ff9776352567e313183a10f254\transformed\activity-ktx-1.8.0\res
+com.wavetopsheet.test.TopSheet-lifecycle-viewmodel-savedstate-2.6.2-27 C:\Users\eddyh\.gradle\caches\8.9\transforms\8b06816fef06008126856e54eb2fba94\transformed\lifecycle-viewmodel-savedstate-2.6.2\res
+com.wavetopsheet.test.TopSheet-slidingpanelayout-1.2.0-28 C:\Users\eddyh\.gradle\caches\8.9\transforms\907b03ea3c0476fa30d106f9f713427d\transformed\slidingpanelayout-1.2.0\res
+com.wavetopsheet.test.TopSheet-window-1.0.0-29 C:\Users\eddyh\.gradle\caches\8.9\transforms\a01dea586cdbcdb6e99c4d13634f3a2e\transformed\window-1.0.0\res
+com.wavetopsheet.test.TopSheet-emoji2-1.2.0-30 C:\Users\eddyh\.gradle\caches\8.9\transforms\a3c0541f03878fef4ff02f26a38a959d\transformed\emoji2-1.2.0\res
+com.wavetopsheet.test.TopSheet-navigation-common-2.8.3-31 C:\Users\eddyh\.gradle\caches\8.9\transforms\a3eb8957495f702cf0cafd1dff54989e\transformed\navigation-common-2.8.3\res
+com.wavetopsheet.test.TopSheet-lifecycle-livedata-core-2.6.2-32 C:\Users\eddyh\.gradle\caches\8.9\transforms\a8221c4a062845a1dc7c70c66d0e4a4e\transformed\lifecycle-livedata-core-2.6.2\res
+com.wavetopsheet.test.TopSheet-fragment-1.6.2-33 C:\Users\eddyh\.gradle\caches\8.9\transforms\a87c4f6f34fa63db159a58d7cfb55858\transformed\fragment-1.6.2\res
+com.wavetopsheet.test.TopSheet-lifecycle-livedata-2.6.2-34 C:\Users\eddyh\.gradle\caches\8.9\transforms\af1ec8159a9125a15e0ff13e4d318e0c\transformed\lifecycle-livedata-2.6.2\res
+com.wavetopsheet.test.TopSheet-profileinstaller-1.4.0-35 C:\Users\eddyh\.gradle\caches\8.9\transforms\b24a6ab11fea838ef68897b0c99cec8d\transformed\profileinstaller-1.4.0\res
+com.wavetopsheet.test.TopSheet-navigation-runtime-2.8.3-36 C:\Users\eddyh\.gradle\caches\8.9\transforms\b2a9a06b69c4194ea6e601d6ded4a9b8\transformed\navigation-runtime-2.8.3\res
+com.wavetopsheet.test.TopSheet-core-runtime-2.2.0-37 C:\Users\eddyh\.gradle\caches\8.9\transforms\b846f2f00b2fb8998e8048ba693200c5\transformed\core-runtime-2.2.0\res
+com.wavetopsheet.test.TopSheet-constraintlayout-2.2.0-38 C:\Users\eddyh\.gradle\caches\8.9\transforms\bc1c60c102f7925434a1f79844a2eee7\transformed\constraintlayout-2.2.0\res
+com.wavetopsheet.test.TopSheet-activity-1.8.0-39 C:\Users\eddyh\.gradle\caches\8.9\transforms\c52297e80860d03a0572949d0aca5515\transformed\activity-1.8.0\res
+com.wavetopsheet.test.TopSheet-fragment-ktx-1.6.2-40 C:\Users\eddyh\.gradle\caches\8.9\transforms\db48ab5a4dba56ae9eb0b016284a03ca\transformed\fragment-ktx-1.6.2\res
+com.wavetopsheet.test.TopSheet-navigation-fragment-2.8.3-41 C:\Users\eddyh\.gradle\caches\8.9\transforms\f5353946a6431f89b99af8ccbea7448d\transformed\navigation-fragment-2.8.3\res
+com.wavetopsheet.test.TopSheet-core-1.13.0-42 C:\Users\eddyh\.gradle\caches\8.9\transforms\f734d3757685d8d992319f55d6e2d5ac\transformed\core-1.13.0\res
+com.wavetopsheet.test.TopSheet-lifecycle-viewmodel-ktx-2.6.2-43 C:\Users\eddyh\.gradle\caches\8.9\transforms\fe3c1e3fc3a9319414b0d9a936170438\transformed\lifecycle-viewmodel-ktx-2.6.2\res

@@ -1,0 +1,13 @@
+#Mon Jan 27 13:28:06 EAT 2025
+base.0=C\:\\Asendi App\\ASENDI\\TopSheet\\build\\intermediates\\dex\\debugAndroidTest\\mergeExtDexDebugAndroidTest\\classes.dex
+base.1=C\:\\Asendi App\\ASENDI\\TopSheet\\build\\intermediates\\dex\\debugAndroidTest\\mergeLibDexDebugAndroidTest\\0\\classes.dex
+base.2=C\:\\Asendi App\\ASENDI\\TopSheet\\build\\intermediates\\dex\\debugAndroidTest\\mergeProjectDexDebugAndroidTest\\0\\classes.dex
+base.3=C\:\\Asendi App\\ASENDI\\TopSheet\\build\\intermediates\\dex\\debugAndroidTest\\mergeExtDexDebugAndroidTest\\classes2.dex
+path.0=classes.dex
+path.1=0/classes.dex
+path.2=0/classes.dex
+path.3=classes2.dex
+renamed.0=classes.dex
+renamed.1=classes2.dex
+renamed.2=classes3.dex
+renamed.3=classes4.dex

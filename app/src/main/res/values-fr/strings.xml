@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name" translatable="false">Asendi</string>
+    <string name="app_name" translatable="false">One-Val</string>
     <string name="off">Quitter cet appareil</string>
     <string name="unsupported_country">Pays non encore pris en charge</string>
     <string name="country_null">Emplacement non trouvé</string>
@@ -27,7 +27,7 @@
     <string name="modpassword">Gérer code PIN</string>
     <string name="modsecretkey">Gérer mot secret</string>
     <string name="terms">Conditions d\'utilisation"</string>
-    <string name="copyright" translatable="false">Asendi ©2024 - Version 1.0</string>
+    <string name="copyright" translatable="false">One-Val ©2024 - Version 1.0</string>
     <string name="privacy">Politiques de confidentialité</string>
     <string name="mail_us">Nous contacter</string>
     <string name="scan_qr">Ou faire scanner le code QR pour recharger votre compte de manière plus rapide</string>
@@ -36,7 +36,7 @@
     <string name="turn_off_flashlight">Sans flash</string>
     <string name="data_error">Erreur lors du traitement de données</string>
     <string name="no_connection">Pas de données mobiles/Wi-Fi</string>
-    <string name="check_connection_error">Asendi utilise les données mobiles/Wi-Fi</string>
+    <string name="check_connection_error">One-Val utilise les données mobiles/Wi-Fi</string>
     <string name="from">envoyé par</string>
     <string name="to">envoyé à</string>
     <string name="burn_type">Raison: Burning</string>
@@ -92,7 +92,7 @@
     <string name="notValidAccount">Compte non reconnu par cet appareil</string>
     <string name="tooShortPswd">PIN : Au moins 4 caractères numériques</string>
     <string name="requestPermTitle">Permission requise</string>
-    <string name="requestPermText">Asendi requiert l\'accès aux fichiers. Veuillez l\'accepter pour continuer.</string>
+    <string name="requestPermText">One-Val requiert l\'accès aux fichiers. Veuillez l\'accepter pour continuer.</string>
     <string name="select_file">Sélectionner</string>
     <string name="fullName">Nom complet</string>
     <string name="birthDate">Date de naissance (exemple: 31/12/1995)</string>

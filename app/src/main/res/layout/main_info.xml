@@ -139,7 +139,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/app_name"
             android:scaleType="fitCenter"
-            android:src="@mipmap/asendi_logo" />
+            android:src="@mipmap/oneval_logo" />
 
         <TextView
             android:id="@+id/scan_invite"
