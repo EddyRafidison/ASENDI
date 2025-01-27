@@ -11,7 +11,7 @@ public class ONEVAL {
     public static String SIGNIN = BASE_URL + "/app/signin";
     public static String SIGNUP = BASE_URL + "/app/signup";
     public static String INFO = BASE_URL + "/app/privacy-terms-info";
-    public static String CONTACT = BASE_URL + "/app/contact-oneval";
+    public static String CONTACT = BASE_URL + "/app/contact-one-val";
     public static String FEED = BASE_URL + "/app/feed";
     public static String BALANCE = BASE_URL + "/app/user-last-stock";
     public static String TRANSFER = BASE_URL + "/app/transfer";
