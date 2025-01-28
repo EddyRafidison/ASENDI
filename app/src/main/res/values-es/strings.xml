@@ -27,7 +27,7 @@
     <string name="modpassword">Administrar código PIN</string>
     <string name="modsecretkey">Administrar palabra secreta</string>
     <string name="terms">Condiciones de uso"</string>
-    <string name="copyright" translatable="false">One-Val ©2024 - Version 1.0</string>
+    <string name="copyright" translatable="false">One-Val ©2025 - Version 1.0</string>
     <string name="privacy">Políticas de privacidad</string>
     <string name="mail_us">Contáctenos</string>
     <string name="scan_qr">O escanea el código QR para recargar tu cuenta más rápido</string>
