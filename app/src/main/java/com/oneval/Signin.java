@@ -651,6 +651,11 @@ public class Signin extends AppCompatActivity {
                                     } catch (JSONException je) {
                                         Toast.makeText(getApplicationContext(), getString(R.string.data_error), Toast.LENGTH_SHORT).show();
                                     }
+                                }else{
+                                    intent.putExtra("act", acc);
+                                    intent.putExtra("psd", psd);
+                                    startActivity(intent);
+                                    Toast.makeText(getApplicationContext(), getString(R.string.connect_error), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         } else {

@@ -149,7 +149,7 @@
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:layout_marginTop="10dp"
+			android:layout_marginTop="5dp"
 			android:background="@drawable/white_bg"
 			android:orientation="vertical">
 
@@ -157,14 +157,16 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical|center|center_horizontal"
-				android:paddingStart="8dp"
-				android:paddingEnd="8dp"
+				android:paddingStart="5dp"
+				android:paddingEnd="5dp"
 				android:text="@string/scan_qr_send"
 				android:textColor="#ff0a140e"
 				android:textSize="14sp"/>
 
 			<RelativeLayout
 				android:layout_width="match_parent"
+				android:paddingTop="12dp"
+				android:layout_marginBottom="29dp"
 				android:layout_height="match_parent">
 
 				<ImageView
@@ -172,7 +174,7 @@
 					android:layout_width="150dp"
 					android:layout_height="150dp"
 					android:adjustViewBounds="true"
-					android:layout_centerInParent="true"
+					android:layout_centerHorizontal="true"
 					android:background="@android:color/transparent"
 					android:contentDescription="@string/app_name"
 					android:scaleType="fitCenter" />
