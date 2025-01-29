@@ -452,7 +452,7 @@ public class HomeActivity extends AppCompatActivity
         // Setting Alert Dialog Title
         alertDialogBuilder.setTitle(getString(R.string.off));
         // Icon Of Alert Dialog
-        alertDialogBuilder.setIcon(R.mipmap.oneval_logo);
+        alertDialogBuilder.setIcon(R.mipmap.ic_launcher);
         // Setting Alert Dialog Message
         alertDialogBuilder.setMessage(getString(R.string.off_msg));
         alertDialogBuilder.setCancelable(true);
