@@ -119,7 +119,7 @@ public class HomeContentFragment extends Fragment {
             v.setVisibility(View.INVISIBLE);
         }
         historylist = layout.findViewById(R.id.history_list);
-        user = "eddy";//Utils.getAccount(requireContext());
+        user = Utils.getAccount(requireContext());
         Bitmap user_qr = Utils.qr(user);
         qr.setImageBitmap(user_qr);
         qr_dest.setImageBitmap(user_qr);

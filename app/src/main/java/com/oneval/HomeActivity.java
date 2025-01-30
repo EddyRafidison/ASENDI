@@ -237,7 +237,7 @@ public class HomeActivity extends AppCompatActivity
 
     private void setupHeader() {
         View header = navigationView.getHeaderView(0);
-        header.findViewById(R.id.user_code).setOnClickListener(
+        header.findViewById(R.id.logo_yellow).setOnClickListener(
                 view -> Toast.makeText(HomeActivity.this, getString(R.string.app_name), Toast.LENGTH_SHORT).show());
     }
 
