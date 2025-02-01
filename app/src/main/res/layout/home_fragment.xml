@@ -201,7 +201,7 @@
 			android:background="@android:color/transparent"
 			android:contentDescription="@string/app_name"
 			android:scaleType="fitCenter"
-			app:srcCompat="@drawable/oneval_text"
+			app:srcCompat="@drawable/oneval_text_mini"
 			tools:ignore="ImageContrastCheck" />
 
 	</RelativeLayout>
