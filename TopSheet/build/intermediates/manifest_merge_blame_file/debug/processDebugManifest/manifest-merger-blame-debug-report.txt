@@ -7,6 +7,6 @@
 7    <uses-sdk android:minSdkVersion="21" />
 8
 9    <application />
-9-->C:\Asendi App\ASENDI\TopSheet\src\main\AndroidManifest.xml:5:1-15
+9-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml:5:1-15
 10
 11</manifest>

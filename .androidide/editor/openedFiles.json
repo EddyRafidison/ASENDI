@@ -1,0 +1,80 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/ASENDI/app/src/main/AndroidManifest.xml",
+      "selection": {
+        "end": {
+          "column": 47,
+          "index": 116,
+          "line": 1
+        },
+        "start": {
+          "column": 47,
+          "index": 116,
+          "line": 1
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/ASENDI/build.gradle",
+      "selection": {
+        "end": {
+          "column": 8,
+          "index": 142,
+          "line": 4
+        },
+        "start": {
+          "column": 8,
+          "index": 142,
+          "line": 4
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/ASENDI/settings.gradle",
+      "selection": {
+        "end": {
+          "column": 14,
+          "index": 156,
+          "line": 4
+        },
+        "start": {
+          "column": 14,
+          "index": 156,
+          "line": 4
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/ASENDI/app/build.gradle",
+      "selection": {
+        "end": {
+          "column": 0,
+          "index": 0,
+          "line": 0
+        },
+        "start": {
+          "column": 0,
+          "index": 0,
+          "line": 0
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/ASENDI/build/reports/configuration-cache/5bbpmldn4opjdcmfdelm6jxx8/aoi68qjjk1iu3yx2fnk0in5qu/configuration-cache-report.html",
+      "selection": {
+        "end": {
+          "column": 0,
+          "index": 0,
+          "line": 0
+        },
+        "start": {
+          "column": 0,
+          "index": 0,
+          "line": 0
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/ASENDI/app/src/main/AndroidManifest.xml"
+}
