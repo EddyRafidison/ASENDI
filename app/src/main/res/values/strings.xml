@@ -85,6 +85,7 @@
 	<string name="enter_pswd">Enter PIN to confirm</string>
 	<string name="click_twice_exit">Click again to exit/log out</string>
 	<string name="or">OR</string>
+    <string name="no_location">Error getting location</string>
 	<string name="not_allowed">Operation failed due to transaction limits</string>
 	<string name="notice_forgotten_pswd">Please enter your secret word to regain access to your account.</string>
 	<string name="connect">Login</string>
@@ -96,7 +97,7 @@
 	<string name="select_file">Select</string>
 	<string name="fullName">Full name</string>
 	<string name="birthDate">Date of birth (example: 31/12/1995)</string>
-	<string name="fullAddress">Full address: accommodation, city, country</string>
+	<string name="fullAddress">Full address - X</string>
 	<string name="cin_with_photos">CIN: Number and 2 double-sided photos</string>
 	<string name="mailAddress">Email</string>
 	<string name="notice_terms_policy">By creating the account, I have read and accept the terms of use and privacy policies.</string>

@@ -1,14 +1,26 @@
 apply plugin: 'com.android.application'
 
+def cal = Calendar.getInstance()
+def yy = cal.get(Calendar.YEAR) % 100
+def M  = cal.get(Calendar.MONTH) + 1
+def d  = cal.get(Calendar.DAY_OF_MONTH)
+def H  = cal.get(Calendar.HOUR_OF_DAY)
+def m  = cal.get(Calendar.MINUTE)
+
+def rawCode = "$yy$M$d$H$m".toInteger()
+def minCode = 25869583
+if (rawCode <= minCode) 
+    rawCode = minCode + 1
+
 android {
     compileSdk 34
-
+  
     defaultConfig {
         applicationId "com.oneval"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 1
-        versionName "1.0"
+        versionCode rawCode
+        versionName "starter"
         multiDexEnabled true
     }
     buildTypes {
@@ -46,5 +58,6 @@ dependencies {
 	implementation 'com.github.razaghimahdi:Android-Loading-Dots:1.3.2'
     implementation 'io.github.elye:loaderviewlibrary:3.0.0'
     implementation 'io.github.tutorialsandroid:filepicker:9.2.5'
+    implementation 'androidx.core:core-splashscreen:1.1.0-alpha02'
 	implementation project(':TopSheet')
 }

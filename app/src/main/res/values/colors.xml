@@ -5,4 +5,5 @@
 	<item name="black" type="color">#000000</item>
 	<item name="accent" type="color">#1E95F8</item>
 	<item name="grey" type="color">#848482</item>
+    <color name="md_theme_dark_background">#1C1B1F</color>
 </resources>

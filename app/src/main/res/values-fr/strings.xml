@@ -85,6 +85,7 @@
     <string name="enter_pswd">Entrer PIN pour confirmer</string>
     <string name="click_twice_exit">Cliquer encore une fois pour sortir/se déconnecter</string>
     <string name="or">OU</string>
+    <string name="no_location">Erreur de localisation</string>
     <string name="not_allowed">Opération échouée due aux limites au niveau des transactions</string>
     <string name="notice_forgotten_pswd">Veuillez entrer votre mot secret pour recouvrir l\'accès à votre compte.</string>
     <string name="connect">Se connecter</string>
@@ -96,7 +97,7 @@
     <string name="select_file">Sélectionner</string>
     <string name="fullName">Nom complet</string>
     <string name="birthDate">Date de naissance (exemple: 31/12/1995)</string>
-    <string name="fullAddress">Adresse complète : logement, ville, pays</string>
+    <string name="fullAddress">Adresse complète - X</string>
     <string name="cin_with_photos">CIN : Numéro et 2 photos recto-verso</string>
     <string name="mailAddress">Email</string>
     <string name="notice_terms_policy">En créant le compte, j\'ai lu et accepte les conditions d\'utilisation et politiques de confidentialité.</string>

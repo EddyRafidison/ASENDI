@@ -56,4 +56,12 @@
         <item name="strokeWidth">0dp</item>
         <item name="strokeColor">@color/black</item>
     </style>
+    
+     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/md_theme_dark_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher</item>
+        <item name="windowSplashScreenAnimationDuration">500</item>
+        <item name="postSplashScreenTheme">@style/AppTheme</item>
+    </style>
+    
 </resources>

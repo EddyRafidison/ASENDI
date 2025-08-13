@@ -8,121 +8,117 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.annotation.NonNull;
-
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.ViewfinderView;
-
 import java.util.Random;
 
-/**
- * Custom Scanner Activity extending from Activity to display a custom layout form scanner view.
- */
+/** Custom Scanner Activity extending from Activity to display a custom layout form scanner view. */
 public class BarcodeScanner extends Activity implements DecoratedBarcodeView.TorchListener {
 
-    private CaptureManager capture;
-    private DecoratedBarcodeView barcodeScannerView;
-    private Button switchFlashlightButton;
-    private ViewfinderView viewfinderView;
+  private CaptureManager capture;
+  private DecoratedBarcodeView barcodeScannerView;
+  private Button switchFlashlightButton;
+  private ViewfinderView viewfinderView;
 
-    @SuppressLint({"ResourceType", "MissingInflatedId"})
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.scanner_activity);
+  @SuppressLint({"ResourceType", "MissingInflatedId"})
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.scanner_activity);
 
-        barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
-        barcodeScannerView.setTorchListener(this);
+    barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
+    barcodeScannerView.setTorchListener(this);
 
-        switchFlashlightButton = findViewById(R.id.switch_flashlight);
+    switchFlashlightButton = findViewById(R.id.switch_flashlight);
 
-        viewfinderView = findViewById(R.id.zxing_viewfinder_view);
+    viewfinderView = findViewById(R.id.zxing_viewfinder_view);
 
-        // if the device does not have flashlight in its camera,
-        // then remove the switch flashlight button...
-        if (!hasFlash()) {
-            switchFlashlightButton.setVisibility(View.GONE);
-        }
-
-        capture = new CaptureManager(this, barcodeScannerView);
-        capture.initializeFromIntent(getIntent(), savedInstanceState);
-        capture.setShowMissingCameraPermissionDialog(false);
-        capture.decode();
-
-        changeMaskColor(null);
-        changeLaserVisibility(false);
+    // if the device does not have flashlight in its camera,
+    // then remove the switch flashlight button...
+    if (!hasFlash()) {
+      switchFlashlightButton.setVisibility(View.GONE);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        capture.onResume();
-    }
+    capture = new CaptureManager(this, barcodeScannerView);
+    capture.initializeFromIntent(getIntent(), savedInstanceState);
+    capture.setShowMissingCameraPermissionDialog(false);
+    capture.decode();
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        capture.onPause();
-    }
+    changeMaskColor(null);
+    changeLaserVisibility(false);
+  }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        capture.onDestroy();
-    }
+  @Override
+  protected void onResume() {
+    super.onResume();
+    capture.onResume();
+  }
 
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        capture.onSaveInstanceState(outState);
-    }
+  @Override
+  protected void onPause() {
+    super.onPause();
+    capture.onPause();
+  }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return barcodeScannerView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
-    }
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    capture.onDestroy();
+  }
 
-    /**
-     * Check if the device's camera has a Flashlight.
-     *
-     * @return true if there is Flashlight, otherwise false.
-     */
-    private boolean hasFlash() {
-        return getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-    }
+  @Override
+  protected void onSaveInstanceState(@NonNull Bundle outState) {
+    super.onSaveInstanceState(outState);
+    capture.onSaveInstanceState(outState);
+  }
 
-    public void changeMaskColor(View view) {
-        Random rnd = new Random();
-        int color = Color.argb(100, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-        viewfinderView.setMaskColor(color);
-    }
+  @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+    return barcodeScannerView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
+  }
 
-    public void changeLaserVisibility(boolean visible) {
-        viewfinderView.setLaserVisibility(visible);
-    }
+  /**
+   * Check if the device's camera has a Flashlight.
+   *
+   * @return true if there is Flashlight, otherwise false.
+   */
+  private boolean hasFlash() {
+    return getApplicationContext()
+        .getPackageManager()
+        .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+  }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
+  public void changeMaskColor(View view) {
+    Random rnd = new Random();
+    int color = Color.argb(100, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+    viewfinderView.setMaskColor(color);
+  }
 
-    @Override
-    public void onTorchOn() {
-        switchFlashlightButton.setText(R.string.turn_off_flashlight);
-    }
+  public void changeLaserVisibility(boolean visible) {
+    viewfinderView.setLaserVisibility(visible);
+  }
 
-    @Override
-    public void onTorchOff() {
-        switchFlashlightButton.setText(R.string.turn_on_flashlight);
-    }
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    finish();
+  }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        capture.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
+  @Override
+  public void onTorchOn() {
+    switchFlashlightButton.setText(R.string.turn_off_flashlight);
+  }
 
+  @Override
+  public void onTorchOff() {
+    switchFlashlightButton.setText(R.string.turn_on_flashlight);
+  }
+
+  @Override
+  public void onRequestPermissionsResult(
+      int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    capture.onRequestPermissionsResult(requestCode, permissions, grantResults);
+  }
 }
