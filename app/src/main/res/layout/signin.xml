@@ -7,17 +7,52 @@
      android:background="@color/primary">
 
     <LinearLayout
+         android:layout_height="70dp"
+         android:layout_width="132dp"
+         android:gravity="center_horizontal"
+         android:layout_centerHorizontal="true"
+         android:layout_marginTop="30dp"
+         android:id="@+id/LinearLayout1">
+
+        <ImageView
+             android:layout_height="match_parent"
+             android:layout_width="wrap_content"
+             android:adjustViewBounds="true"
+             android:contentDescription="@string/app_name"
+             android:scaleType="fitCenter"
+             android:src="@drawable/oneval_text"
+             android:background="@android:color/transparent"
+             tools:ignore="ImageContrastCheck" />
+
+    </LinearLayout>
+
+    <TextView
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:layout_below="@id/LinearLayout1"
+         android:gravity="top|center_vertical|center|center_horizontal"
+         android:layout_centerHorizontal="true"
+         android:textSize="12sp"
+         android:lines="1"
+         android:textColor="#fffffefe"
+         android:id="@+id/myapp"
+         android:text="@string/slog" />
+
+    <LinearLayout
          android:layout_height="wrap_content"
          android:layout_width="@dimen/field_size"
-         android:layout_centerInParent="true"
+         android:layout_below="@id/myapp"
+         android:gravity="center_horizontal"
          android:padding="15dp"
          android:orientation="vertical"
-         android:layout_marginTop="2dp"
+         android:layout_centerHorizontal="true"
+         android:layout_marginTop="15dp"
          android:id="@+id/layoutLinearLayout1">
 
         <RelativeLayout
              android:layout_height="56dp"
              android:layout_width="match_parent"
+             android:gravity="center_horizontal"
              android:background="@drawable/edt_bg"
              android:layout_marginTop="10dp">
 
@@ -57,11 +92,13 @@
         <RelativeLayout
              android:layout_height="wrap_content"
              android:layout_width="match_parent"
+             android:gravity="center_horizontal"
              android:layout_marginTop="20dp">
 
             <LinearLayout
                  android:layout_height="56dp"
                  android:layout_width="match_parent"
+                 android:layout_centerInParent="true"
                  android:background="@drawable/edt_bg"
                  android:gravity="center_vertical"
                  android:orientation="horizontal">
@@ -170,36 +207,5 @@
              android:text="@string/signup" />
 
     </LinearLayout>
-
-    <LinearLayout
-         android:layout_height="46dp"
-         android:layout_width="match_parent"
-         android:gravity="center_horizontal"
-         android:layout_marginTop="40dp"
-         android:id="@+id/LinearLayout1">
-
-        <ImageView
-             android:layout_height="match_parent"
-             android:layout_width="wrap_content"
-             android:adjustViewBounds="true"
-             android:contentDescription="@string/app_name"
-             android:scaleType="fitCenter"
-             android:src="@drawable/oneval_text"
-             tools:ignore="ImageContrastCheck" />
-
-    </LinearLayout>
-
-    <TextView
-         android:layout_height="wrap_content"
-         android:layout_width="wrap_content"
-         android:layout_below="@id/LinearLayout1"
-         android:gravity="top|center_vertical|center|center_horizontal"
-         android:layout_above="@id/layoutLinearLayout1"
-         android:layout_centerHorizontal="true"
-         android:textSize="14sp"
-         android:lines="1"
-         android:textColor="#fffffefe"
-         android:id="@+id/myapp"
-         android:text="@string/slog" />
 
 </RelativeLayout>

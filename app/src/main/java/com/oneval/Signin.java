@@ -594,11 +594,17 @@ public class Signin extends AppCompatActivity {
     }
 
     private void onClick(View c) {
+       final Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+       final String acc = account.getText().toString();
+       final String psd = pswd.getText().toString();
+       
+        //Only test, to be removed later
+        intent.putExtra("act", acc);
+        intent.putExtra("psd", psd);
+        startActivity(intent);
+        
         if (!isDownloading) {
-            final Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             if (account.length() > 0 && pswd.length() > 0) {
-                final String acc = account.getText().toString();
-                final String psd = pswd.getText().toString();
                 if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
                     Utils.showNoConnectionAlert(getApplicationContext(), login);
                 } else {

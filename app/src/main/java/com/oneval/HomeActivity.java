@@ -2,6 +2,8 @@ package com.oneval;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +14,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -237,7 +240,8 @@ public class HomeActivity extends AppCompatActivity
 
     private void setupHeader() {
         View header = navigationView.getHeaderView(0);
-        header.findViewById(R.id.logo_yellow).setOnClickListener(
+        appInfo(header);
+        header.findViewById(R.id.pieces_img).setOnClickListener(
                 view -> Toast.makeText(HomeActivity.this, getString(R.string.app_name), Toast.LENGTH_SHORT).show());
     }
 
@@ -505,6 +509,20 @@ public class HomeActivity extends AppCompatActivity
         int notif_size = notif_list.size();
         setBadgeCount(notif_size);
     }
+
+    private void appInfo(View v){
+    try {
+    final TextView infoT = v.findViewById(R.id.app_info);
+    PackageManager pm = getPackageManager();
+    PackageInfo info = pm.getPackageInfo(this.getPackageName(), 0);
+    String versionName = info.versionName;
+    infoT.setText("V."+versionName +" - ©" + "20" + versionName.substring(0, 2));
+    } catch (Exception e) {
+    e.printStackTrace();
+    Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+    }
+    }
+    
 
     private void refreshFeed() {
         ONEVAL.TIMER = new Timer();

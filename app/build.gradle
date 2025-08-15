@@ -8,6 +8,7 @@ def H  = cal.get(Calendar.HOUR_OF_DAY)
 def m  = cal.get(Calendar.MINUTE)
 
 def rawCode = "$yy$M$d$H$m".toInteger()
+def name = rawCode.toString()
 def minCode = 25869583
 if (rawCode <= minCode) 
     rawCode = minCode + 1
@@ -20,7 +21,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 34
         versionCode rawCode
-        versionName "starter"
+        versionName name
         multiDexEnabled true
     }
     buildTypes {

@@ -37,6 +37,7 @@ import com.developer.filepicker.model.DialogConfigs;
 import com.developer.filepicker.model.DialogProperties;
 import com.developer.filepicker.view.FilePickerDialog;
 import java.io.File;
+import java.util.Locale;
 import org.json.JSONException;
 
 public class Signup extends AppCompatActivity {
@@ -103,12 +104,13 @@ public class Signup extends AppCompatActivity {
     TextView fulladdTitle = findViewById(R.id.fulladdT);
     String fullAdd = getString(R.string.fullAddress);
     
-    String loc = Utils.getCountryCode(getApplicationContext());
+    final String loc = Utils.getCountryCode(getApplicationContext());
     if(loc.isEmpty()){
         Toast.makeText(getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT).show();
         finish();
     }
-    fulladdTitle.setText(fullAdd.replace(" X", " " + loc));
+    Locale locale = new Locale("", loc);
+    fulladdTitle.setText(fullAdd.replace(" X", " " + locale.getDisplayCountry()));
     DrawableCompat.setTint(signup.getBackground(), Color.parseColor("#D32F2F"));
     fullname.requestFocus();
     fullname.setAllCaps(true);
@@ -232,7 +234,7 @@ public class Signup extends AppCompatActivity {
                                           new String[] {
                                             mailAd,
                                             birth,
-                                            addrs,
+                                            addrs + " " + loc,
                                             fulln,
                                             Cin,
                                             psd1,

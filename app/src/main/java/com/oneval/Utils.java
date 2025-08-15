@@ -264,7 +264,7 @@ public class Utils {
 
   public static String getAccount(Context ctx) {
     SharedPreferences sp = ctx.getSharedPreferences("datavalues", Context.MODE_PRIVATE);
-    return sp.getString("acc_name", "");
+    return sp.getString("acc_name", "JULES-1111");
   }
 
   public static void saveCategory(Context ctx, String cat) {
