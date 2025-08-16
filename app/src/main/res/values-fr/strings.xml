@@ -124,5 +124,6 @@
     <string name="enter_Id_first">Veuillez entrer votre identifiant d\'abord</string>
     <string name="confirm_login">Pour votre sécurité, veuillez entrer votre mot secret.</string>
     <string name="transfer_not_allowed">Ce transfert sera bientôt autorisé</string>
+    <string name="join_session">Rejoindre la session active</string>
 
 </resources>

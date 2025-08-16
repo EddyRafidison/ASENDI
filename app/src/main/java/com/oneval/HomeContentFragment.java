@@ -5,13 +5,19 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.RippleDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +43,7 @@ import androidx.fragment.app.Fragment;
 import com.elyeproj.loaderviewlibrary.LoaderTextView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.zxing.client.android.Intents;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
@@ -70,10 +77,11 @@ public class HomeContentFragment extends Fragment {
             isBottomSheetToOpen = false,
             isPbtoShow = false,
             isBSopen = false;
-    private TextView user_id;
+    private TextView user_id, stat;
     private LoaderTextView stock;
     private EditText user_dest,
             value;
+    private FloatingActionButton go;        
     private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
             result -> {
                 if (result.getContents() == null) {
@@ -114,10 +122,25 @@ public class HomeContentFragment extends Fragment {
         user_id = layout.findViewById(R.id.user_id);
         qr_dest = layout.findViewById(R.id.dest_qr);
         rel_ = layout.findViewById(R.id.rel_);
+        stat = layout.findViewById(R.id.stat);
+        go = layout.findViewById(R.id.go);
         View v = requireActivity().findViewById(R.id.empty_data_layout);
         if (v != null) {
             v.setVisibility(View.INVISIBLE);
         }
+        
+        GradientDrawable gradientDrawable = new GradientDrawable(
+        GradientDrawable.Orientation.TL_BR,
+        new int[]{Color.parseColor("#F4E847"), Color.parseColor("#FBAC3E")});
+        gradientDrawable.setShape(GradientDrawable.OVAL);
+        gradientDrawable.setGradientType(GradientDrawable.LINEAR_GRADIENT);
+        gradientDrawable.setAlpha(200); // translucide
+        
+        ColorStateList rippleColor = ColorStateList.valueOf(Color.parseColor("#EFB32E"));
+        RippleDrawable rippleDrawable = new RippleDrawable(rippleColor, gradientDrawable, null);
+        
+        go.setBackground(rippleDrawable);
+        
         historylist = layout.findViewById(R.id.history_list);
         user = Utils.getAccount(requireContext());
         Bitmap user_qr = Utils.qr(user);
@@ -171,6 +194,10 @@ public class HomeContentFragment extends Fragment {
             user_gr = "Consumer";
         }
         group.setText(user_gr);
+        
+        // # number of active session, * Average clicks per active user
+        // / Average value (OV) per click
+        setStat("#12  |  *1.2  |  /2000");
         send.setOnClickListener(v1 -> {
             String val = value.getText().toString();
             if (user_dest.length() > 2) {
@@ -367,7 +394,16 @@ public class HomeContentFragment extends Fragment {
                 }
             }
         });
-
+        
+        go.setOnClickListener(v4 -> {
+            Toast.makeText(getActivity(), "go", Toast.LENGTH_SHORT).show();
+        });
+        
+        stat.setOnLongClickListener(v5 -> {
+            Toast.makeText(getActivity(), "mini-statistique", Toast.LENGTH_SHORT).show();
+            return true;
+        });
+        
         copy.setOnClickListener(v2 -> {
             ClipboardManager clipboard = (ClipboardManager) requireActivity()
                     .getSystemService(Context.CLIPBOARD_SERVICE);
@@ -698,5 +734,30 @@ public class HomeContentFragment extends Fragment {
             i++;
         }
         return rFinal.toString();
+    }
+    
+    private void setStat(String text) {
+       SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);
+
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (c != '#' && c != '*' && c != '+' && c != '/' && c != '-') {
+                spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.GREEN), i, i + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            if (c == '|') {
+                spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.WHITE), i, i + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }
+
+        char[] symbols = {'#', '*', '+', '/', '-'};
+        for (char symbol : symbols) {
+            int index = text.indexOf(symbol);
+            while (index != -1) {
+                spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.YELLOW), index, index + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                index = text.indexOf(symbol, index + 1);
+            }
+        }
+
+        stat.setText(spannableStringBuilder);
     }
 }
