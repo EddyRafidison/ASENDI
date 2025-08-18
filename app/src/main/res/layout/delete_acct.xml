@@ -67,7 +67,7 @@
             app:cornerRadius="15dp"
             android:id="@+id/dlt_btn"
             android:layout_width="220dp"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:padding="5dp"

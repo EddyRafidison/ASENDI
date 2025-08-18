@@ -190,16 +190,18 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
              android:layout_height="wrap_content"
              android:layout_width="wrap_content"
-             android:src="@drawable/rocket"
-             app:backgroundTint="#EBFFB32E"
-             android:layout_marginBottom="58dp"
-             android:layout_marginRight="16dp"
-             app:tint="#FFFFFF"
+             android:src="@drawable/join_ac"
              android:tooltipText="@string/join_session"
+             app:rippleColor="@android:color/white"
+             app:backgroundTint="#010"
+             android:layout_gravity="bottom|end"
+             android:layout_marginBottom="58dp"
+             android:contentDescription="@string/app_name"
+             app:maxImageSize="28dp"
+             app:tint="#FD0"
+             android:layout_marginRight="16dp"
              app:fabSize="normal"
-             app:maxImageSize="25dp"
-             android:id="@+id/go"
-             android:layout_gravity="bottom|end" />
+             android:id="@+id/go" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -219,6 +221,7 @@
              android:gravity="center|center_vertical|center_horizontal"
              android:paddingRight="7dp"
              android:textSize="15sp"
+             android:singleLine="true"
              android:textColor="#FD0"
              android:paddingLeft="7dp"
              android:layout_alignParentBottom="true"

@@ -9,15 +9,15 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.RippleDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,20 +127,8 @@ public class HomeContentFragment extends Fragment {
         View v = requireActivity().findViewById(R.id.empty_data_layout);
         if (v != null) {
             v.setVisibility(View.INVISIBLE);
-        }
-        
-        GradientDrawable gradientDrawable = new GradientDrawable(
-        GradientDrawable.Orientation.TL_BR,
-        new int[]{Color.parseColor("#F4E847"), Color.parseColor("#FBAC3E")});
-        gradientDrawable.setShape(GradientDrawable.OVAL);
-        gradientDrawable.setGradientType(GradientDrawable.LINEAR_GRADIENT);
-        gradientDrawable.setAlpha(200); // translucide
-        
-        ColorStateList rippleColor = ColorStateList.valueOf(Color.parseColor("#EFB32E"));
-        RippleDrawable rippleDrawable = new RippleDrawable(rippleColor, gradientDrawable, null);
-        
-        go.setBackground(rippleDrawable);
-        
+        } 
+                  
         historylist = layout.findViewById(R.id.history_list);
         user = Utils.getAccount(requireContext());
         Bitmap user_qr = Utils.qr(user);
@@ -169,8 +157,7 @@ public class HomeContentFragment extends Fragment {
         bottomsheet_transfer = layout.findViewById(R.id.bottomsheet_send);
         MaterialButton send = layout.findViewById(R.id.sendbutton);
         ImageButton scan_but = layout.findViewById(R.id.scan_button);
-        DrawableCompat.setTint(scan_but.getBackground(),
-                getResources().getColor(R.color.primary));
+        
         stock = layout.findViewById(R.id.balance);
         Typeface tf = Typeface.createFromAsset(requireActivity().getAssets(),
                 "fonts/SuperstarM54.ttf");
@@ -195,9 +182,11 @@ public class HomeContentFragment extends Fragment {
         }
         group.setText(user_gr);
         
-        // # number of active session, * Average clicks per active user
-        // / Average value (OV) per click
-        setStat("#12  |  *1.2  |  /2000");
+        stat.setMovementMethod(LinkMovementMethod.getInstance());
+        stat.setHighlightColor(Color.YELLOW);
+        // #S number of active session, #C Number of clicks in session
+        // #Val/C Average value (OV) per click
+        setStat("#S 12  |  #C 1200  |  #Val/C 7000");
         send.setOnClickListener(v1 -> {
             String val = value.getText().toString();
             if (user_dest.length() > 2) {
@@ -397,11 +386,6 @@ public class HomeContentFragment extends Fragment {
         
         go.setOnClickListener(v4 -> {
             Toast.makeText(getActivity(), "go", Toast.LENGTH_SHORT).show();
-        });
-        
-        stat.setOnLongClickListener(v5 -> {
-            Toast.makeText(getActivity(), "mini-statistique", Toast.LENGTH_SHORT).show();
-            return true;
         });
         
         copy.setOnClickListener(v2 -> {
@@ -741,23 +725,32 @@ public class HomeContentFragment extends Fragment {
 
         for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
-            if (c != '#' && c != '*' && c != '+' && c != '/' && c != '-') {
-                spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.GREEN), i, i + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
             if (c == '|') {
                 spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.WHITE), i, i + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
 
-        char[] symbols = {'#', '*', '+', '/', '-'};
-        for (char symbol : symbols) {
-            int index = text.indexOf(symbol);
-            while (index != -1) {
-                spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.YELLOW), index, index + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                index = text.indexOf(symbol, index + 1);
-            }
+        String[] symbols = {"#S", "#C", "#Val/C"};
+        int syms = symbols.length;
+        for (int i = 0; i < syms; i++) {
+            String symbol = symbols[i];
+            int indexStart = text.indexOf(symbol);
+            int length = symbol.length();
+            int indexEnd = text.lastIndexOf(symbol) + length;
+            
+            spannableStringBuilder.setSpan(new Clickables(stat, symbols, i, string -> {
+                String statString = null;
+                if(string.equals("#S")){
+                    statString = getString(R.string.stat_session);
+                } else if  (string.equals("#C")){
+                   statString = getString(R.string.stat_clicks);
+                } else {
+                   statString = getString(R.string.stat_vpc); 
+                }
+                Toast.makeText(getContext(), statString, Toast.LENGTH_SHORT).show();
+                }, Color.MAGENTA), indexStart, indexEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
-
-        stat.setText(spannableStringBuilder);
+            
+        stat.setText(spannableStringBuilder, TextView.BufferType.SPANNABLE);
     }
 }

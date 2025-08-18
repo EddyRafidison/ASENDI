@@ -125,6 +125,9 @@
 	<string name="confirm_login">For your security, please enter your secret word.</string>
     <string name="transfer_not_allowed">This transfer will be allowed soon</string>
     <string name="join_session">Join the active session</string>
+    <string name="stat_session">Active session id</string>
+    <string name="stat_clicks">Number of clicks in the active session</string>
+    <string name="stat_vpc">Average value OneVal of a click</string>
 
 </resources>
 

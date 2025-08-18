@@ -21,7 +21,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/note_msg"
-			android:textColor="#82B1FF"
+			android:textColor="#DDE0E0"
 			android:textSize="14sp"
 			tools:ignore="VisualLintLongText" />
 
@@ -84,7 +84,7 @@
 			android:id="@+id/sendmsg"
 			style="@style/buttonStyle"
 			android:layout_width="220dp"
-			android:layout_height="50dp"
+			android:layout_height="55dp"
 			android:layout_gravity="center_horizontal"
 			android:layout_marginTop="10dp"
 			android:padding="5dp"

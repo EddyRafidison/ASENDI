@@ -366,7 +366,7 @@
                 </RelativeLayout>
 
                 <Button
-                     android:layout_height="50dp"
+                     android:layout_height="55dp"
                      android:layout_width="match_parent"
                      android:padding="5dp"
                      android:textSize="15sp"

@@ -125,5 +125,8 @@
     <string name="confirm_login">Pour votre sécurité, veuillez entrer votre mot secret.</string>
     <string name="transfer_not_allowed">Ce transfert sera bientôt autorisé</string>
     <string name="join_session">Rejoindre la session active</string>
+    <string name="stat_session">Numéro de la session active</string>
+    <string name="stat_clicks">Nombre de clics de la session</string>
+    <string name="stat_vpc">Valeur en moyenne d\'un clic en OneVal</string>
 
 </resources>
