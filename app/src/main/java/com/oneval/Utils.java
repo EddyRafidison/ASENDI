@@ -10,7 +10,13 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -45,9 +51,11 @@ import com.elyeproj.loaderviewlibrary.LoaderTextView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -57,6 +65,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -65,17 +74,61 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Utils {
-  public static Bitmap qr(String text) {
-    MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-    Bitmap bitmap = null;
-    try {
-      BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE, 600, 600);
-      BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-      bitmap = barcodeEncoder.createBitmap(bitMatrix);
-    } catch (WriterException ignored) {
-    }
-    return bitmap;
-  }
+    
+  public static Bitmap qr(Activity activity, String text) {
+       Bitmap logo = BitmapFactory.decodeResource(activity.getResources(), R.drawable.ic_launcher_qr);
+       final int size = 250;
+        try {
+            Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
+            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+            hints.put(EncodeHintType.MARGIN, 1);
+
+            BitMatrix matrix = new MultiFormatWriter().encode(
+                    text,
+                    BarcodeFormat.QR_CODE,
+                    size, size,
+                    hints
+            );
+
+            Bitmap qrBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(qrBitmap);
+
+            Paint paint = new Paint();
+            paint.setColor(Color.DKGRAY);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setAntiAlias(true);
+
+            int blockSize = 4; // taille des points arrondis
+
+            for (int x = 0; x < size; x++) {
+                for (int y = 0; y < size; y++) {
+                    if (matrix.get(x, y)) {
+                        float left = x;
+                        float top = y;
+                        RectF rect = new RectF(left, top, left + blockSize, top + blockSize);
+                        canvas.drawRoundRect(rect, blockSize/2f, blockSize/2f, paint);
+                    }
+                }
+            }
+
+            // Ajouter le logo au centre si présent
+            if (logo != null) {
+                int overlaySize = size / 5; // taille du logo = 20% du QR
+                Bitmap scaledLogo = Bitmap.createScaledBitmap(logo, overlaySize, overlaySize, true);
+
+                int left = (size - overlaySize) / 2;
+                int top = (size - overlaySize) / 2;
+
+                canvas.drawBitmap(scaledLogo, left, top, null);
+            }
+
+            return qrBitmap;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+}
 
   public static void showNoConnectionAlert(Context ctx, View v) {
     Snackbar sb = Snackbar.make(v, ctx.getString(R.string.no_connection), Snackbar.LENGTH_LONG);

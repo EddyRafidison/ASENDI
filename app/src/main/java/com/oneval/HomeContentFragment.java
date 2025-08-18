@@ -131,7 +131,7 @@ public class HomeContentFragment extends Fragment {
                   
         historylist = layout.findViewById(R.id.history_list);
         user = Utils.getAccount(requireContext());
-        Bitmap user_qr = Utils.qr(user);
+        Bitmap user_qr = Utils.qr(requireActivity(),user);
         qr.setImageBitmap(user_qr);
         qr_dest.setImageBitmap(user_qr);
         rel.setAlpha(0);
@@ -336,14 +336,14 @@ public class HomeContentFragment extends Fragment {
                 if (s.length() > 0) {
                     stock.setText(stockMasker());
                     stock.setTransformationMethod(new StockHiding());
-                    Bitmap qr = Utils.qr(s_);
+                    Bitmap qr = Utils.qr(requireActivity(), s_);
                     if (qr != null) {
                         qr_dest.setImageBitmap(qr);
                     }
                 } else {
                     stock.setText(stockShower());
                     stock.setTransformationMethod(null);
-                    qr_dest.setImageBitmap(Utils.qr("JULES-1111"));
+                    qr_dest.setImageBitmap(Utils.qr(requireActivity(), "JULES-1111"));
                 }
                 // TODO Auto-generated method stub
             }
