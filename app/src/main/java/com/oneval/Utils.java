@@ -55,11 +55,17 @@ import com.elyeproj.loaderviewlibrary.LoaderTextView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.BinaryBitmap;
 import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatReader;
 import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.RGBLuminanceSource;
+import com.google.zxing.Result;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -85,6 +91,7 @@ public class Utils {
       Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
       hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
       hints.put(EncodeHintType.MARGIN, 1);
+      hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 
       BitMatrix matrix =
           new MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE, size, size, hints);
@@ -92,21 +99,10 @@ public class Utils {
       Bitmap qrBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
       Canvas canvas = new Canvas(qrBitmap);
 
-      Paint paint = new Paint();
-      paint.setColor(Color.DKGRAY);
-      paint.setStyle(Paint.Style.FILL);
-      paint.setAntiAlias(true);
-
-      int blockSize = 4; // taille des points arrondis
-
+      // Générer un QR code classique (pixels noirs/blancs)
       for (int x = 0; x < size; x++) {
         for (int y = 0; y < size; y++) {
-          if (matrix.get(x, y)) {
-            float left = x;
-            float top = y;
-            RectF rect = new RectF(left, top, left + blockSize, top + blockSize);
-            canvas.drawRoundRect(rect, blockSize / 2f, blockSize / 2f, paint);
-          }
+          qrBitmap.setPixel(x, y, matrix.get(x, y) ? Color.BLACK : Color.WHITE);
         }
       }
 
@@ -130,7 +126,25 @@ public class Utils {
   }
 
   public static Bitmap resizeBitmap(Bitmap original) {
-    return Bitmap.createScaledBitmap(original, 500, 500, true);
+    return Bitmap.createScaledBitmap(original, 600, 600, true);
+  }
+
+  public static String getDestQRCode(Context ctx, Bitmap bitmap) {
+    String qrString = "";
+    int width = bitmap.getWidth();
+    int height = bitmap.getHeight();
+    int[] pixels = new int[width * height];
+    bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+
+    RGBLuminanceSource source = new RGBLuminanceSource(width, height, pixels);
+    BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
+    try {
+      Result result = new MultiFormatReader().decode(binaryBitmap);
+      qrString = result.getText();
+    } catch (Exception e) {
+      Toast.makeText(ctx, ctx.getString(R.string.invalid_img), Toast.LENGTH_SHORT).show();
+    }
+    return qrString;
   }
 
   public static void saveToDownloads(Activity context, Bitmap bitmap, String fileName) {
@@ -348,7 +362,7 @@ public class Utils {
 
   public static String getAccount(Context ctx) {
     SharedPreferences sp = ctx.getSharedPreferences("datavalues", Context.MODE_PRIVATE);
-    return sp.getString("acc_name", "JULES-1111");
+    return sp.getString("acc_name", "A-A00Z");
   }
 
   public static void saveCategory(Context ctx, String cat) {

@@ -1,19 +1,24 @@
 package com.oneval;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -33,14 +38,23 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
+import com.developer.filepicker.model.DialogConfigs;
+import com.developer.filepicker.model.DialogProperties;
+import com.developer.filepicker.view.FilePickerDialog;
 import com.elyeproj.loaderviewlibrary.LoaderTextView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
@@ -49,6 +63,7 @@ import com.google.zxing.client.android.Intents;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 import com.wavetopsheet.TopSheetBehavior;
+import java.io.File;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -83,11 +98,29 @@ public class HomeContentFragment extends Fragment {
           Intent originalIntent = result.getOriginalIntent();
           if (originalIntent == null) {
           } else if (originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
-            Toast.makeText(getActivity(), "Require permission", Toast.LENGTH_LONG).show();
+            Toast
+                .makeText(getActivity(), requireContext().getString(R.string.write_storage_missing),
+                    Toast.LENGTH_LONG)
+                .show();
           }
         } else {
           user_dest.setText(result.getContents());
           value.requestFocus();
+        }
+      });
+  private static final int REQUEST_STORAGE_PERMISSIONS = 125;
+  private static final int REQUEST_MEDIA_PERMISSIONS = 476;
+  private final DialogProperties properties = new DialogProperties();
+  private final String readPermission = android.Manifest.permission.READ_EXTERNAL_STORAGE;
+  private final String writePermission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+  private FilePickerDialog filePickerDialog;
+  private final ActivityResultLauncher<Intent> getPermResult = registerForActivityResult(
+      new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+          if (result.getResultCode() == Activity.RESULT_OK) {
+            filePickerDialog.show();
+          }
         }
       });
   private String user;
@@ -135,12 +168,17 @@ public class HomeContentFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
           vib.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
-          vib.vibrate(50); // Android < 26
+          vib.vibrate(50);
         }
       }
       String user_d = user_dest.getText().toString();
       if (user_d.length() > 3) {
         Utils.saveToDownloads(requireActivity(), Utils.resizeBitmap(dest_qr), user_d);
+      } else {
+        Toast
+            .makeText(requireActivity(), requireActivity().getString(R.string.no_dest),
+                Toast.LENGTH_SHORT)
+            .show();
       }
       return true;
     });
@@ -196,18 +234,13 @@ public class HomeContentFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
           vib.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
-          vib.vibrate(50); // Android < 26
+          vib.vibrate(50);
         }
       }
       Utils.saveToDownloads(requireActivity(), Utils.resizeBitmap(user_qr), user);
       return true;
     });
 
-    stat.setMovementMethod(LinkMovementMethod.getInstance());
-    stat.setHighlightColor(Color.YELLOW);
-    // #S number of active session, #C Number of clicks in session
-    // #Val/C Average value (OV) per click
-    setStat("#S 12  |  #C 1200  |  #Val/C 7000");
     send.setOnClickListener(v1 -> {
       String val = value.getText().toString();
       if (user_dest.length() > 2) {
@@ -231,6 +264,33 @@ public class HomeContentFragment extends Fragment {
         Toast.makeText(getActivity(), getString(R.string.check_entries), Toast.LENGTH_SHORT).show();
       }
     });
+
+    properties.selection_mode = DialogConfigs.SINGLE_MODE;
+    properties.selection_type = DialogConfigs.FILE_SELECT;
+    properties.root = new File(DialogConfigs.DEFAULT_DIR);
+    properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
+    properties.offset = new File(DialogConfigs.DEFAULT_DIR);
+    properties.extensions = new String[] {"png", "jpg", "webp", "jpeg"};
+    properties.show_hidden_files = false;
+    filePickerDialog = new FilePickerDialog(requireActivity(), properties);
+    filePickerDialog.setTitle(getString(R.string.select_file));
+    filePickerDialog.setPositiveBtnName(
+        HtmlCompat.fromHtml("<font color='green'>" + getString(R.string.selection) + "</font>",
+            HtmlCompat.FROM_HTML_MODE_LEGACY));
+    filePickerDialog.setCancelable(true);
+    filePickerDialog.setNegativeBtnName(getString(R.string.cancel));
+    filePickerDialog.setDialogSelectionListener(files -> {
+      // files is the array of the paths of files selected by the Application User.
+      String path = files[0];
+      Bitmap qrc = BitmapFactory.decodeFile(path);
+      user_dest.setText(Utils.getDestQRCode(requireContext(), qrc));
+      if (user_dest.length() > 0) {
+        value.requestFocus();
+      } else {
+        user_dest.requestFocus();
+      }
+    });
+
     filter_history.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
@@ -413,6 +473,7 @@ public class HomeContentFragment extends Fragment {
       clipboard.setPrimaryClip(clip);
       Toast.makeText(getActivity(), getString(R.string.copy), Toast.LENGTH_SHORT).show();
     });
+
     scan_but.setOnClickListener(v3 -> {
       ScanOptions options = new ScanOptions();
       options.setCaptureActivity(BarcodeScanner.class);
@@ -421,6 +482,20 @@ public class HomeContentFragment extends Fragment {
       options.setBeepEnabled(false);
       barcodeLauncher.launch(options);
     });
+
+    scan_but.setOnLongClickListener(v7 -> {
+      Vibrator vib = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
+      if (vib != null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+          vib.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+          vib.vibrate(50);
+        }
+      }
+      checkPermissions();
+      return true;
+    });
+
     tsb.setTopSheetCallback(new TopSheetBehavior.TopSheetCallback() {
       @Override
       public void onStateChanged(@NonNull View top_Sheet, int newState) {
@@ -758,7 +833,8 @@ public class HomeContentFragment extends Fragment {
   }
 
   private void setStat(String text) {
-    SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);
+    stat.setText(text);
+    SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(stat.getText());
 
     for (int i = 0; i < text.length(); i++) {
       char c = text.charAt(i);
@@ -790,5 +866,157 @@ public class HomeContentFragment extends Fragment {
     }
 
     stat.setText(spannableStringBuilder, TextView.BufferType.SPANNABLE);
+  }
+
+  private void checkPermissions() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      // As the device is Android 13 and above so I want the permission of accessing Audio, Images,
+      // Videos
+      // You can ask permission according to your requirements what you want to access.
+      String imagesPermission = android.Manifest.permission.READ_MEDIA_IMAGES;
+      // Check for permissions and request them if needed
+      if (ContextCompat.checkSelfPermission(requireActivity(), imagesPermission)
+          == PackageManager.PERMISSION_GRANTED) {
+        // You have the permissions, you can proceed with your media file operations.
+        // Showing dialog when Show Dialog button is clicked.
+        filePickerDialog.show();
+      } else {
+        // You don't have the permissions. Request them.
+        ActivityCompat.requestPermissions(
+            requireActivity(), new String[] {imagesPermission}, REQUEST_MEDIA_PERMISSIONS);
+      }
+    } else {
+      // Android version is below 13 so we are asking normal read and write storage permissions
+      // Check for permissions and request them if needed
+      if (ContextCompat.checkSelfPermission(requireActivity(), readPermission)
+              == PackageManager.PERMISSION_GRANTED
+          && ContextCompat.checkSelfPermission(requireActivity(), writePermission)
+              == PackageManager.PERMISSION_GRANTED) {
+        // You have the permissions, you can proceed with your file operations.
+        // Show the file picker dialog when needed
+        filePickerDialog.show();
+      } else {
+        // You don't have the permissions. Request them.
+        ActivityCompat.requestPermissions(requireActivity(),
+            new String[] {readPermission, writePermission}, REQUEST_STORAGE_PERMISSIONS);
+      }
+    }
+  }
+
+  @Override
+  public void onRequestPermissionsResult(
+      int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    if (requestCode == REQUEST_STORAGE_PERMISSIONS) {
+      if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        // Permissions were granted. You can proceed with your file operations.
+        // Showing dialog when Show Dialog button is clicked.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+          // Android version is 11 and above so to access all types of files we have to give
+          // special permission so show user a dialog..
+          accessAllFilesPermissionDialog();
+        } else {
+          // Android version is 10 and below so need of special permission...
+          filePickerDialog.show();
+        }
+      } else {
+        // Permissions were denied. Show a rationale dialog or inform the user about the importance
+        // of these permissions.
+        showRationaleDialog();
+      }
+    }
+
+    // This conditions only works on Android 13 and above versions
+    if (requestCode == REQUEST_MEDIA_PERMISSIONS) {
+      if (grantResults.length > 0 && areAllPermissionsGranted(grantResults)) {
+        // Permissions were granted. You can proceed with your media file operations.
+        // Showing dialog when Show Dialog button is clicked.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+          // Android version is 11 and above so to access all types of files we have to give
+          // special permission so show user a dialog..
+          accessAllFilesPermissionDialog();
+        }
+      } else {
+        // Permissions were denied. Show a rationale dialog or inform the user about the importance
+        // of these permissions.
+        showRationaleDialog();
+      }
+    }
+  }
+
+  private boolean areAllPermissionsGranted(int[] grantResults) {
+    for (int result : grantResults) {
+      if (result != PackageManager.PERMISSION_GRANTED) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private void showRationaleDialog() {
+    if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), readPermission)
+        || ActivityCompat.shouldShowRequestPermissionRationale(
+            requireActivity(), writePermission)) {
+      // Show a rationale dialog explaining why the permissions are necessary.
+      new AlertDialog.Builder(requireActivity())
+          .setTitle(getString(R.string.requestPermTitle))
+          .setMessage(getString(R.string.requestPermText))
+          .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"
+                                     + "Ok"
+                                     + "</font>",
+                                 HtmlCompat.FROM_HTML_MODE_LEGACY),
+              (dialog, which) -> {
+                // Request permissions when the user clicks OK.
+                ActivityCompat.requestPermissions(requireActivity(),
+                    new String[] {readPermission, writePermission}, REQUEST_STORAGE_PERMISSIONS);
+              })
+          .setNeutralButton(
+              HtmlCompat.fromHtml("<font color='red'>" + getString(R.string.cancel) + "</font>",
+                  HtmlCompat.FROM_HTML_MODE_LEGACY),
+              (dialog, which) -> {
+                dialog.dismiss();
+                // Handle the case where the user cancels the permission request.
+              })
+          .show();
+    } else {
+      // Request permissions directly if no rationale is needed.
+      ActivityCompat.requestPermissions(requireActivity(),
+          new String[] {readPermission, writePermission}, REQUEST_STORAGE_PERMISSIONS);
+    }
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.R)
+  private void accessAllFilesPermissionDialog() {
+    new AlertDialog.Builder(requireActivity())
+        .setTitle(getString(R.string.requestPermTitle))
+        .setMessage(getString(R.string.requestPermText))
+        .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"
+                                   + "Ok"
+                                   + "</font>",
+                               HtmlCompat.FROM_HTML_MODE_LEGACY),
+            (dialog, which) -> {
+              // Request permissions when the user clicks OK.
+              Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                  Uri.parse("package:com.oneval"));
+              getPermResult.launch(intent);
+            })
+        .setNeutralButton(
+            HtmlCompat.fromHtml("<font color='red'>" + getString(R.string.cancel) + "</font>",
+                HtmlCompat.FROM_HTML_MODE_LEGACY),
+            (dialog, which) -> {
+              dialog.dismiss();
+              // Handle the case where the user cancels the permission request.
+            })
+        .show();
+  }
+  @Override
+  public void onStart() {
+    super.onStart();
+    // TODO: Implement this method
+    // #S number of active session, #C Number of clicks in session
+    // #Val/C Average value (OV) per click
+    setStat("#S 0  |  #C 0  |  #Val/C 0");
+    stat.setMovementMethod(LinkMovementMethod.getInstance());
+    stat.setHighlightColor(Color.YELLOW);
   }
 }

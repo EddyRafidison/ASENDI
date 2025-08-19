@@ -131,5 +131,6 @@
     <string name="write_storage_missing">Veuillez accorder la permission et réessayer</string>
     <string name="error_saving_image">Erreur lors de la sauvegarde</string>
     <string name="saved">Sauvegardée dans le dossier des téléchargements</string>
+    <string name="invalid_img">Image invalide</string>
 
 </resources>

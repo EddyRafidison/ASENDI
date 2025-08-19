@@ -145,8 +145,6 @@ public class Signup extends AppCompatActivity {
     properties.root = new File(DialogConfigs.DEFAULT_DIR);
     properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
     properties.offset = new File(DialogConfigs.DEFAULT_DIR);
-    // If you want to view files with specific type of extensions the pass string array to
-    // properties.extensions
     properties.extensions = new String[] {"png", "jpg", "webp", "jpeg"};
     properties.show_hidden_files = false;
     filePickerDialog = new FilePickerDialog(this, properties);
@@ -171,6 +169,7 @@ public class Signup extends AppCompatActivity {
         cin2.setImageBitmap(cin2b);
       }
     });
+
     signup.setOnClickListener(v -> {
       String fulln = fullname.getText().toString();
       String birth = birthdate.getText().toString();

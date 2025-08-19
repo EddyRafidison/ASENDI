@@ -80,7 +80,7 @@
                  android:layout_toEndOf="@id/acc_icon"
                  android:background="@android:color/transparent"
                  android:gravity="center_vertical|center|center_horizontal|start"
-                 android:hint="JULES-1111"
+                 android:hint="A-A00Z"
                  android:layout_margin="4dp"
                  android:textColorHint="#64B5F6"
                  android:lines="1"

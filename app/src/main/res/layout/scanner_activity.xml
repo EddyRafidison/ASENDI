@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:layout_height="match_parent"
-	android:layout_width="match_parent">
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_height="match_parent"
+     android:layout_width="match_parent">
 
-	<com.journeyapps.barcodescanner.DecoratedBarcodeView
-		android:layout_height="match_parent"
-		android:layout_width="match_parent"
-		app:zxing_scanner_layout="@layout/viewfinder"
-		android:id="@+id/zxing_barcode_scanner"/>
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+         android:layout_height="match_parent"
+         android:layout_width="match_parent"
+         app:zxing_scanner_layout="@layout/viewfinder"
+         android:id="@+id/zxing_barcode_scanner" />
 
-	<ImageButton
-		android:layout_width="48dp"
-		android:layout_height="48dp"
-		android:id="@+id/switch_flashlight"
-		android:scaleType="fitCenter"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="switchFlash"
-		android:adjustViewBounds="true"
-		android:background="@drawable/flash_bg"
-		android:src="@drawable/flash_off"
-		android:layout_alignParentBottom="true"
-		android:layout_centerHorizontal="true"
-		android:layout_marginBottom="35dp"/>
+    <ImageButton
+         android:layout_height="48dp"
+         android:layout_width="48dp"
+         android:adjustViewBounds="true"
+         android:src="@drawable/flash_off"
+         android:clickable="true"
+         android:onClick="switchFlash"
+         android:layout_centerHorizontal="true"
+         android:focusable="true"
+         android:layout_marginBottom="35dp"
+         android:scaleType="fitCenter"
+         android:background="@android:color/transparent"
+         android:layout_alignParentBottom="true"
+         android:id="@+id/switch_flashlight" />
 
 </RelativeLayout>
-
