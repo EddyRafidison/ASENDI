@@ -15,61 +15,57 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class SplashActivity extends AppCompatActivity {
- private Intent intent;
- private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
-        splashScreen.setKeepOnScreenCondition(() -> true);
-        
-        if(Build.VERSION.SDK_INT >= 23){
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-        != PackageManager.PERMISSION_GRANTED) {
+  private Intent intent;
+  private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        ActivityCompat.requestPermissions(this,
-            new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-            100);
-            }else{
-                gotoNext();
-            }    
-        }else{
-            gotoNext();
-        }
-        
+    SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
+    splashScreen.setKeepOnScreenCondition(() -> true);
+
+    if (Build.VERSION.SDK_INT >= 23) {
+      if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+          != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(
+            this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
+      } else {
+        gotoNext();
+      }
+    } else {
+      gotoNext();
     }
-    
-   @Override
-   public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+  }
+
+  @Override
+  public void onRequestPermissionsResult(
+      int requestCode, String[] permissions, int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
     if (requestCode == 100) {
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-           gotoNext();
-        } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT).show();
-            finish();
-        }
+      if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        gotoNext();
+      } else {
+        Toast.makeText(getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
+            .show();
+        finish();
+      }
     }
-    }
-  
-  private void gotoNext(){
-     scheduler.schedule(
-        () -> {
-            intent = new Intent(this, Signin.class);
-            startActivity(intent);
-            finish();
-         
-          runOnUiThread(
-              () -> {
-                  // code here (empty)
-              });
-        },
-        3,
-        TimeUnit.SECONDS);
-  }    
-    
+  }
+
+  private void gotoNext() {
+    scheduler.schedule(() -> {
+      intent = new Intent(this, Signin.class);
+      startActivity(intent);
+      finish();
+
+      runOnUiThread(()
+                        -> {
+                            // code here (empty)
+                        });
+    }, 3, TimeUnit.SECONDS);
+  }
+
   @Override
   protected void onDestroy() {
     super.onDestroy();

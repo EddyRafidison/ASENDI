@@ -78,97 +78,102 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Utils {
-    
   public static Bitmap qr(Activity activity, String text) {
-       Bitmap logo = BitmapFactory.decodeResource(activity.getResources(), R.drawable.ic_launcher_qr);
-       final int size = 250;
-        try {
-            Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
-            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-            hints.put(EncodeHintType.MARGIN, 1);
+    Bitmap logo = BitmapFactory.decodeResource(activity.getResources(), R.drawable.ic_launcher_qr);
+    final int size = 250;
+    try {
+      Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
+      hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+      hints.put(EncodeHintType.MARGIN, 1);
 
-            BitMatrix matrix = new MultiFormatWriter().encode(
-                    text,
-                    BarcodeFormat.QR_CODE,
-                    size, size,
-                    hints
-            );
+      BitMatrix matrix =
+          new MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE, size, size, hints);
 
-            Bitmap qrBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(qrBitmap);
+      Bitmap qrBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+      Canvas canvas = new Canvas(qrBitmap);
 
-            Paint paint = new Paint();
-            paint.setColor(Color.DKGRAY);
-            paint.setStyle(Paint.Style.FILL);
-            paint.setAntiAlias(true);
+      Paint paint = new Paint();
+      paint.setColor(Color.DKGRAY);
+      paint.setStyle(Paint.Style.FILL);
+      paint.setAntiAlias(true);
 
-            int blockSize = 4; // taille des points arrondis
+      int blockSize = 4; // taille des points arrondis
 
-            for (int x = 0; x < size; x++) {
-                for (int y = 0; y < size; y++) {
-                    if (matrix.get(x, y)) {
-                        float left = x;
-                        float top = y;
-                        RectF rect = new RectF(left, top, left + blockSize, top + blockSize);
-                        canvas.drawRoundRect(rect, blockSize/2f, blockSize/2f, paint);
-                    }
-                }
-            }
-
-            // Ajouter le logo au centre si présent
-            if (logo != null) {
-                int overlaySize = size / 5; // taille du logo = 20% du QR
-                Bitmap scaledLogo = Bitmap.createScaledBitmap(logo, overlaySize, overlaySize, true);
-
-                int left = (size - overlaySize) / 2;
-                int top = (size - overlaySize) / 2;
-
-                canvas.drawBitmap(scaledLogo, left, top, null);
-            }
-
-            return qrBitmap;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+      for (int x = 0; x < size; x++) {
+        for (int y = 0; y < size; y++) {
+          if (matrix.get(x, y)) {
+            float left = x;
+            float top = y;
+            RectF rect = new RectF(left, top, left + blockSize, top + blockSize);
+            canvas.drawRoundRect(rect, blockSize / 2f, blockSize / 2f, paint);
+          }
         }
+      }
+
+      // Ajouter le logo au centre si présent
+      if (logo != null) {
+        int overlaySize = size / 5; // taille du logo = 20% du QR
+        Bitmap scaledLogo = Bitmap.createScaledBitmap(logo, overlaySize, overlaySize, true);
+
+        int left = (size - overlaySize) / 2;
+        int top = (size - overlaySize) / 2;
+
+        canvas.drawBitmap(scaledLogo, left, top, null);
+      }
+
+      return qrBitmap;
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
     }
+  }
 
-    public static void saveToDownloads(Activity context, Bitmap bitmap, String fileName){
-        
+  public static Bitmap resizeBitmap(Bitmap original) {
+    return Bitmap.createScaledBitmap(original, 500, 500, true);
+  }
+
+  public static void saveToDownloads(Activity context, Bitmap bitmap, String fileName) {
     OutputStream out = null;
-    
-    if (Build.VERSION.SDK_INT < 29 && ContextCompat.checkSelfPermission(context,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-        ActivityCompat.requestPermissions(context,
-        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-        Toast.makeText(context, context.getString(R.string.write_storage_missing), Toast.LENGTH_LONG).show();
-        }
-    try{      
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
+    if (Build.VERSION.SDK_INT < 29
+        && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(
+          context, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+      Toast.makeText(context, context.getString(R.string.write_storage_missing), Toast.LENGTH_LONG)
+          .show();
+    }
+    try {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Downloads.DISPLAY_NAME, fileName + ".png");
         values.put(MediaStore.Downloads.MIME_TYPE, "image/png");
         values.put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
 
-        Uri uri = context.getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
+        Uri uri =
+            context.getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
         if (uri != null) {
-            out = context.getContentResolver().openOutputStream(uri);
+          out = context.getContentResolver().openOutputStream(uri);
         } else {
-            Toast.makeText(context, context.getString(R.string.error_saving_image), Toast.LENGTH_LONG).show();
+          Toast.makeText(context, context.getString(R.string.error_saving_image), Toast.LENGTH_LONG)
+              .show();
         }
-    } else {
+      } else {
         File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         File file = new File(dir, fileName + ".png");
         out = new FileOutputStream(file);
+      }
+      bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+      if (out != null) {
+        out.close();
+        Toast.makeText(context, context.getString(R.string.saved), Toast.LENGTH_LONG).show();
+      }
+    } catch (Exception e) {
+      Toast.makeText(context, context.getString(R.string.error_saving_image), Toast.LENGTH_LONG)
+          .show();
     }
-    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-    if (out != null) { out.close();
-    Toast.makeText(context, context.getString(R.string.saved), Toast.LENGTH_LONG).show(); }
-    }catch(Exception e){
-   Toast.makeText(context, context.getString(R.string.error_saving_image), Toast.LENGTH_LONG).show();
-   }
-   }
+  }
 
   public static void showNoConnectionAlert(Context ctx, View v) {
     Snackbar sb = Snackbar.make(v, ctx.getString(R.string.no_connection), Snackbar.LENGTH_LONG);
@@ -204,50 +209,41 @@ public class Utils {
     return jo;
   }
 
-  public static void connectToServer(
-      Activity ctx,
-      String url,
-      String[] keys,
-      String[] values,
-      final boolean showProgress,
-      final ServerListener slistener) {
+  public static void connectToServer(Activity ctx, String url, String[] keys, String[] values,
+      final boolean showProgress, final ServerListener slistener) {
     try {
       progress prog = new progress();
       if (showProgress) {
         prog.show(ctx);
       }
-      final JsonObjectRequest jsonObjectRequest =
-          new JsonObjectRequest(
-              Request.Method.POST,
-              url,
-              post(keys, values),
-              response -> {
-                if (showProgress) {
-                  prog.dismiss();
-                }
-                slistener.OnDataLoaded(response);
-              },
-              error -> {
-                if (showProgress) {
-                  prog.dismiss();
-                }
-                try {
-                  slistener.OnDataLoaded(null);
-                } catch (Exception e) {
-                  Toast.makeText(ctx, ctx.getString(R.string.connect_error), Toast.LENGTH_SHORT)
-                      .show();
-                }
-              }) {
-
-            @NonNull
-            @Override
-            public Map<String, String> getHeaders() {
-              // Build the headers
-              final Map<String, String> params = new HashMap<>();
-              params.put("Content-Type", "application/json");
-              return params;
+      final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,
+          post(keys, values),
+          response
+          -> {
+            if (showProgress) {
+              prog.dismiss();
             }
-          };
+            slistener.OnDataLoaded(response);
+          },
+          error -> {
+            if (showProgress) {
+              prog.dismiss();
+            }
+            try {
+              slistener.OnDataLoaded(null);
+            } catch (Exception e) {
+              Toast.makeText(ctx, ctx.getString(R.string.connect_error), Toast.LENGTH_SHORT).show();
+            }
+          }) {
+        @NonNull
+        @Override
+        public Map<String, String> getHeaders() {
+          // Build the headers
+          final Map<String, String> params = new HashMap<>();
+          params.put("Content-Type", "application/json");
+          return params;
+        }
+      };
       Volley.newRequestQueue(ctx).add(jsonObjectRequest);
     } catch (Exception e) {
       Toast.makeText(ctx, ctx.getString(R.string.connect_error), Toast.LENGTH_SHORT).show();
@@ -257,19 +253,14 @@ public class Utils {
   public static void requestTP(final Activity ctx, String item, final LoaderTextView lt) {
     try {
       RequestQueue queue = Volley.newRequestQueue(ctx);
-      StringRequest sr =
-          new StringRequest(
-              Request.Method.GET,
-              ONEVAL.INFO + "?r=" + item,
-              response ->
-                  lt.setText(
-                      HtmlCompat.fromHtml(response, HtmlCompat.FROM_HTML_MODE_LEGACY),
-                      TextView.BufferType.SPANNABLE),
-              error -> {
-                lt.setText("( … )");
-                Toast.makeText(ctx, ctx.getString(R.string.connect_error), Toast.LENGTH_SHORT)
-                    .show();
-              });
+      StringRequest sr = new StringRequest(Request.Method.GET, ONEVAL.INFO + "?r=" + item,
+          response
+          -> lt.setText(HtmlCompat.fromHtml(response, HtmlCompat.FROM_HTML_MODE_LEGACY),
+              TextView.BufferType.SPANNABLE),
+          error -> {
+            lt.setText("( … )");
+            Toast.makeText(ctx, ctx.getString(R.string.connect_error), Toast.LENGTH_SHORT).show();
+          });
       queue.add(sr);
     } catch (Exception e) {
       Toast.makeText(ctx, ctx.getString(R.string.connect_error), Toast.LENGTH_SHORT).show();
@@ -319,8 +310,8 @@ public class Utils {
   private static String Decrypt(String key, String data) {
     String d;
     try {
-      d =
-          Objects.requireNonNull(
+      d = Objects
+              .requireNonNull(
                   DataCrypto.getDefault(key, "wa20" + key.substring(1, 4) + "ve24", new byte[16]))
               .decryptOrNull(data);
     } catch (Exception e) {
@@ -332,8 +323,8 @@ public class Utils {
   private static String Encrypt(String key, String data) {
     String d;
     try {
-      d =
-          Objects.requireNonNull(
+      d = Objects
+              .requireNonNull(
                   DataCrypto.getDefault(key, "wa20" + key.substring(1, 4) + "ve24", new byte[16]))
               .encryptOrNull(data);
     } catch (Exception e) {
@@ -469,11 +460,9 @@ public class Utils {
     FileOutputStream output;
     try {
       input = new FileInputStream(new File(ctx.getFilesDir(), "One-Val.apk"));
-      output =
-          new FileOutputStream(
-              new File(
-                  Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                  "One-Val.apk"));
+      output = new FileOutputStream(
+          new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+              "One-Val.apk"));
       byte[] data = new byte[4096];
       int count;
       while ((count = input.read(data)) != -1) {
@@ -482,22 +471,19 @@ public class Utils {
       output.close();
       input.close();
     } catch (IOException ignored) {
-
     }
   }
 
   public static void installUpdate(Context context) {
     try {
       PackageInstaller packageInstaller = context.getPackageManager().getPackageInstaller();
-      int sessionId =
-          packageInstaller.createSession(
-              new PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL));
+      int sessionId = packageInstaller.createSession(
+          new PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL));
       PackageInstaller.Session session = packageInstaller.openSession(sessionId);
 
       long sizeBytes = 0;
       File f =
-          new File(
-              Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+          new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
               "One-Val.apk");
       InputStream inputStream = new FileInputStream(f);
       OutputStream out;
@@ -513,16 +499,15 @@ public class Utils {
       out.close();
 
       Intent intent = new Intent(context, Signin.class);
-      PendingIntent pendingIntent =
-          PendingIntent.getBroadcast(
-              context, 1337111117, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+      PendingIntent pendingIntent = PendingIntent.getBroadcast(
+          context, 1337111117, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
       session.commit(pendingIntent.getIntentSender());
       session.close();
     } catch (IOException ignored) {
     }
   }
-public static String getCountryCode(Context context) {
+  public static String getCountryCode(Context context) {
     String countryCode = null;
 
     // via TelephonyManager
@@ -551,18 +536,14 @@ public static String getCountryCode(Context context) {
                 countryCode = addresses.get(0).getCountryCode();
               }
             } else {
-              geocoder.getFromLocation(
-                  lat,
-                  lon,
-                  1,
-                  new Geocoder.GeocodeListener() {
-                    @Override
-                    public void onGeocode(List<Address> addresses) {
-                      if (addresses != null && !addresses.isEmpty()) {
-                        String country = addresses.get(0).getCountryName();
-                      }
-                    }
-                  });
+              geocoder.getFromLocation(lat, lon, 1, new Geocoder.GeocodeListener() {
+                @Override
+                public void onGeocode(List<Address> addresses) {
+                  if (addresses != null && !addresses.isEmpty()) {
+                    String country = addresses.get(0).getCountryName();
+                  }
+                }
+              });
             }
           } catch (IOException e) {
             e.printStackTrace();

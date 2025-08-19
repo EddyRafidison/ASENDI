@@ -10,14 +10,8 @@ public class HistoryItem {
   String account;
   String fees;
 
-  public HistoryItem(
-      Context ctx,
-      String time,
-      String amount,
-      String type,
-      String receiver,
-      String reference,
-      String fees) {
+  public HistoryItem(Context ctx, String time, String amount, String type, String receiver,
+      String reference, String fees) {
     // type is either 0 (sent) or 1 (received)
     this.time = time;
     this.ctx = ctx;
@@ -55,33 +49,17 @@ public class HistoryItem {
   public CharSequence getDetail() {
     // Note : AE = ARIARY-EQUIVALENCE
     if (type.equals("1")) {
-      return HtmlCompat.fromHtml(
-          "<b>"
-              + amount
-              + "</b>"
-              + "&nbsp;"
-              + ctx.getString(R.string.to)
-              + "&nbsp;"
-              + receiver
+      return HtmlCompat.fromHtml("<b>" + amount + "</b>"
+              + "&nbsp;" + ctx.getString(R.string.to) + "&nbsp;" + receiver
               + (".&nbsp;").replace(".", ctx.getString(R.string.punct))
               + ctx.getString(R.string.fees).replace("100", fees)
-              + (".<br>").replace(".", ctx.getString(R.string.punct))
-              + "Id:&nbsp;"
-              + reference,
+              + (".<br>").replace(".", ctx.getString(R.string.punct)) + "Id:&nbsp;" + reference,
           HtmlCompat.FROM_HTML_MODE_LEGACY);
     } else {
-      return HtmlCompat.fromHtml(
-          "<b>"
-              + amount
-              + "</b>"
-              + "&nbsp;"
-              + ctx.getString(R.string.from)
-              + "&nbsp;"
-              + receiver
-              + ctx.getString(R.string.punct)
-              + "<br>"
-              + "Id:&nbsp;"
-              + reference,
+      return HtmlCompat.fromHtml("<b>" + amount + "</b>"
+              + "&nbsp;" + ctx.getString(R.string.from) + "&nbsp;" + receiver
+              + ctx.getString(R.string.punct) + "<br>"
+              + "Id:&nbsp;" + reference,
           HtmlCompat.FROM_HTML_MODE_LEGACY);
     }
   }

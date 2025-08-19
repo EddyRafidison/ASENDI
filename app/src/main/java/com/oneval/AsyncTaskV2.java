@@ -14,7 +14,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public abstract class AsyncTaskV2<Params, Progress, Result> {
-
   // This handler will be used to communicate with main thread
   private final Handler handler = new Handler(Looper.getMainLooper());
   private final AtomicBoolean cancelled = new AtomicBoolean(false);
@@ -68,7 +67,6 @@ public abstract class AsyncTaskV2<Params, Progress, Result> {
           handler.post(this::onCancelled);
         }
       } catch (InterruptedException | ExecutionException ignored) {
-
       }
     };
   }

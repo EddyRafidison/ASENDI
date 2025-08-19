@@ -47,17 +47,15 @@ public class Signup extends AppCompatActivity {
   private final String readPermission = android.Manifest.permission.READ_EXTERNAL_STORAGE;
   private final String writePermission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
   private FilePickerDialog filePickerDialog;
-  private final ActivityResultLauncher<Intent> getPermResult =
-      registerForActivityResult(
-          new ActivityResultContracts.StartActivityForResult(),
-          new ActivityResultCallback<>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-              if (result.getResultCode() == Activity.RESULT_OK) {
-                filePickerDialog.show();
-              }
-            }
-          });
+  private final ActivityResultLauncher<Intent> getPermResult = registerForActivityResult(
+      new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+          if (result.getResultCode() == Activity.RESULT_OK) {
+            filePickerDialog.show();
+          }
+        }
+      });
   private EditText fullname, birthdate, address, cin, email, pswd1, pswd2, sk;
   private ImageButton cin1, cin2;
   private CheckBox check;
@@ -70,18 +68,15 @@ public class Signup extends AppCompatActivity {
     super.onCreate(arg0);
     Window w = getWindow();
     try {
-      w.setFlags(
-          WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+      w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
           WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
     } catch (Exception ignored) {
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
       w.setDecorFitsSystemWindows(false);
     } else {
-      getWindow()
-          .setFlags(
-              WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
-              WindowManager.LayoutParams.TYPE_STATUS_BAR);
+      getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+          WindowManager.LayoutParams.TYPE_STATUS_BAR);
     }
     w.setNavigationBarColor(getResources().getColor(R.color.primary));
     setContentView(R.layout.signup);
@@ -103,11 +98,12 @@ public class Signup extends AppCompatActivity {
     TextView textCheck = findViewById(R.id.textCheck);
     TextView fulladdTitle = findViewById(R.id.fulladdT);
     String fullAdd = getString(R.string.fullAddress);
-    
+
     final String loc = Utils.getCountryCode(getApplicationContext());
-    if(loc.isEmpty()){
-        Toast.makeText(getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT).show();
-        finish();
+    if (loc.isEmpty()) {
+      Toast.makeText(getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
+          .show();
+      finish();
     }
     Locale locale = new Locale("", loc);
     fulladdTitle.setText(fullAdd.replace(" X", " " + locale.getDisplayCountry()));
@@ -115,10 +111,8 @@ public class Signup extends AppCompatActivity {
     fullname.requestFocus();
     fullname.setAllCaps(true);
 
-    String[] strs =
-        new String[] {
-          getString(R.string.terms).toLowerCase(), getString(R.string.privacy).toLowerCase()
-        };
+    String[] strs = new String[] {
+        getString(R.string.terms).toLowerCase(), getString(R.string.privacy).toLowerCase()};
     final String t = getString(R.string.notice_terms_policy);
     final String tlc = t.toLowerCase();
     SpannableStringBuilder ss = new SpannableStringBuilder(t);
@@ -126,32 +120,21 @@ public class Signup extends AppCompatActivity {
       String s = strs[i];
       int start = tlc.indexOf(s);
       int end = tlc.lastIndexOf(s) + s.length();
-      ss.setSpan(
-          new Clickables(
-              textCheck,
-              strs,
-              i,
-              string -> {
-                Intent browserIntent;
-                if (string.equals(strs[0])) {
-                  // show terms of use
-                  browserIntent =
-                      new Intent(
-                          Intent.ACTION_VIEW,
-                          Uri.parse(ONEVAL.INFO + "?r=terms" + "&l=" + ONEVAL.TPLANG));
-                } else {
-                  // show policy
-                  browserIntent =
-                      new Intent(
-                          Intent.ACTION_VIEW,
-                          Uri.parse(ONEVAL.INFO + "?r=privacy" + "&l=" + ONEVAL.TPLANG));
-                }
-                startActivity(browserIntent);
-              },
-              Color.MAGENTA),
-          start,
-          end,
-          Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+      ss.setSpan(new Clickables(textCheck, strs, i, string -> {
+        Intent browserIntent;
+        if (string.equals(strs[0])) {
+          // show terms of use
+          browserIntent = new Intent(Intent.ACTION_VIEW,
+              Uri.parse(ONEVAL.INFO + "?r=terms"
+                  + "&l=" + ONEVAL.TPLANG));
+        } else {
+          // show policy
+          browserIntent = new Intent(Intent.ACTION_VIEW,
+              Uri.parse(ONEVAL.INFO + "?r=privacy"
+                  + "&l=" + ONEVAL.TPLANG));
+        }
+        startActivity(browserIntent);
+      }, Color.MAGENTA), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     textCheck.setText(ss, TextView.BufferType.SPANNABLE);
@@ -169,220 +152,186 @@ public class Signup extends AppCompatActivity {
     filePickerDialog = new FilePickerDialog(this, properties);
     filePickerDialog.setTitle(getString(R.string.select_file));
     filePickerDialog.setPositiveBtnName(
-        HtmlCompat.fromHtml(
-            "<font color='green'>" + getString(R.string.selection) + "</font>",
+        HtmlCompat.fromHtml("<font color='green'>" + getString(R.string.selection) + "</font>",
             HtmlCompat.FROM_HTML_MODE_LEGACY));
     filePickerDialog.setCancelable(true);
     filePickerDialog.setNegativeBtnName(getString(R.string.cancel));
-    filePickerDialog.setDialogSelectionListener(
-        files -> {
-          // files is the array of the paths of files selected by the Application User.
-          if (cin_code == 1) {
-            String cin_path_1 = files[0];
-            Bitmap cin1b = BitmapFactory.decodeFile(cin_path_1);
-            cin_bytes_1 = Utils.imageToString(cin1b);
-            cin1.setImageBitmap(cin1b);
+    filePickerDialog.setDialogSelectionListener(files -> {
+      // files is the array of the paths of files selected by the Application User.
+      if (cin_code == 1) {
+        String cin_path_1 = files[0];
+        Bitmap cin1b = BitmapFactory.decodeFile(cin_path_1);
+        cin_bytes_1 = Utils.imageToString(cin1b);
+        cin1.setImageBitmap(cin1b);
 
-          } else {
-            String cin_path_2 = files[0];
-            Bitmap cin2b = BitmapFactory.decodeFile(cin_path_2);
-            cin_bytes_2 = Utils.imageToString(cin2b);
-            cin2.setImageBitmap(cin2b);
-          }
-        });
-    signup.setOnClickListener(
-        v -> {
-          String fulln = fullname.getText().toString();
-          String birth = birthdate.getText().toString();
-          String addrs = address.getText().toString();
-          String Cin = cin.getText().toString();
-          String mailAd = email.getText().toString();
-          String psd1 = pswd1.getText().toString();
-          String psd2 = pswd2.getText().toString();
-          String secretkey = sk.getText().toString();
-          if (!fulln.isEmpty()) {
-            if (!birth.isEmpty()) {
-              if (!addrs.isEmpty()) {
-                if (!Cin.isEmpty()) {
-                  if (!mailAd.isEmpty()) {
-                    if (!cin_bytes_1.isEmpty()) {
-                      if (!cin_bytes_2.isEmpty()) {
-                        if (!psd1.isEmpty()) {
-                          if (!psd2.isEmpty()) {
-                            if (!secretkey.isEmpty()) {
-                              if (psd1.equals(psd2)) {
-                                if (psd1.length() >= 4) {
-                                  if (!check.isChecked()) {
-                                    Toast.makeText(
-                                            getApplicationContext(),
-                                            getString(R.string.check_termsPolicy),
-                                            Toast.LENGTH_SHORT)
-                                        .show();
-                                  } else {
-                                    if (Utils.isConnectionAvailable(getApplicationContext())
-                                        == false) {
-                                      Utils.showNoConnectionAlert(getApplicationContext(), signup);
-                                    } else {
-                                      // process signup
-                                      Utils.connectToServer(
-                                          Signup.this,
-                                          ONEVAL.SIGNUP,
-                                          new String[] {
-                                            "email", "birth", "addr", "name", "cin", "pswd", "sk",
-                                            "cinimg1", "cinimg2"
-                                          },
-                                          new String[] {
-                                            mailAd,
-                                            birth,
-                                            addrs + " " + loc,
-                                            fulln,
-                                            Cin,
-                                            psd1,
-                                            secretkey,
-                                            cin_bytes_1,
-                                            cin_bytes_2
-                                          },
-                                          true,
-                                          response -> {
-                                            if (response != null) {
-                                              try {
-                                                String msg = response.getString("msg");
-                                                if (msg.equals("ok")) {
-                                                  signup.setClickable(false);
-                                                  Utils.showMessage(
-                                                      getApplicationContext(),
-                                                      signup,
-                                                      getString(R.string.check_signup_mail),
-                                                      true);
-                                                } else if (msg.equals("retry")) {
-                                                  Toast.makeText(
-                                                          getApplicationContext(),
-                                                          getString(R.string.retry_signup),
-                                                          Toast.LENGTH_SHORT)
-                                                      .show();
-                                                } else if (msg.contains("unsupported")) {
-                                                  Toast.makeText(
-                                                          getApplicationContext(),
-                                                          getString(R.string.unsupported_country),
-                                                          Toast.LENGTH_SHORT)
-                                                      .show();
-                                                } else if (msg.contains("what")) {
-                                                  Toast.makeText(
-                                                          getApplicationContext(),
-                                                          getString(R.string.country_null),
-                                                          Toast.LENGTH_SHORT)
-                                                      .show();
-                                                } else {
-                                                  Toast.makeText(
-                                                          getApplicationContext(),
-                                                          getString(R.string.failed),
-                                                          Toast.LENGTH_SHORT)
-                                                      .show();
-                                                }
-                                              } catch (JSONException je) {
-                                                Toast.makeText(
-                                                        getApplicationContext(),
-                                                        getString(R.string.data_error),
-                                                        Toast.LENGTH_SHORT)
-                                                    .show();
-                                              }
-                                            }
-                                          });
-                                    }
-                                  }
-                                } else {
-                                  Toast.makeText(
-                                          getApplicationContext(),
-                                          getString(R.string.tooShortPswd),
-                                          Toast.LENGTH_SHORT)
-                                      .show();
-                                }
-                              } else {
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        getString(R.string.not_matched_pswd),
-                                        Toast.LENGTH_SHORT)
+      } else {
+        String cin_path_2 = files[0];
+        Bitmap cin2b = BitmapFactory.decodeFile(cin_path_2);
+        cin_bytes_2 = Utils.imageToString(cin2b);
+        cin2.setImageBitmap(cin2b);
+      }
+    });
+    signup.setOnClickListener(v -> {
+      String fulln = fullname.getText().toString();
+      String birth = birthdate.getText().toString();
+      String addrs = address.getText().toString();
+      String Cin = cin.getText().toString();
+      String mailAd = email.getText().toString();
+      String psd1 = pswd1.getText().toString();
+      String psd2 = pswd2.getText().toString();
+      String secretkey = sk.getText().toString();
+      if (!fulln.isEmpty()) {
+        if (!birth.isEmpty()) {
+          if (!addrs.isEmpty()) {
+            if (!Cin.isEmpty()) {
+              if (!mailAd.isEmpty()) {
+                if (!cin_bytes_1.isEmpty()) {
+                  if (!cin_bytes_2.isEmpty()) {
+                    if (!psd1.isEmpty()) {
+                      if (!psd2.isEmpty()) {
+                        if (!secretkey.isEmpty()) {
+                          if (psd1.equals(psd2)) {
+                            if (psd1.length() >= 4) {
+                              if (!check.isChecked()) {
+                                Toast
+                                    .makeText(getApplicationContext(),
+                                        getString(R.string.check_termsPolicy), Toast.LENGTH_SHORT)
                                     .show();
+                              } else {
+                                if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
+                                  Utils.showNoConnectionAlert(getApplicationContext(), signup);
+                                } else {
+                                  // process signup
+                                  Utils.connectToServer(Signup.this, ONEVAL.SIGNUP,
+                                      new String[] {"email", "birth", "addr", "name", "cin", "pswd",
+                                          "sk", "cinimg1", "cinimg2"},
+                                      new String[] {mailAd, birth, addrs + " " + loc, fulln, Cin,
+                                          psd1, secretkey, cin_bytes_1, cin_bytes_2},
+                                      true, response -> {
+                                        if (response != null) {
+                                          try {
+                                            String msg = response.getString("msg");
+                                            if (msg.equals("ok")) {
+                                              signup.setClickable(false);
+                                              Utils.showMessage(getApplicationContext(), signup,
+                                                  getString(R.string.check_signup_mail), true);
+                                            } else if (msg.equals("retry")) {
+                                              Toast
+                                                  .makeText(getApplicationContext(),
+                                                      getString(R.string.retry_signup),
+                                                      Toast.LENGTH_SHORT)
+                                                  .show();
+                                            } else if (msg.contains("unsupported")) {
+                                              Toast
+                                                  .makeText(getApplicationContext(),
+                                                      getString(R.string.unsupported_country),
+                                                      Toast.LENGTH_SHORT)
+                                                  .show();
+                                            } else if (msg.contains("what")) {
+                                              Toast
+                                                  .makeText(getApplicationContext(),
+                                                      getString(R.string.country_null),
+                                                      Toast.LENGTH_SHORT)
+                                                  .show();
+                                            } else {
+                                              Toast
+                                                  .makeText(getApplicationContext(),
+                                                      getString(R.string.failed),
+                                                      Toast.LENGTH_SHORT)
+                                                  .show();
+                                            }
+                                          } catch (JSONException je) {
+                                            Toast
+                                                .makeText(getApplicationContext(),
+                                                    getString(R.string.data_error),
+                                                    Toast.LENGTH_SHORT)
+                                                .show();
+                                          }
+                                        }
+                                      });
+                                }
                               }
                             } else {
-                              Toast.makeText(
-                                      getApplicationContext(),
-                                      getString(R.string.check_entries),
-                                      Toast.LENGTH_SHORT)
+                              Toast
+                                  .makeText(getApplicationContext(),
+                                      getString(R.string.tooShortPswd), Toast.LENGTH_SHORT)
                                   .show();
                             }
                           } else {
-                            Toast.makeText(
-                                    getApplicationContext(),
-                                    getString(R.string.check_entries),
-                                    Toast.LENGTH_SHORT)
+                            Toast
+                                .makeText(getApplicationContext(),
+                                    getString(R.string.not_matched_pswd), Toast.LENGTH_SHORT)
                                 .show();
                           }
                         } else {
-                          Toast.makeText(
-                                  getApplicationContext(),
-                                  getString(R.string.check_entries),
+                          Toast
+                              .makeText(getApplicationContext(), getString(R.string.check_entries),
                                   Toast.LENGTH_SHORT)
                               .show();
                         }
                       } else {
-                        Toast.makeText(
-                                getApplicationContext(),
-                                getString(R.string.check_entries),
+                        Toast
+                            .makeText(getApplicationContext(), getString(R.string.check_entries),
                                 Toast.LENGTH_SHORT)
                             .show();
                       }
                     } else {
-                      Toast.makeText(
-                              getApplicationContext(),
-                              getString(R.string.check_entries),
+                      Toast
+                          .makeText(getApplicationContext(), getString(R.string.check_entries),
                               Toast.LENGTH_SHORT)
                           .show();
                     }
                   } else {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            getString(R.string.check_entries),
+                    Toast
+                        .makeText(getApplicationContext(), getString(R.string.check_entries),
                             Toast.LENGTH_SHORT)
                         .show();
                   }
                 } else {
-                  Toast.makeText(
-                          getApplicationContext(),
-                          getString(R.string.check_entries),
+                  Toast
+                      .makeText(getApplicationContext(), getString(R.string.check_entries),
                           Toast.LENGTH_SHORT)
                       .show();
                 }
               } else {
-                Toast.makeText(
-                        getApplicationContext(),
-                        getString(R.string.check_entries),
+                Toast
+                    .makeText(getApplicationContext(), getString(R.string.check_entries),
                         Toast.LENGTH_SHORT)
                     .show();
               }
             } else {
-              Toast.makeText(
-                      getApplicationContext(),
-                      getString(R.string.check_entries),
+              Toast
+                  .makeText(getApplicationContext(), getString(R.string.check_entries),
                       Toast.LENGTH_SHORT)
                   .show();
             }
           } else {
-            Toast.makeText(
+            Toast
+                .makeText(
                     getApplicationContext(), getString(R.string.check_entries), Toast.LENGTH_SHORT)
                 .show();
           }
-        });
-    cin1.setOnClickListener(
-        v -> {
-          cin_code = 1;
-          checkPermissions();
-        });
-    cin2.setOnClickListener(
-        v -> {
-          cin_code = 2;
-          checkPermissions();
-        });
+        } else {
+          Toast
+              .makeText(
+                  getApplicationContext(), getString(R.string.check_entries), Toast.LENGTH_SHORT)
+              .show();
+        }
+      } else {
+        Toast
+            .makeText(
+                getApplicationContext(), getString(R.string.check_entries), Toast.LENGTH_SHORT)
+            .show();
+      }
+    });
+    cin1.setOnClickListener(v -> {
+      cin_code = 1;
+      checkPermissions();
+    });
+    cin2.setOnClickListener(v -> {
+      cin_code = 2;
+      checkPermissions();
+    });
   }
 
   private void checkPermissions() {
@@ -477,19 +426,17 @@ public class Signup extends AppCompatActivity {
       new AlertDialog.Builder(this)
           .setTitle(getString(R.string.requestPermTitle))
           .setMessage(getString(R.string.requestPermText))
-          .setPositiveButton(
-              HtmlCompat.fromHtml(
-                  "<font color='yellow'>" + "Ok" + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY),
+          .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"
+                                     + "Ok"
+                                     + "</font>",
+                                 HtmlCompat.FROM_HTML_MODE_LEGACY),
               (dialog, which) -> {
                 // Request permissions when the user clicks OK.
-                ActivityCompat.requestPermissions(
-                    this,
-                    new String[] {readPermission, writePermission},
-                    REQUEST_STORAGE_PERMISSIONS);
+                ActivityCompat.requestPermissions(this,
+                    new String[] {readPermission, writePermission}, REQUEST_STORAGE_PERMISSIONS);
               })
           .setNeutralButton(
-              HtmlCompat.fromHtml(
-                  "<font color='red'>" + getString(R.string.cancel) + "</font>",
+              HtmlCompat.fromHtml("<font color='red'>" + getString(R.string.cancel) + "</font>",
                   HtmlCompat.FROM_HTML_MODE_LEGACY),
               (dialog, which) -> {
                 dialog.dismiss();
@@ -508,20 +455,18 @@ public class Signup extends AppCompatActivity {
     new AlertDialog.Builder(Signup.this)
         .setTitle(getString(R.string.requestPermTitle))
         .setMessage(getString(R.string.requestPermText))
-        .setPositiveButton(
-            HtmlCompat.fromHtml(
-                "<font color='yellow'>" + "Ok" + "</font>", HtmlCompat.FROM_HTML_MODE_LEGACY),
+        .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"
+                                   + "Ok"
+                                   + "</font>",
+                               HtmlCompat.FROM_HTML_MODE_LEGACY),
             (dialog, which) -> {
               // Request permissions when the user clicks OK.
-              Intent intent =
-                  new Intent(
-                      Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
-                      Uri.parse("package:com.oneval"));
+              Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                  Uri.parse("package:com.oneval"));
               getPermResult.launch(intent);
             })
         .setNeutralButton(
-            HtmlCompat.fromHtml(
-                "<font color='red'>" + getString(R.string.cancel) + "</font>",
+            HtmlCompat.fromHtml("<font color='red'>" + getString(R.string.cancel) + "</font>",
                 HtmlCompat.FROM_HTML_MODE_LEGACY),
             (dialog, which) -> {
               dialog.dismiss();

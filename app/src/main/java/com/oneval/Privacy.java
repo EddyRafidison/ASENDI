@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import com.elyeproj.loaderviewlibrary.LoaderTextView;
 
 public class Privacy extends Fragment {
-
   @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -16,7 +15,10 @@ public class Privacy extends Fragment {
     // Inflate the layout for this fragment
     LoaderTextView text = layout.findViewById(R.id.textdata);
     // load data here
-    Utils.requestTP(getActivity(), "privacy" + "&l=" + ONEVAL.TPLANG, text);
+    Utils.requestTP(getActivity(),
+        "privacy"
+            + "&l=" + ONEVAL.TPLANG,
+        text);
     return layout;
   }
 }

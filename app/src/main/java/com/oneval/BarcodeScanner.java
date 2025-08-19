@@ -15,12 +15,11 @@ import com.journeyapps.barcodescanner.ViewfinderView;
 
 /** Custom Scanner Activity extending from Activity to display a custom layout form scanner view. */
 public class BarcodeScanner extends Activity implements DecoratedBarcodeView.TorchListener {
-
   private CaptureManager capture;
   private DecoratedBarcodeView barcodeScannerView;
   private ImageButton switchFlashlightButton;
   private ViewfinderView viewfinderView;
-  private boolean flashON = false;  
+  private boolean flashON = false;
 
   @SuppressLint({"ResourceType", "MissingInflatedId"})
   @Override
@@ -85,9 +84,8 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
    * @return true if there is Flashlight, otherwise false.
    */
   private boolean hasFlash() {
-    return getApplicationContext()
-        .getPackageManager()
-        .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+    return getApplicationContext().getPackageManager().hasSystemFeature(
+        PackageManager.FEATURE_CAMERA_FLASH);
   }
 
   public void changeMaskColor(View view) {
@@ -98,15 +96,15 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
     viewfinderView.setLaserVisibility(visible);
   }
 
-  public void switchFlash(View v){
-      if(hasFlash()){
-          if(!flashON){
-              barcodeScannerView.setTorchOn();
-          }else{
-              barcodeScannerView.setTorchOff();
-          }
+  public void switchFlash(View v) {
+    if (hasFlash()) {
+      if (!flashON) {
+        barcodeScannerView.setTorchOn();
+      } else {
+        barcodeScannerView.setTorchOff();
       }
-  } 
+    }
+  }
 
   @Override
   public void onBackPressed() {
@@ -116,13 +114,13 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
 
   @Override
   public void onTorchOn() {
-    flashON = true;  
+    flashON = true;
     switchFlashlightButton.setImageResource(R.drawable.flash_on);
   }
 
   @Override
   public void onTorchOff() {
-    flashON = false;  
+    flashON = false;
     switchFlashlightButton.setImageResource(R.drawable.flash_off);
   }
 

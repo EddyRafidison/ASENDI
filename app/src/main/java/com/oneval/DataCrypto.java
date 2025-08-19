@@ -35,15 +35,11 @@ public class DataCrypto {
   }
 
   private String encrypt(String data)
-      throws UnsupportedEncodingException,
-          NoSuchAlgorithmException,
-          NoSuchPaddingException,
-          InvalidAlgorithmParameterException,
-          InvalidKeyException,
-          InvalidKeySpecException,
-          BadPaddingException,
-          IllegalBlockSizeException {
-    if (data == null) return null;
+      throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException,
+             InvalidAlgorithmParameterException, InvalidKeyException, InvalidKeySpecException,
+             BadPaddingException, IllegalBlockSizeException {
+    if (data == null)
+      return null;
     SecretKey secretKey = getSecretKey(hashTheKey(mBuilder.getKey()));
     byte[] dataBytes = data.getBytes(mBuilder.getCharsetName());
     Cipher cipher = Cipher.getInstance(mBuilder.getAlgorithm());
@@ -61,14 +57,11 @@ public class DataCrypto {
   }
 
   private String decrypt(String data)
-      throws UnsupportedEncodingException,
-          NoSuchAlgorithmException,
-          InvalidKeySpecException,
-          NoSuchPaddingException,
-          InvalidAlgorithmParameterException,
-          InvalidKeyException {
+      throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeySpecException,
+             NoSuchPaddingException, InvalidAlgorithmParameterException, InvalidKeyException {
     String d;
-    if (data == null) return null;
+    if (data == null)
+      return null;
     byte[] dataBytes = Base64.decode(data, mBuilder.getBase64Mode());
     SecretKey secretKey = getSecretKey(hashTheKey(mBuilder.getKey()));
     Cipher cipher = Cipher.getInstance(mBuilder.getAlgorithm());
@@ -94,12 +87,8 @@ public class DataCrypto {
   private SecretKey getSecretKey(char[] key)
       throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeySpecException {
     SecretKeyFactory factory = SecretKeyFactory.getInstance(mBuilder.getSecretKeyType());
-    KeySpec spec =
-        new PBEKeySpec(
-            key,
-            mBuilder.getSalt().getBytes(mBuilder.getCharsetName()),
-            mBuilder.getIterationCount(),
-            mBuilder.getKeyLength());
+    KeySpec spec = new PBEKeySpec(key, mBuilder.getSalt().getBytes(mBuilder.getCharsetName()),
+        mBuilder.getIterationCount(), mBuilder.getKeyLength());
     SecretKey tmp = factory.generateSecret(spec);
     return new SecretKeySpec(tmp.getEncoded(), mBuilder.getKeyAlgorithm());
   }
@@ -112,7 +101,6 @@ public class DataCrypto {
   }
 
   private static class Builder {
-
     private byte[] mIv;
     private int mKeyLength;
     private int mBase64Mode;
