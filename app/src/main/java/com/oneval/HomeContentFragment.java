@@ -9,8 +9,11 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -104,6 +107,7 @@ public class HomeContentFragment extends Fragment {
             LastHistSize = 0,
             cursor = 0;
     private DecimalFormat df;
+    private Bitmap dest_qr = null;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -117,7 +121,7 @@ public class HomeContentFragment extends Fragment {
         rel = layout.findViewById(R.id.rel);
         topsheet_arrow = layout.findViewById(R.id.topsheet_arrow);
         topsheet_profile = layout.findViewById(R.id.topsheet_profile);
-        ImageView qr = layout.findViewById(R.id.qr);
+        final ImageView qr = layout.findViewById(R.id.qr);
         Spinner filter_history = layout.findViewById(R.id.filter_history);
         user_id = layout.findViewById(R.id.user_id);
         qr_dest = layout.findViewById(R.id.dest_qr);
@@ -131,9 +135,26 @@ public class HomeContentFragment extends Fragment {
                   
         historylist = layout.findViewById(R.id.history_list);
         user = Utils.getAccount(requireContext());
-        Bitmap user_qr = Utils.qr(requireActivity(),user);
+        final Bitmap user_qr = Utils.qr(requireActivity(),user);
         qr.setImageBitmap(user_qr);
         qr_dest.setImageBitmap(user_qr);
+        
+        qr_dest.setOnLongClickListener(v6 ->{
+            Vibrator vib = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            if (vib != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vib.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+            vib.vibrate(50); // Android < 26
+              }
+             }
+             String user_d = user_dest.getText().toString();
+             if(user_d.length() > 3){
+             Utils.saveToDownloads(requireActivity(), dest_qr, user_d);
+             }
+            return true;
+        });
+        
         rel.setAlpha(0);
         rel_.setAlpha(0);
         DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance();
@@ -181,6 +202,19 @@ public class HomeContentFragment extends Fragment {
             user_gr = "Consumer";
         }
         group.setText(user_gr);
+        
+        qr.setOnLongClickListener(v5 ->{
+            Vibrator vib = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            if (vib != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vib.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+            vib.vibrate(50); // Android < 26
+              }
+             }
+            Utils.saveToDownloads(requireActivity(), user_qr, user);
+            return true;
+        });
         
         stat.setMovementMethod(LinkMovementMethod.getInstance());
         stat.setHighlightColor(Color.YELLOW);
@@ -336,14 +370,14 @@ public class HomeContentFragment extends Fragment {
                 if (s.length() > 0) {
                     stock.setText(stockMasker());
                     stock.setTransformationMethod(new StockHiding());
-                    Bitmap qr = Utils.qr(requireActivity(), s_);
-                    if (qr != null) {
-                        qr_dest.setImageBitmap(qr);
+                    dest_qr = Utils.qr(requireActivity(), s_);
+                    if (dest_qr != null) {
+                        qr_dest.setImageBitmap(dest_qr);
                     }
                 } else {
                     stock.setText(stockShower());
                     stock.setTransformationMethod(null);
-                    qr_dest.setImageBitmap(Utils.qr(requireActivity(), "JULES-1111"));
+                    qr_dest.setImageBitmap(Utils.qr(requireActivity(), user));
                 }
                 // TODO Auto-generated method stub
             }

@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-     xmlns:android="http://schemas.android.com/apk/res/android"
-     xmlns:app="http://schemas.android.com/apk/res-auto"
-     android:layout_height="match_parent"
-     android:layout_width="match_parent">
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent">
 
-    <com.journeyapps.barcodescanner.DecoratedBarcodeView
-         android:layout_height="match_parent"
-         android:layout_width="match_parent"
-         app:zxing_scanner_layout="@layout/viewfinder"
-         android:id="@+id/zxing_barcode_scanner" />
+	<com.journeyapps.barcodescanner.DecoratedBarcodeView
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		app:zxing_scanner_layout="@layout/viewfinder"
+		android:id="@+id/zxing_barcode_scanner"/>
 
-    <Button
-         android:layout_height="wrap_content"
-         android:layout_width="wrap_content"
-         android:layout_centerHorizontal="true"
-         android:layout_alignParentTop="true"
-         android:id="@+id/switch_flashlight"
-         android:text="@string/turn_on_flashlight" />
+	<ImageButton
+		android:layout_width="48dp"
+		android:layout_height="48dp"
+		android:id="@+id/switch_flashlight"
+		android:scaleType="fitCenter"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="switchFlash"
+		android:adjustViewBounds="true"
+		android:background="@drawable/flash_bg"
+		android:src="@drawable/flash_off"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:layout_marginBottom="35dp"/>
 
 </RelativeLayout>
+

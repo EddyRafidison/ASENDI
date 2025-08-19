@@ -128,6 +128,9 @@
     <string name="stat_session">Active session id</string>
     <string name="stat_clicks">Number of clicks in the active session</string>
     <string name="stat_vpc">Average value OneVal of a click</string>
+    <string name="write_storage_missing">Veuillez accorder la permission et réessayer</string>
+    <string name="error_saving_image">Erreur lors de la sauvegarde</string>
+    <string name="saved">Sauvegardée dans le dossier des téléchargements</string>
 
 </resources>
 

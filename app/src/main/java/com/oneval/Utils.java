@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,9 +25,11 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.view.Gravity;
@@ -41,6 +44,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.ListPopupWindow;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -128,7 +132,43 @@ public class Utils {
             e.printStackTrace();
             return null;
         }
-}
+    }
+
+    public static void saveToDownloads(Activity context, Bitmap bitmap, String fileName){
+        
+    OutputStream out = null;
+    
+    if (Build.VERSION.SDK_INT < 29 && ContextCompat.checkSelfPermission(context,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(context,
+        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        Toast.makeText(context, context.getString(R.string.write_storage_missing), Toast.LENGTH_LONG).show();
+        }
+    try{      
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Downloads.DISPLAY_NAME, fileName + ".png");
+        values.put(MediaStore.Downloads.MIME_TYPE, "image/png");
+        values.put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
+
+        Uri uri = context.getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
+        if (uri != null) {
+            out = context.getContentResolver().openOutputStream(uri);
+        } else {
+            Toast.makeText(context, context.getString(R.string.error_saving_image), Toast.LENGTH_LONG).show();
+        }
+    } else {
+        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File file = new File(dir, fileName + ".png");
+        out = new FileOutputStream(file);
+    }
+    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+    if (out != null) { out.close();
+    Toast.makeText(context, context.getString(R.string.saved), Toast.LENGTH_LONG).show(); }
+    }catch(Exception e){
+   Toast.makeText(context, context.getString(R.string.error_saving_image), Toast.LENGTH_LONG).show();
+   }
+   }
 
   public static void showNoConnectionAlert(Context ctx, View v) {
     Snackbar sb = Snackbar.make(v, ctx.getString(R.string.no_connection), Snackbar.LENGTH_LONG);

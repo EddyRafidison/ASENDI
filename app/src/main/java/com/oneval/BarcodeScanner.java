@@ -7,20 +7,20 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.ViewfinderView;
-import java.util.Random;
 
 /** Custom Scanner Activity extending from Activity to display a custom layout form scanner view. */
 public class BarcodeScanner extends Activity implements DecoratedBarcodeView.TorchListener {
 
   private CaptureManager capture;
   private DecoratedBarcodeView barcodeScannerView;
-  private Button switchFlashlightButton;
+  private ImageButton switchFlashlightButton;
   private ViewfinderView viewfinderView;
+  private boolean flashON = false;  
 
   @SuppressLint({"ResourceType", "MissingInflatedId"})
   @Override
@@ -91,14 +91,22 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
   }
 
   public void changeMaskColor(View view) {
-    Random rnd = new Random();
-    int color = Color.argb(100, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-    viewfinderView.setMaskColor(color);
+    viewfinderView.setMaskColor(Color.parseColor("#761D486F"));
   }
 
   public void changeLaserVisibility(boolean visible) {
     viewfinderView.setLaserVisibility(visible);
   }
+
+  public void switchFlash(View v){
+      if(hasFlash()){
+          if(!flashON){
+              barcodeScannerView.setTorchOn();
+          }else{
+              barcodeScannerView.setTorchOff();
+          }
+      }
+  } 
 
   @Override
   public void onBackPressed() {
@@ -108,12 +116,14 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
 
   @Override
   public void onTorchOn() {
-    switchFlashlightButton.setText(R.string.turn_off_flashlight);
+    flashON = true;  
+    switchFlashlightButton.setImageResource(R.drawable.flash_on);
   }
 
   @Override
   public void onTorchOff() {
-    switchFlashlightButton.setText(R.string.turn_on_flashlight);
+    flashON = false;  
+    switchFlashlightButton.setImageResource(R.drawable.flash_off);
   }
 
   @Override
