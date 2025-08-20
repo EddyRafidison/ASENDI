@@ -1,6 +1,6 @@
 <resources>
 
-	<string name="app_name" translatable="false">One-Val</string>
+	<string name="app_name" translatable="false">OneX</string>
 	<string name="off">Exit this device</string>
 	<string name="unsupported_country">Country not yet supported</string>
 	<string name="country_null">Location not found</string>
@@ -132,6 +132,7 @@
     <string name="error_saving_image">Erreur lors de la sauvegarde</string>
     <string name="saved">Sauvegardée dans le dossier des téléchargements</string>
     <string name="invalid_img">Invalid image</string>
+    <string name="check_dest">Check recipient</string>
 
 </resources>
 

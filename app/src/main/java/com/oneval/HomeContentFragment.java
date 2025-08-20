@@ -176,7 +176,7 @@ public class HomeContentFragment extends Fragment {
         Utils.saveToDownloads(requireActivity(), Utils.resizeBitmap(dest_qr), user_d);
       } else {
         Toast
-            .makeText(requireActivity(), requireActivity().getString(R.string.no_dest),
+            .makeText(requireActivity(), requireActivity().getString(R.string.check_dest),
                 Toast.LENGTH_SHORT)
             .show();
       }
@@ -727,9 +727,9 @@ public class HomeContentFragment extends Fragment {
                       Utils.connectToServer(getActivity(), ONEVAL.GET_STAT,
                           new String[] {"user", "pswd", "tkn"},
                           new String[] {user, pswd, Utils.getTkn(requireContext())}, false,
-                          resp -> {
+                          resp1 -> {
                             try {
-                              String dataStat = resp.getString("stat");
+                              String dataStat = resp1.getString("stat");
                               // Data display here
                               setStat(dataStat);
                             } catch (JSONException e) {

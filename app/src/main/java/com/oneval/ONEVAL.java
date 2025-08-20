@@ -22,8 +22,8 @@ public class ONEVAL {
   public static String TRANSREC = BASE_URL + "/app/transactions-history";
   public static String LATEST_APK = BASE_URL + "/app/download-latest-apk";
   public static String CHECKAPP = BASE_URL + "/app/check-app-version";
-  public static String GET_STAT = BASE_URL + "/app/mini-stat" public static Timer TIMER =
-      new Timer();
+  public static String GET_STAT = BASE_URL + "/app/mini-stat";
+  public static Timer TIMER = new Timer();
   public static Timer TIMER2 = new Timer();
   public static boolean ISCONNECTED = false;
   public static String PINREC = "123456";
