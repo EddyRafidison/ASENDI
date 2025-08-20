@@ -22,7 +22,7 @@
          android:focusable="true"
          android:layout_marginBottom="35dp"
          android:scaleType="fitCenter"
-         android:background="@android:color/transparent"
+         android:background="@drawable/flash_bg"
          android:layout_alignParentBottom="true"
          android:id="@+id/switch_flashlight" />
 

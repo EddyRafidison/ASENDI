@@ -87,7 +87,7 @@ public class HomeContentFragment extends Fragment {
   private ImageView bottomsheet_arrow;
   private ImageView bottomsheet_transfer;
   private boolean isTopsheetToOpen = false, isBottomSheetToOpen = false, isPbtoShow = false,
-                  isBSopen = false;
+                  isBSopen = false, isNextLoad = false;
   private TextView user_id, stat;
   private LoaderTextView stock;
   private EditText user_dest, value;
@@ -218,7 +218,7 @@ public class HomeContentFragment extends Fragment {
     DrawableCompat.setTint(copy.getBackground(), Color.parseColor("#ABC1B6"));
     TextView group = layout.findViewById(R.id.user_group);
     user_id.setText(user);
-    refresh();
+
     final String grp = Utils.getCategory(requireContext());
     String user_gr = null;
     if (grp.equals("C")) {
@@ -341,72 +341,7 @@ public class HomeContentFragment extends Fragment {
           default:
             return;
         }
-        Utils.connectToServer(getActivity(), ONEVAL.TRANSREC,
-            new String[] {"user", "pswd", "days", "tkn"},
-            new String[] {user, pswd, String.valueOf(days), Utils.getTkn(requireContext())},
-            isPbtoShow, response -> {
-              history.clear();
-              try {
-                JSONArray jSONArray = response.getJSONArray("trans");
-                for (int i = 0; i < jSONArray.length(); i++) {
-                  JSONObject obj = jSONArray.getJSONObject(i);
-                  String sen = obj.getString("sender");
-                  String rec = obj.getString("receiver");
-                  String type;
-                  String amoun = obj.getString("amount");
-                  String price = obj.getString("unit_price");
-                  final double p = Double.parseDouble(price);
-                  String refer = obj.getString("reference");
-                  String deliver_date = obj.getString("deliver_date");
-                  String deliver_time = obj.getString("deliver_time");
-                  String transfees = df.format(Double.parseDouble(obj.getString("fees")));
-                  String Amoun = df.format(Double.parseDouble(amoun) * p);
-
-                  if (user.equals(sen)) {
-                    user_ = rec;
-                    type = "1";
-                  } else {
-                    user_ = sen;
-                    type = "0";
-                  }
-
-                  history.add(new HistoryItem(getContext(), deliver_date + deliver_time, Amoun,
-                      type, user_, refer, transfees));
-                }
-                Utils.connectToServer(getActivity(), ONEVAL.BALANCE,
-                    new String[] {"user", "pswd", "tkn"},
-                    new String[] {user, pswd, Utils.getTkn(requireContext())}, false, resp -> {
-                      try {
-                        String bal = resp.getString("msg");
-                        if (!bal.equals("error")) {
-                          Fees = resp.getString("fees");
-                          stock.setText(df.format(Double.parseDouble(bal)));
-                        } else {
-                          Toast
-                              .makeText(getContext(),
-                                  requireActivity().getString(R.string.connect_error),
-                                  Toast.LENGTH_SHORT)
-                              .show();
-                        }
-                      } catch (JSONException e) {
-                        Toast
-                            .makeText(getContext(),
-                                requireActivity().getString(R.string.data_error),
-                                Toast.LENGTH_SHORT)
-                            .show();
-                      }
-                    });
-
-              } catch (JSONException je) {
-                Toast
-                    .makeText(getActivity(), requireActivity().getString(R.string.data_error),
-                        Toast.LENGTH_SHORT)
-                    .show();
-              }
-              ArrayAdapter<HistoryItem> la = new HistoryAdapter(getActivity(), history);
-              historylist.setAdapter(la);
-            });
-      } // to close the onItemSelected
+      }
 
       public void onNothingSelected(AdapterView<?> parent) {}
     });
@@ -724,15 +659,21 @@ public class HomeContentFragment extends Fragment {
         });
       }
     };
-    ONEVAL.TIMER2.schedule(doAsynchronousTask, 15000, 15000);
+    ONEVAL.TIMER2.schedule(doAsynchronousTask, 3000, 3000);
   }
 
   private void reloadUpdate() {
     if (ONEVAL.ISCONNECTED) {
+      if (!isNextLoad) {
+        isPbtoShow = true;
+        isNextLoad = true;
+      } else {
+        isPbtoShow = false;
+      }
       Utils.connectToServer(getActivity(), ONEVAL.TRANSREC,
           new String[] {"user", "pswd", "days", "tkn"},
-          new String[] {user, pswd, String.valueOf(days), Utils.getTkn(requireContext())}, false,
-          response -> {
+          new String[] {user, pswd, String.valueOf(days), Utils.getTkn(requireContext())},
+          isPbtoShow, response -> {
             history.clear();
             try {
               JSONArray jSONArray = response.getJSONArray("trans");
@@ -782,6 +723,23 @@ public class HomeContentFragment extends Fragment {
                                 Toast.LENGTH_SHORT)
                             .show();
                       }
+                      // Check min stat
+                      Utils.connectToServer(getActivity(), ONEVAL.GET_STAT,
+                          new String[] {"user", "pswd", "tkn"},
+                          new String[] {user, pswd, Utils.getTkn(requireContext())}, false,
+                          resp -> {
+                            try {
+                              String dataStat = resp.getString("stat");
+                              // Data display here
+                              setStat(dataStat);
+                            } catch (JSONException e) {
+                              Toast
+                                  .makeText(getContext(),
+                                      requireActivity().getString(R.string.data_error),
+                                      Toast.LENGTH_SHORT)
+                                  .show();
+                            }
+                          });
                     } catch (JSONException e) {
                       Toast
                           .makeText(getContext(), requireActivity().getString(R.string.data_error),
@@ -832,9 +790,8 @@ public class HomeContentFragment extends Fragment {
     return rFinal.toString();
   }
 
-  private void setStat(String text) {
-    stat.setText(text);
-    SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(stat.getText());
+  private synchronized void setStat(String text) {
+    SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);
 
     for (int i = 0; i < text.length(); i++) {
       char c = text.charAt(i);
@@ -1018,5 +975,6 @@ public class HomeContentFragment extends Fragment {
     setStat("#S 0  |  #C 0  |  #Val/C 0");
     stat.setMovementMethod(LinkMovementMethod.getInstance());
     stat.setHighlightColor(Color.YELLOW);
+    refresh();
   }
 }
