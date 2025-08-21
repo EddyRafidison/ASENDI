@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">One-Val</string>
+    <string name="app_name" translatable="false">OneX</string>
     <string name="off">退出此设备</string>
     <string name="unsupported_country">尚不支持的国家/地区</string>
     <string name="country_null">未找到位置</string>
@@ -26,7 +26,7 @@
     <string name="modpassword">管理 PIN 码</string>
     <string name="modsecretkey">管理密语</string>
     <string name="terms">使用条款</string>
-    <string name="copyright" translatable="false">One-Val ©2025 - Version 1.0</string>
+    <string name="copyright" translatable="false">OneX ©2025 - Version 1.0</string>
     <string name="privacy">隐私政策</string>
     <string name="mail_us">联系我们</string>
     <string name="scan_qr">或扫描二维码快速充值</string>
@@ -49,7 +49,7 @@
     <string name="empty_list">没有可显示的新闻</string>
     <string name="check_entries">检查字段</string>
     <string name="check_termsPolicy">查看我们的服务条款和隐私政策</string>
-    <string name="top_sheet_behavior" translatable="false">com.wavetopsheet.TopSheetBehavior</string>
+    <string name="top_sheet_behavior" translatable="false">com.topsheet.TopSheetBehavior</string>
     <string name="at">有</string>
     <string name="min_am" translatable="false">min. 100</string>
     <string name="pswd">PIN</string>
@@ -91,7 +91,7 @@
     <string name="notValidAccount">此设备无法识别帐户</string>
     <string name="tooShortPswd">PIN：至少 4 位数字字符</string>
     <string name="requestPermTitle">需要许可</string>
-    <string name="requestPermText">One-Val 需要文件访问权限。请接受以继续。</string>
+    <string name="requestPermText">OneX 需要文件访问权限。请接受以继续。</string>
     <string name="select_file">选择</string>
     <string name="fullName">姓名</string>
     <string name="birthDate">出生日期（例如：31/12/1995）</string>

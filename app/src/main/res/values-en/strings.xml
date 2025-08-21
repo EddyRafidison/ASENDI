@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name" translatable="false">One-Val</string>
+    <string name="app_name" translatable="false">OneX</string>
     <string name="off">Exit this device</string>
     <string name="unsupported_country">Country not yet supported</string>
     <string name="country_null">Location not found</string>
@@ -27,7 +27,7 @@
     <string name="modpassword">Manage PIN code</string>
     <string name="modsecretkey">Manage secret word</string>
     <string name="terms">Terms of Use"</string>
-    <string name="copyright" translatable="false">One-Val ©2025 - Version 1.0</string>
+    <string name="copyright" translatable="false">OneX ©2025 - Version 1.0</string>
     <string name="privacy">Privacy Policies</string>
     <string name="mail_us">Contact us</string>
     <string name="scan_qr">Or scan the QR code to top up your account faster</string>
@@ -36,7 +36,7 @@
     <string name="turn_off_flashlight">No flash</string>
     <string name="data_error">Error while processing data</string>
     <string name="no_connection">No mobile data/Wi-Fi</string>
-    <string name="check_connection_error">One-Val uses mobile data/Wi-Fi</string>
+    <string name="check_connection_error">OneX uses mobile data/Wi-Fi</string>
     <string name="from">sent by</string>
     <string name="to">sent to</string>
     <string name="burn_type">Raison: Burning</string>
@@ -50,7 +50,7 @@
     <string name="empty_list">No news to display</string>
     <string name="check_entries">Check the fields</string>
     <string name="check_termsPolicy">Check our terms of service and privacy policies</string>
-    <string name="top_sheet_behavior" translatable="false">com.wavetopsheet.TopSheetBehavior</string>
+    <string name="top_sheet_behavior" translatable="false">com.topsheet.TopSheetBehavior</string>
     <string name="at">has</string>
     <string name="min_am" translatable="false">min. 100</string>
     <string name="pswd">PIN</string>
@@ -92,7 +92,7 @@
     <string name="notValidAccount">Account not recognized by this device</string>
     <string name="tooShortPswd">PIN: At least 4 numeric characters</string>
     <string name="requestPermTitle">Permission required</string>
-    <string name="requestPermText">One-Val requires file access. Please accept to continue.</string>
+    <string name="requestPermText">OneX requires file access. Please accept to continue.</string>
     <string name="select_file">Select</string>
     <string name="fullName">Full name</string>
     <string name="birthDate">Date of birth (example: 31/12/1995)</string>

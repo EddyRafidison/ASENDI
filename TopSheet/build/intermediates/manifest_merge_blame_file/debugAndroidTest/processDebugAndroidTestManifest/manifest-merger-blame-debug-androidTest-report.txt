@@ -1,6 +1,6 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="com.wavetopsheet.test" >
+3    package="com.topsheet.test" >
 4
 5    <uses-sdk
 5-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:5:5-74
@@ -17,19 +17,19 @@
 11-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:14:22-52
 12        android:handleProfiling="false"
 12-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:13:22-53
-13        android:label="Tests for com.wavetopsheet.test"
+13        android:label="Tests for com.topsheet.test"
 13-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:15:22-69
-14        android:targetPackage="com.wavetopsheet.test" />
+14        android:targetPackage="com.topsheet.test" />
 14-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:12:22-67
 15
 16    <permission
 16-->[androidx.core:core:1.13.0] /data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/c962daca4be13e871ed7f6cf94915ca1/transformed/core-1.13.0/AndroidManifest.xml:22:5-24:47
-17        android:name="com.wavetopsheet.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+17        android:name="com.topsheet.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
 17-->[androidx.core:core:1.13.0] /data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/c962daca4be13e871ed7f6cf94915ca1/transformed/core-1.13.0/AndroidManifest.xml:23:9-81
 18        android:protectionLevel="signature" />
 18-->[androidx.core:core:1.13.0] /data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/c962daca4be13e871ed7f6cf94915ca1/transformed/core-1.13.0/AndroidManifest.xml:24:9-44
 19
-20    <uses-permission android:name="com.wavetopsheet.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+20    <uses-permission android:name="com.topsheet.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 20-->[androidx.core:core:1.13.0] /data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/c962daca4be13e871ed7f6cf94915ca1/transformed/core-1.13.0/AndroidManifest.xml:26:5-97
 20-->[androidx.core:core:1.13.0] /data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/c962daca4be13e871ed7f6cf94915ca1/transformed/core-1.13.0/AndroidManifest.xml:26:22-94
 21
@@ -47,7 +47,7 @@
 28-->[androidx.emoji2:emoji2:1.2.0] /data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/c682ea894e6a8d060650f2f4cfd5402b/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
 29            android:name="androidx.startup.InitializationProvider"
 29-->[androidx.emoji2:emoji2:1.2.0] /data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/c682ea894e6a8d060650f2f4cfd5402b/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
-30            android:authorities="com.wavetopsheet.test.androidx-startup"
+30            android:authorities="com.topsheet.test.androidx-startup"
 30-->[androidx.emoji2:emoji2:1.2.0] /data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/c682ea894e6a8d060650f2f4cfd5402b/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
 31            android:exported="false" >
 31-->[androidx.emoji2:emoji2:1.2.0] /data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/c682ea894e6a8d060650f2f4cfd5402b/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37

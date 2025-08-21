@@ -1,18 +1,17 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml:1:1-6:12
-INJECTED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml:1:1-6:12
+ADDED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml:1:1-5:12
+INJECTED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml:1:1-5:12
 	package
-		ADDED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml:2:5-31
 		INJECTED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml
 	android:versionName
-		ADDED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml:4:5-30
+		ADDED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml:3:5-30
 	xmlns:android
 		ADDED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml:1:11-69
 	android:versionCode
-		ADDED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml:3:5-28
+		ADDED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml:2:5-28
 application
-ADDED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml:5:1-15
+ADDED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml:4:1-15
 uses-sdk
 INJECTED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/src/main/AndroidManifest.xml

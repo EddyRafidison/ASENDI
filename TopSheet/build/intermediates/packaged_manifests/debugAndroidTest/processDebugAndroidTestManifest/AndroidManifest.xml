@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wavetopsheet.test" >
+    package="com.topsheet.test" >
 
     <uses-sdk
         android:minSdkVersion="21"
@@ -10,14 +10,14 @@
         android:name="android.test.InstrumentationTestRunner"
         android:functionalTest="false"
         android:handleProfiling="false"
-        android:label="Tests for com.wavetopsheet.test"
-        android:targetPackage="com.wavetopsheet.test" />
+        android:label="Tests for com.topsheet.test"
+        android:targetPackage="com.topsheet.test" />
 
     <permission
-        android:name="com.wavetopsheet.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="com.topsheet.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.wavetopsheet.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+    <uses-permission android:name="com.topsheet.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 
     <application
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -27,7 +27,7 @@
 
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.wavetopsheet.test.androidx-startup"
+            android:authorities="com.topsheet.test.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"
