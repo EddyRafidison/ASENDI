@@ -78,9 +78,9 @@ public class Signup extends AppCompatActivity {
       getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
           WindowManager.LayoutParams.TYPE_STATUS_BAR);
     }
-    w.setNavigationBarColor(getResources().getColor(R.color.primary));
+    w.setNavigationBarColor(ContextCompat.getColor(this, R.color.primary));
     setContentView(R.layout.signup);
-    overridePendingTransition(R.anim.nav_enter, R.anim.nav_exit);
+
     CheckNetwork network_ = new CheckNetwork(getApplicationContext());
     network_.registerNetworkCallback();
     fullname = findViewById(R.id.fullname);
@@ -347,8 +347,7 @@ public class Signup extends AppCompatActivity {
         filePickerDialog.show();
       } else {
         // You don't have the permissions. Request them.
-        ActivityCompat.requestPermissions(
-            this, new String[] {imagesPermission}, REQUEST_MEDIA_PERMISSIONS);
+        imagesPermissionLauncher.launch(imagesPermission);
       }
     } else {
       // Android version is below 13 so we are asking normal read and write storage permissions
@@ -362,52 +361,34 @@ public class Signup extends AppCompatActivity {
         filePickerDialog.show();
       } else {
         // You don't have the permissions. Request them.
-        ActivityCompat.requestPermissions(
-            this, new String[] {readPermission, writePermission}, REQUEST_STORAGE_PERMISSIONS);
+        storagePermissionsLauncher.launch(new String[] {readPermission, writePermission});
       }
     }
   }
 
-  @Override
-  public void onRequestPermissionsResult(
-      int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    if (requestCode == REQUEST_STORAGE_PERMISSIONS) {
-      if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        // Permissions were granted. You can proceed with your file operations.
-        // Showing dialog when Show Dialog button is clicked.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-          // Android version is 11 and above so to access all types of files we have to give
-          // special permission so show user a dialog..
+  private final ActivityResultLauncher<String[]> storagePermissionsLauncher =
+      registerForActivityResult(
+          new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+            boolean allGranted = result.containsValue(true) && !result.containsValue(false);
+            if (allGranted) {
+              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                accessAllFilesPermissionDialog();
+              } else {
+                filePickerDialog.show();
+              }
+            } else {
+              showRationaleDialog();
+            }
+          });
+
+  private final ActivityResultLauncher<String> imagesPermissionLauncher =
+      registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
           accessAllFilesPermissionDialog();
         } else {
-          // Android version is 10 and below so need of special permission...
-          filePickerDialog.show();
+          showRationaleDialog();
         }
-      } else {
-        // Permissions were denied. Show a rationale dialog or inform the user about the importance
-        // of these permissions.
-        showRationaleDialog();
-      }
-    }
-
-    // This conditions only works on Android 13 and above versions
-    if (requestCode == REQUEST_MEDIA_PERMISSIONS) {
-      if (grantResults.length > 0 && areAllPermissionsGranted(grantResults)) {
-        // Permissions were granted. You can proceed with your media file operations.
-        // Showing dialog when Show Dialog button is clicked.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-          // Android version is 11 and above so to access all types of files we have to give
-          // special permission so show user a dialog..
-          accessAllFilesPermissionDialog();
-        }
-      } else {
-        // Permissions were denied. Show a rationale dialog or inform the user about the importance
-        // of these permissions.
-        showRationaleDialog();
-      }
-    }
-  }
+      });
 
   private boolean areAllPermissionsGranted(int[] grantResults) {
     for (int result : grantResults) {
@@ -431,8 +412,7 @@ public class Signup extends AppCompatActivity {
                                  HtmlCompat.FROM_HTML_MODE_LEGACY),
               (dialog, which) -> {
                 // Request permissions when the user clicks OK.
-                ActivityCompat.requestPermissions(this,
-                    new String[] {readPermission, writePermission}, REQUEST_STORAGE_PERMISSIONS);
+                checkPermissions();
               })
           .setNeutralButton(
               HtmlCompat.fromHtml("<font color='red'>" + getString(R.string.cancel) + "</font>",
@@ -444,8 +424,7 @@ public class Signup extends AppCompatActivity {
           .show();
     } else {
       // Request permissions directly if no rationale is needed.
-      ActivityCompat.requestPermissions(
-          this, new String[] {readPermission, writePermission}, REQUEST_STORAGE_PERMISSIONS);
+      checkPermissions();
     }
   }
 

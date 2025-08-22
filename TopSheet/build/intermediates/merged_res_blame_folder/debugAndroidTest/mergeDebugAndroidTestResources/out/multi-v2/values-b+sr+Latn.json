@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.wavetopsheet.test.TopSheet-mergeDebugAndroidTestResources-40:/values-b+sr+Latn/values-b+sr+Latn.xml",
+            "outputFile": "com.topsheet.test.TopSheet-mergeDebugAndroidTestResources-40:/values-b+sr+Latn/values-b+sr+Latn.xml",
             "map": [
                 {
                     "source": "/data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/b358f62d241dc275b8b54bfca6da4c80/transformed/appcompat-1.6.1/res/values-b+sr+Latn/values-b+sr+Latn.xml",

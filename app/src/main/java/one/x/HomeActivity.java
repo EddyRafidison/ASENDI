@@ -54,7 +54,6 @@ public class HomeActivity
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
-    overridePendingTransition(R.anim.nav_enter, R.anim.nav_exit);
     if (!isOnCreate) {
       isOnCreate = true;
     }
@@ -519,7 +518,7 @@ public class HomeActivity
 
   private void refreshFeed() {
     ONEX.TIMER = new Timer();
-    final Handler handler = new Handler();
+    final Handler handler = new Handler(Looper.getMainLooper());
     TimerTask doAsynchronousTask = new TimerTask() {
       @Override
       public void run() {

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.wavetopsheet.test.TopSheet-mergeDebugAndroidTestResources-40:/values-eu/values-eu.xml",
+            "outputFile": "com.topsheet.test.TopSheet-mergeDebugAndroidTestResources-40:/values-eu/values-eu.xml",
             "map": [
                 {
                     "source": "/data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/c962daca4be13e871ed7f6cf94915ca1/transformed/core-1.13.0/res/values-eu/values-eu.xml",

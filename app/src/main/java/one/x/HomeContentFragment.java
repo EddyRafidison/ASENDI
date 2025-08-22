@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
@@ -128,9 +129,10 @@ public class HomeContentFragment extends Fragment {
   private String user_;
   private String Fees = "?";
   private ListView historylist;
-  private int days = 0, LastHistSize = 0, cursor = 0;
+  private int days = 0, LastHistSize = 0, cursor = 0, codeClick = 0;
   private DecimalFormat df;
-  private Bitmap dest_qr = null;
+  private Bitmap user_qr = null, dest_qr = null;
+  private Vibrator vib = null;
 
   @SuppressLint("ResourceAsColor")
   @Override
@@ -158,12 +160,13 @@ public class HomeContentFragment extends Fragment {
 
     historylist = layout.findViewById(R.id.history_list);
     user = Utils.getAccount(requireContext());
-    final Bitmap user_qr = Utils.qr(requireActivity(), user);
+    user_qr = Utils.qr(requireActivity(), user);
     qr.setImageBitmap(user_qr);
     qr_dest.setImageBitmap(user_qr);
 
+    vib = (Vibrator) requireActivity().getSystemService(Vibrator.class);
+
     qr_dest.setOnLongClickListener(v6 -> {
-      Vibrator vib = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
       if (vib != null) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
           vib.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
@@ -171,15 +174,8 @@ public class HomeContentFragment extends Fragment {
           vib.vibrate(50);
         }
       }
-      String user_d = user_dest.getText().toString();
-      if (user_d.length() > 3) {
-        Utils.saveToDownloads(requireActivity(), Utils.resizeBitmap(dest_qr), user_d);
-      } else {
-        Toast
-            .makeText(requireActivity(), requireActivity().getString(R.string.check_dest),
-                Toast.LENGTH_SHORT)
-            .show();
-      }
+      codeClick = 2;
+      checkPermissions();
       return true;
     });
 
@@ -229,7 +225,6 @@ public class HomeContentFragment extends Fragment {
     group.setText(user_gr);
 
     qr.setOnLongClickListener(v5 -> {
-      Vibrator vib = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
       if (vib != null) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
           vib.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
@@ -237,7 +232,8 @@ public class HomeContentFragment extends Fragment {
           vib.vibrate(50);
         }
       }
-      Utils.saveToDownloads(requireActivity(), Utils.resizeBitmap(user_qr), user);
+      codeClick = 1;
+      checkPermissions();
       return true;
     });
 
@@ -419,7 +415,6 @@ public class HomeContentFragment extends Fragment {
     });
 
     scan_but.setOnLongClickListener(v7 -> {
-      Vibrator vib = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
       if (vib != null) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
           vib.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
@@ -427,6 +422,7 @@ public class HomeContentFragment extends Fragment {
           vib.vibrate(50);
         }
       }
+      codeClick = 3;
       checkPermissions();
       return true;
     });
@@ -647,7 +643,7 @@ public class HomeContentFragment extends Fragment {
 
   private void refresh() {
     ONEX.TIMER2 = new Timer();
-    final Handler handler = new Handler();
+    final Handler handler = new Handler(Looper.getMainLooper());
     TimerTask doAsynchronousTask = new TimerTask() {
       @Override
       public void run() {
@@ -827,20 +823,24 @@ public class HomeContentFragment extends Fragment {
 
   private void checkPermissions() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-      // As the device is Android 13 and above so I want the permission of accessing Audio, Images,
-      // Videos
-      // You can ask permission according to your requirements what you want to access.
-      String imagesPermission = android.Manifest.permission.READ_MEDIA_IMAGES;
-      // Check for permissions and request them if needed
-      if (ContextCompat.checkSelfPermission(requireActivity(), imagesPermission)
-          == PackageManager.PERMISSION_GRANTED) {
-        // You have the permissions, you can proceed with your media file operations.
-        // Showing dialog when Show Dialog button is clicked.
-        filePickerDialog.show();
+      if (codeClick == 3) {
+        // As the device is Android 13 and above so I want the permission of accessing Audio,
+        // Images, Videos You can ask permission according to your requirements what you want to
+        // access.
+        String imagesPermission = android.Manifest.permission.READ_MEDIA_IMAGES;
+        // Check for permissions and request them if needed
+        if (ContextCompat.checkSelfPermission(requireActivity(), imagesPermission)
+            == PackageManager.PERMISSION_GRANTED) {
+          // You have the permissions, you can proceed with your media file operations.
+          // Showing dialog when Show Dialog button is clicked.
+          switchAction();
+        } else {
+          // You don't have the permissions. Request them.
+          imagesPermissionLauncher.launch(imagesPermission);
+        }
       } else {
-        // You don't have the permissions. Request them.
-        ActivityCompat.requestPermissions(
-            requireActivity(), new String[] {imagesPermission}, REQUEST_MEDIA_PERMISSIONS);
+        // No permission needed for Android 13
+        switchAction();
       }
     } else {
       // Android version is below 13 so we are asking normal read and write storage permissions
@@ -851,55 +851,61 @@ public class HomeContentFragment extends Fragment {
               == PackageManager.PERMISSION_GRANTED) {
         // You have the permissions, you can proceed with your file operations.
         // Show the file picker dialog when needed
-        filePickerDialog.show();
+        switchAction();
       } else {
         // You don't have the permissions. Request them.
-        ActivityCompat.requestPermissions(requireActivity(),
-            new String[] {readPermission, writePermission}, REQUEST_STORAGE_PERMISSIONS);
+        storagePermissionsLauncher.launch(new String[] {readPermission, writePermission});
       }
     }
   }
 
-  @Override
-  public void onRequestPermissionsResult(
-      int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    if (requestCode == REQUEST_STORAGE_PERMISSIONS) {
-      if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        // Permissions were granted. You can proceed with your file operations.
-        // Showing dialog when Show Dialog button is clicked.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-          // Android version is 11 and above so to access all types of files we have to give
-          // special permission so show user a dialog..
+  private void switchAction() {
+    switch (codeClick) {
+      case 1:
+        Utils.saveToDownloads(requireActivity(), Utils.resizeBitmap(user_qr), user);
+        break;
+      case 2:
+        String user_d = user_dest.getText().toString();
+        if (user_d.length() > 3) {
+          Utils.saveToDownloads(requireActivity(), Utils.resizeBitmap(dest_qr), user_d);
+        } else {
+          Toast
+              .makeText(requireActivity(), requireActivity().getString(R.string.check_dest),
+                  Toast.LENGTH_SHORT)
+              .show();
+        }
+        break;
+      case 3:
+        filePickerDialog.show();
+        break;
+      default:
+        return;
+    }
+  }
+
+  private final ActivityResultLauncher<String[]> storagePermissionsLauncher =
+      registerForActivityResult(
+          new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+            boolean allGranted = result.containsValue(true) && !result.containsValue(false);
+            if (allGranted) {
+              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                accessAllFilesPermissionDialog();
+              } else {
+                switchAction();
+              }
+            } else {
+              showRationaleDialog();
+            }
+          });
+
+  private final ActivityResultLauncher<String> imagesPermissionLauncher =
+      registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
           accessAllFilesPermissionDialog();
         } else {
-          // Android version is 10 and below so need of special permission...
-          filePickerDialog.show();
+          showRationaleDialog();
         }
-      } else {
-        // Permissions were denied. Show a rationale dialog or inform the user about the importance
-        // of these permissions.
-        showRationaleDialog();
-      }
-    }
-
-    // This conditions only works on Android 13 and above versions
-    if (requestCode == REQUEST_MEDIA_PERMISSIONS) {
-      if (grantResults.length > 0 && areAllPermissionsGranted(grantResults)) {
-        // Permissions were granted. You can proceed with your media file operations.
-        // Showing dialog when Show Dialog button is clicked.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-          // Android version is 11 and above so to access all types of files we have to give
-          // special permission so show user a dialog..
-          accessAllFilesPermissionDialog();
-        }
-      } else {
-        // Permissions were denied. Show a rationale dialog or inform the user about the importance
-        // of these permissions.
-        showRationaleDialog();
-      }
-    }
-  }
+      });
 
   private boolean areAllPermissionsGranted(int[] grantResults) {
     for (int result : grantResults) {
@@ -924,8 +930,7 @@ public class HomeContentFragment extends Fragment {
                                  HtmlCompat.FROM_HTML_MODE_LEGACY),
               (dialog, which) -> {
                 // Request permissions when the user clicks OK.
-                ActivityCompat.requestPermissions(requireActivity(),
-                    new String[] {readPermission, writePermission}, REQUEST_STORAGE_PERMISSIONS);
+                checkPermissions();
               })
           .setNeutralButton(
               HtmlCompat.fromHtml("<font color='red'>" + getString(R.string.cancel) + "</font>",
@@ -936,9 +941,8 @@ public class HomeContentFragment extends Fragment {
               })
           .show();
     } else {
-      // Request permissions directly if no rationale is needed.
-      ActivityCompat.requestPermissions(requireActivity(),
-          new String[] {readPermission, writePermission}, REQUEST_STORAGE_PERMISSIONS);
+      // Request permissions
+      checkPermissions();
     }
   }
 

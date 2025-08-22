@@ -149,15 +149,6 @@ public class Utils {
 
   public static void saveToDownloads(Activity context, Bitmap bitmap, String fileName) {
     OutputStream out = null;
-
-    if (Build.VERSION.SDK_INT < 29
-        && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            != PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(
-          context, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-      Toast.makeText(context, context.getString(R.string.write_storage_missing), Toast.LENGTH_LONG)
-          .show();
-    }
     try {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         ContentValues values = new ContentValues();
@@ -314,7 +305,7 @@ public class Utils {
     listPopupWindow.setWidth(w);
     listPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
     listPopupWindow.setBackgroundDrawable(
-        new ColorDrawable(ctx.getResources().getColor(R.color.primary)));
+        new ColorDrawable(ContextCompat.getColor(ctx, R.color.primary)));
     listPopupWindow.setModal(true);
     listPopupWindow.setPromptPosition(ListPopupWindow.POSITION_PROMPT_BELOW);
     listPopupWindow.setOnItemClickListener(null);
@@ -469,14 +460,12 @@ public class Utils {
     snackbar.show();
   }
 
-  public static void copyApkFromPrivateToPublic(Context ctx) {
+  public static void copyApkToExternal(Context ctx) {
     FileInputStream input;
     FileOutputStream output;
     try {
       input = new FileInputStream(new File(ctx.getFilesDir(), "OneX.apk"));
-      output = new FileOutputStream(
-          new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-              "OneX.apk"));
+      output = new FileOutputStream(new File(ctx.getExternalFilesDir(null), "OneX.apk"));
       byte[] data = new byte[4096];
       int count;
       while ((count = input.read(data)) != -1) {
@@ -496,9 +485,7 @@ public class Utils {
       PackageInstaller.Session session = packageInstaller.openSession(sessionId);
 
       long sizeBytes = 0;
-      File f =
-          new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-              "OneX.apk");
+      File f = new File(context.getExternalFilesDir(null), "OneX.apk");
       InputStream inputStream = new FileInputStream(f);
       OutputStream out;
       out = session.openWrite("oneval_session_install", 0, sizeBytes);

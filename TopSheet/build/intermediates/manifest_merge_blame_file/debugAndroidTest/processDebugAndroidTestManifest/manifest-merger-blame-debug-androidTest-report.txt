@@ -3,24 +3,24 @@
 3    package="com.topsheet.test" >
 4
 5    <uses-sdk
-5-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:5:5-74
+5-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7192662405939796226.xml:5:5-74
 6        android:minSdkVersion="21"
-6-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:5:15-41
+6-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7192662405939796226.xml:5:15-41
 7        android:targetSdkVersion="34" />
-7-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:5:42-71
+7-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7192662405939796226.xml:5:42-71
 8
 9    <instrumentation
-9-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:11:5-15:71
+9-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7192662405939796226.xml:11:5-15:67
 10        android:name="android.test.InstrumentationTestRunner"
-10-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:11:22-75
+10-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7192662405939796226.xml:11:22-75
 11        android:functionalTest="false"
-11-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:14:22-52
+11-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7192662405939796226.xml:14:22-52
 12        android:handleProfiling="false"
-12-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:13:22-53
+12-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7192662405939796226.xml:13:22-53
 13        android:label="Tests for com.topsheet.test"
-13-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:15:22-69
+13-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7192662405939796226.xml:15:22-65
 14        android:targetPackage="com.topsheet.test" />
-14-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:12:22-67
+14-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7192662405939796226.xml:12:22-63
 15
 16    <permission
 16-->[androidx.core:core:1.13.0] /data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/c962daca4be13e871ed7f6cf94915ca1/transformed/core-1.13.0/AndroidManifest.xml:22:5-24:47
@@ -34,14 +34,14 @@
 20-->[androidx.core:core:1.13.0] /data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/c962daca4be13e871ed7f6cf94915ca1/transformed/core-1.13.0/AndroidManifest.xml:26:22-94
 21
 22    <application
-22-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:7:5-9:19
+22-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7192662405939796226.xml:7:5-9:19
 23        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 23-->[androidx.core:core:1.13.0] /data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/c962daca4be13e871ed7f6cf94915ca1/transformed/core-1.13.0/AndroidManifest.xml:28:18-86
 24        android:debuggable="true"
 25        android:extractNativeLibs="true" >
 26        <uses-library android:name="android.test.runner" />
-26-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:8:9-60
-26-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10824023173860474496.xml:8:23-57
+26-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7192662405939796226.xml:8:9-60
+26-->/storage/emulated/0/AndroidIDEProjects/ASENDI/TopSheet/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7192662405939796226.xml:8:23-57
 27
 28        <provider
 28-->[androidx.emoji2:emoji2:1.2.0] /data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/c682ea894e6a8d060650f2f4cfd5402b/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20

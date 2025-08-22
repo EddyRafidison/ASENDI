@@ -2,6 +2,7 @@ package one.x;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -51,10 +52,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Signin extends AppCompatActivity {
-  private static final int REQUEST_STORAGE_PERMISSIONS = 123;
-  private static final int REQUEST_FILE_PERMISSIONS = 456;
-  private final String readPermission = android.Manifest.permission.READ_EXTERNAL_STORAGE;
-  private final String writePermission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
   private final ActivityResultLauncher<Intent> getInstallPermResult =
       registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
           result
@@ -67,12 +64,6 @@ public class Signin extends AppCompatActivity {
   private String vers = "";
   private int dld = 0;
   private boolean isDownloading = false, doubleBackToExitPressedOnce = false;
-  private final ActivityResultLauncher<Intent> getPermResult =
-      registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-        if (result.getResultCode() == Activity.RESULT_OK) {
-          downloadApp(ONEX.LATEST_APK);
-        }
-      });
 
   @SuppressLint("ResourceAsColor")
   @Override
@@ -158,7 +149,9 @@ public class Signin extends AppCompatActivity {
     login.setOnClickListener(this::onClick);
     signup.setOnClickListener(c -> {
       if (!isDownloading) {
-        startActivity(new Intent(getApplicationContext(), Signup.class));
+        ActivityOptions option =
+            ActivityOptions.makeCustomAnimation(Signin.this, R.anim.nav_enter, R.anim.nav_exit);
+        startActivity(new Intent(getApplicationContext(), Signup.class), option.toBundle());
       } else {
         Toast.makeText(getApplicationContext(), getString(R.string.app_busy), Toast.LENGTH_SHORT)
             .show();
@@ -211,10 +204,9 @@ public class Signin extends AppCompatActivity {
               ssb_.setSpan(new Clickables(myapp, new String[] {strrr}, 0, string -> {
                 if (string.equals(strrr)) {
                   try {
-                    Utils.copyApkFromPrivateToPublic(getApplicationContext());
-                    final File appfile = new File(Environment.getExternalStoragePublicDirectory(
-                                                      Environment.DIRECTORY_DOWNLOADS)
-                        + File.separator + "OneX.apk");
+                    Utils.copyApkToExternal(getApplicationContext());
+                    final File appfile =
+                        new File(getExternalFilesDir(null) + File.separator + "OneX.apk");
                     if (appfile.exists()) {
                       try {
                         Uri apkUri;
@@ -430,10 +422,9 @@ public class Signin extends AppCompatActivity {
             ssb.setSpan(new Clickables(myapp, new String[] {strr}, 0, string -> {
               if (string.equals(strr)) {
                 try {
-                  Utils.copyApkFromPrivateToPublic(getApplicationContext());
-                  final File appfile = new File(
-                      Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                      + File.separator + "OneX.apk");
+                  Utils.copyApkToExternal(getApplicationContext());
+                  final File appfile =
+                      new File(getExternalFilesDir(null) + File.separator + "OneX.apk");
                   if (appfile.exists()) {
                     try {
                       Uri apkUri;
@@ -449,6 +440,7 @@ public class Signin extends AppCompatActivity {
                         intent = new Intent(Intent.ACTION_VIEW);
                         intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                       }
                       startActivity(intent);
                     } catch (Exception e) {
@@ -488,153 +480,20 @@ public class Signin extends AppCompatActivity {
         getInstallPermResult.launch(inst);
       }
     }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-      // As the device is Android 13 and above so I want the permission of accessing Audio, Images,
-      // Videos You can ask permission according to your requirements what you want to access.
-      String filesPermission = android.Manifest.permission.MANAGE_EXTERNAL_STORAGE;
-      // Check for permissions and request them if needed
-      if (ContextCompat.checkSelfPermission(this, filesPermission)
-          == PackageManager.PERMISSION_GRANTED) {
-        // You have the permissions, you can proceed with your media file operations.
-        // Showing dialog when Show Dialog button is clicked.
-        downloadApp(ONEX.LATEST_APK);
-      } else {
-        // You don't have the permissions. Request them.
-        ActivityCompat.requestPermissions(
-            this, new String[] {filesPermission}, REQUEST_FILE_PERMISSIONS);
-      }
-    } else {
-      // Android version is below 13 so we are asking normal read and write storage permissions
-      // Check for permissions and request them if needed
-      if (ContextCompat.checkSelfPermission(this, readPermission)
-              == PackageManager.PERMISSION_GRANTED
-          && ContextCompat.checkSelfPermission(this, writePermission)
-              == PackageManager.PERMISSION_GRANTED) {
-        // You have the permissions, you can proceed with your file operations.
-        downloadApp(ONEX.LATEST_APK);
-      } else {
-        // You don't have the permissions. Request them.
-        ActivityCompat.requestPermissions(
-            this, new String[] {readPermission, writePermission}, REQUEST_STORAGE_PERMISSIONS);
-      }
-    }
-  }
-
-  @Override
-  public void onRequestPermissionsResult(
-      int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    if (requestCode == REQUEST_STORAGE_PERMISSIONS) {
-      if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        // Permissions were granted. You can proceed with your file operations.
-        // Showing dialog when Show Dialog button is clicked.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-          // Android version is 11 and above so to access all types of files we have to give
-          // special permission so show user a dialog..
-          accessAllFilesPermissionDialog();
-        } else {
-          // Android version is 10 and below so need of special permission...
-          downloadApp(ONEX.LATEST_APK);
-        }
-      } else {
-        // Permissions were denied. Show a rationale dialog or inform the user about the importance
-        // of these permissions.
-        showRationaleDialog();
-      }
-    }
-
-    // This conditions only works on Android 13 and above versions
-    if (requestCode == REQUEST_FILE_PERMISSIONS) {
-      if (grantResults.length > 0 && areAllPermissionsGranted(grantResults)) {
-        // Permissions were granted. You can proceed with your media file operations.
-        // Showing dialog when Show Dialog button is clicked.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-          // Android version is 11 and above so to access all types of files we have to give
-          // special permission so show user a dialog..
-          accessAllFilesPermissionDialog();
-        }
-      } else {
-        // Permissions were denied. Show a rationale dialog or inform the user about the importance
-        // of these permissions.
-        showRationaleDialog();
-      }
-    }
-  }
-
-  private boolean areAllPermissionsGranted(int[] grantResults) {
-    for (int result : grantResults) {
-      if (result != PackageManager.PERMISSION_GRANTED) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  private void showRationaleDialog() {
-    if (ActivityCompat.shouldShowRequestPermissionRationale(this, readPermission)
-        || ActivityCompat.shouldShowRequestPermissionRationale(this, writePermission)) {
-      // Show a rationale dialog explaining why the permissions are necessary.
-      new AlertDialog.Builder(this)
-          .setTitle(getString(R.string.requestPermTitle))
-          .setMessage(getString(R.string.requestPermText))
-          .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"
-                                     + "Ok"
-                                     + "</font>",
-                                 HtmlCompat.FROM_HTML_MODE_LEGACY),
-              (dialog, which) -> {
-                // Request permissions when the user clicks OK.
-                ActivityCompat.requestPermissions(this,
-                    new String[] {readPermission, writePermission}, REQUEST_STORAGE_PERMISSIONS);
-              })
-          .setNeutralButton(
-              HtmlCompat.fromHtml("<font color='#848482'>" + getString(R.string.cancel) + "</font>",
-                  HtmlCompat.FROM_HTML_MODE_LEGACY),
-              (dialog, which) -> {
-                dialog.dismiss();
-                // Handle the case where the user cancels the permission request.
-              })
-          .show();
-    } else {
-      // Request permissions directly if no rationale is needed.
-      ActivityCompat.requestPermissions(
-          this, new String[] {readPermission, writePermission}, REQUEST_STORAGE_PERMISSIONS);
-    }
-  }
-
-  @RequiresApi(api = Build.VERSION_CODES.R)
-  private void accessAllFilesPermissionDialog() {
-    new AlertDialog.Builder(Signin.this)
-        .setTitle(getString(R.string.requestPermTitle))
-        .setMessage(getString(R.string.requestPermText))
-        .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"
-                                   + "Ok"
-                                   + "</font>",
-                               HtmlCompat.FROM_HTML_MODE_LEGACY),
-            (dialog, which) -> {
-              // Request permissions when the user clicks OK.
-              Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
-                  Uri.parse("package:one.x"));
-              getPermResult.launch(intent);
-            })
-        .setNeutralButton(
-            HtmlCompat.fromHtml("<font color='#848482'>" + getString(R.string.cancel) + "</font>",
-                HtmlCompat.FROM_HTML_MODE_LEGACY),
-            (dialog, which) -> {
-              dialog.dismiss();
-              // Handle the case where the user cancels the permission request.
-            })
-        .show();
+    downloadApp(ONEX.LATEST_APK);
   }
 
   private void onClick(View c) {
     final Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+    final ActivityOptions option =
+        ActivityOptions.makeCustomAnimation(Signin.this, R.anim.nav_enter, R.anim.nav_exit);
     final String acc = account.getText().toString();
     final String psd = pswd.getText().toString();
 
     // Only test, to be removed later
     intent.putExtra("act", acc);
     intent.putExtra("psd", psd);
-    startActivity(intent);
+    startActivity(intent, option.toBundle());
 
     if (!isDownloading) {
       if (account.length() > 0 && pswd.length() > 0) {
@@ -649,7 +508,7 @@ public class Signin extends AppCompatActivity {
             if (pstat == false) {
               intent.putExtra("act", acc);
               intent.putExtra("psd", psd);
-              startActivity(intent);
+              startActivity(intent, option.toBundle());
             } else {
               showLoginConfirm(acc, psd, intent);
             }
@@ -675,7 +534,7 @@ public class Signin extends AppCompatActivity {
                           }
                           if (!tkn.isEmpty()) {
                             Utils.saveTkn(getApplicationContext(), tkn);
-                            startActivity(intent);
+                            startActivity(intent, option.toBundle());
                           }
                         } else if (msg.equals("incorrect auth")) {
                           Utils.showMessage(getApplicationContext(), login,
@@ -742,6 +601,8 @@ public class Signin extends AppCompatActivity {
                                       + "</font>",
                                   HtmlCompat.FROM_HTML_MODE_LEGACY),
         (arg0, arg1) -> {
+          final ActivityOptions option =
+              ActivityOptions.makeCustomAnimation(Signin.this, R.anim.nav_enter, R.anim.nav_exit);
           final String sk = edtSk.getText().toString();
           if (!sk.isEmpty()) {
             if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
@@ -768,7 +629,7 @@ public class Signin extends AppCompatActivity {
                           intent.putExtra("psd", psd);
                           if (!tkn.isEmpty()) {
                             Utils.saveTkn(getApplicationContext(), tkn);
-                            startActivity(intent);
+                            startActivity(intent, option.toBundle());
                           }
                         } else if (msg.contains("incorrect")) {
                           if (msg.contains("secret word")) {

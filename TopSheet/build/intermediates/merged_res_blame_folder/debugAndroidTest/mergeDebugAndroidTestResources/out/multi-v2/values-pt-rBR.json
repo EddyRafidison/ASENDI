@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.wavetopsheet.test.TopSheet-mergeDebugAndroidTestResources-40:/values-pt-rBR/values-pt-rBR.xml",
+            "outputFile": "com.topsheet.test.TopSheet-mergeDebugAndroidTestResources-40:/values-pt-rBR/values-pt-rBR.xml",
             "map": [
                 {
                     "source": "/data/data/com.itsaky.androidide/files/home/.gradle/caches/8.9/transforms/430da7e794f0c54a8b9f0242ec7c252d/transformed/navigation-ui-2.8.3/res/values-pt-rBR/values-pt-rBR.xml",

@@ -30,8 +30,8 @@
 	<string name="copyright" translatable="false">OneX ©2025 - Version 1.0</string>
 	<string name="privacy">Privacy Policies</string>
 	<string name="mail_us">Contact us</string>
-	<string name="scan_qr">Or scan the QR code to top up your account faster</string>
-	<string name="scan_qr_send">Or scan the QR code to top up the account specified above</string>
+	<string name="scan_qr">Or invite to scan the QR code to top up your account faster</string>
+	<string name="scan_qr_send">Or invite to scan the QR code to top up the account specified above</string>
 	<string name="turn_on_flashlight">With flash</string>
 	<string name="turn_off_flashlight">No flash</string>
 	<string name="data_error">Error while processing data</string>

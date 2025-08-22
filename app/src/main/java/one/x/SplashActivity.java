@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -27,8 +29,7 @@ public class SplashActivity extends AppCompatActivity {
     if (Build.VERSION.SDK_INT >= 23) {
       if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
           != PackageManager.PERMISSION_GRANTED) {
-        ActivityCompat.requestPermissions(
-            this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
+        locPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION);
       } else {
         gotoNext();
       }
@@ -37,21 +38,18 @@ public class SplashActivity extends AppCompatActivity {
     }
   }
 
-  @Override
-  public void onRequestPermissionsResult(
-      int requestCode, String[] permissions, int[] grantResults) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-    if (requestCode == 100) {
-      if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        gotoNext();
-      } else {
-        Toast.makeText(getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
-            .show();
-        finish();
-      }
-    }
-  }
+  private final ActivityResultLauncher<String> locPermissionLauncher =
+      registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted) {
+          gotoNext();
+        } else {
+          Toast
+              .makeText(
+                  getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
+              .show();
+          finish();
+        }
+      });
 
   private void gotoNext() {
     scheduler.schedule(() -> {
