@@ -97,5 +97,4 @@ public class SplashActivity extends AppCompatActivity {
       scheduler.shutdown();
     }
   }
-
 }

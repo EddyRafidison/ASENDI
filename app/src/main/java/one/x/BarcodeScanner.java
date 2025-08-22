@@ -62,6 +62,14 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
   }
 
   @Override
+  @Deprecated
+  public void onBackPressed() {
+    super.onBackPressed();
+    // TODO: Implement this method
+    finish();
+  }
+
+  @Override
   protected void onDestroy() {
     super.onDestroy();
     capture.onDestroy();
@@ -104,12 +112,6 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
         barcodeScannerView.setTorchOff();
       }
     }
-  }
-
-  @Override
-  public void onBackPressed() {
-    super.onBackPressed();
-    finish();
   }
 
   @Override

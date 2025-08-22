@@ -122,5 +122,4 @@ public class AppSecChecker extends Service {
             (dialog, which) -> { dialog.dismiss(); })
         .show();
   }
-
 }
