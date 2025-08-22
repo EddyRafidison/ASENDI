@@ -3,8 +3,11 @@ package one.x;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -18,25 +21,18 @@ import java.util.concurrent.TimeUnit;
 
 public class SplashActivity extends AppCompatActivity {
   private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
-    splashScreen.setKeepOnScreenCondition(() -> true);
-
-    if (Build.VERSION.SDK_INT >= 23) {
-      if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-          != PackageManager.PERMISSION_GRANTED) {
-        locPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION);
-      } else {
-        gotoNext();
-      }
-    } else {
-      gotoNext();
-    }
-  }
-
+  private final ActivityResultLauncher<String> notifPermissionLauncher =
+      registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted) {
+          gotoNext();
+        } else {
+          Toast
+              .makeText(
+                  getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
+              .show();
+          finish();
+        }
+      });
   private final ActivityResultLauncher<String> locPermissionLauncher =
       registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
         if (isGranted) {
@@ -58,18 +54,24 @@ public class SplashActivity extends AppCompatActivity {
         }
       });
 
-  private final ActivityResultLauncher<String> notifPermissionLauncher =
-      registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-        if (isGranted) {
-          gotoNext();
-        } else {
-          Toast
-              .makeText(
-                  getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
-              .show();
-          finish();
-        }
-      });
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
+    splashScreen.setKeepOnScreenCondition(() -> true);
+
+    if (Build.VERSION.SDK_INT >= 23) {
+      if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+          != PackageManager.PERMISSION_GRANTED) {
+        locPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION);
+      } else {
+        gotoNext();
+      }
+    } else {
+      gotoNext();
+    }
+  }
 
   private void gotoNext() {
     scheduler.schedule(() -> {
@@ -95,4 +97,5 @@ public class SplashActivity extends AppCompatActivity {
       scheduler.shutdown();
     }
   }
+
 }

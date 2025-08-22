@@ -27,4 +27,5 @@ public class ONEX {
   public static Timer TIMER2 = new Timer();
   public static boolean ISCONNECTED = false;
   public static String PINREC = "123456";
+  public static String GFID = "123456";
 }
