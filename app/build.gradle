@@ -62,5 +62,6 @@ dependencies {
     implementation 'io.github.elye:loaderviewlibrary:3.0.0'
     implementation 'io.github.tutorialsandroid:filepicker:9.2.5'
     implementation 'androidx.core:core-splashscreen:1.1.0-alpha02'
+    implementation 'com.scottyab:rootbeer-lib:0.1.1'
 	implementation project(':TopSheet')
 }

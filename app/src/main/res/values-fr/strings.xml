@@ -133,5 +133,9 @@
     <string name="saved">Sauvegardée dans le dossier des téléchargements</string>
     <string name="invalid_img">Image invalide</string>
     <string name="check_dest">Vérifier le destinataire</string>
+    <string name="not_secure">Cet appareil semble vulnérable au vol de données</string>
+    <string name="securi_check">Checking device security</string>
+    <string name="set_device_security_title">Sécurité de l\'appareil</string>
+    <string name="set_device_security">OneX recommande l\'activation de la sécurité de l\'appareil dans les paramètres.</string>
 
 </resources>

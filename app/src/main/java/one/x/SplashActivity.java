@@ -17,7 +17,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class SplashActivity extends AppCompatActivity {
-  private Intent intent;
   private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +40,27 @@ public class SplashActivity extends AppCompatActivity {
   private final ActivityResultLauncher<String> locPermissionLauncher =
       registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
         if (isGranted) {
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    getApplicationContext(), Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+              notifPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            }
+          } else {
+            gotoNext();
+          }
+        } else {
+          Toast
+              .makeText(
+                  getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
+              .show();
+          finish();
+        }
+      });
+
+  private final ActivityResultLauncher<String> notifPermissionLauncher =
+      registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted) {
           gotoNext();
         } else {
           Toast
@@ -53,14 +73,18 @@ public class SplashActivity extends AppCompatActivity {
 
   private void gotoNext() {
     scheduler.schedule(() -> {
-      intent = new Intent(this, Signin.class);
-      startActivity(intent);
+      // Lancer l'activité Signin
+      Intent signinIntent = new Intent(SplashActivity.this, Signin.class);
+      startActivity(signinIntent);
       finish();
 
-      runOnUiThread(()
-                        -> {
-                            // code here (empty)
-                        });
+      // Démarrer le service AppSecChecker
+      Intent serviceIntent = new Intent(SplashActivity.this, AppSecChecker.class);
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        startForegroundService(serviceIntent);
+      } else {
+        startService(serviceIntent);
+      }
     }, 3, TimeUnit.SECONDS);
   }
 

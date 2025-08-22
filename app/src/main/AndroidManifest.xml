@@ -74,6 +74,8 @@
 		<activity android:name=".BarcodeScanner" tools:replace="android:screenOrientation" android:screenOrientation="portrait" android:exported="true"
             tools:ignore="LockedOrientationActivity">
 		</activity>
+        <service android:name=".AppSecChecker"
+         android:exported="false"/>
 		<provider android:name="androidx.core.content.FileProvider" android:authorities="one.x.fileprovider" android:exported="false" android:grantUriPermissions="true">
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"/>
 		</provider>
