@@ -36,8 +36,9 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
     ActionBar ab = getActionBar();
     SpannableString spanString = new SpannableString("QR Scanner");
     Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/RobotoRegular.ttf");
-    spanString.setSpan(new ItemTypefaceSpan("", typeface), 0, spanString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-    ab.setTitle(spanString);  
+    spanString.setSpan(new ItemTypefaceSpan("", typeface), 0, spanString.length(),
+        Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+    ab.setTitle(spanString);
 
     barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
     barcodeScannerView.setTorchListener(this);
@@ -65,7 +66,7 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
   protected void attachBaseContext(Context newBase) {
     super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
-  
+
   @Override
   protected void onResume() {
     super.onResume();

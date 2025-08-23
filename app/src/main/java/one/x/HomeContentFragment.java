@@ -655,7 +655,12 @@ public class HomeContentFragment extends Fragment {
         });
       }
     };
-    ONEX.TIMER2.schedule(doAsynchronousTask, 3000, 3000);
+    if (ONEX.TIMER2 != null) {
+      ONEX.TIMER2.cancel();
+      ONEX.TIMER2 = null;
+    }
+    ONEX.TIMER2 = new Timer();
+    ONEX.TIMER2.schedule(doAsynchronousTask, 3000);
   }
 
   private void reloadUpdate() {
@@ -698,6 +703,12 @@ public class HomeContentFragment extends Fragment {
                 history.add(new HistoryItem(getContext(), deliver_date + deliver_time, Amoun, type,
                     user_, refer, transfees));
               }
+              final int hs = history.size();
+              if (LastHistSize != hs) {
+                LastHistSize = hs;
+                ArrayAdapter<HistoryItem> la = new HistoryAdapter(getActivity(), history);
+                historylist.setAdapter(la);
+              }
               Utils.connectToServer(getActivity(), ONEX.BALANCE,
                   new String[] {"user", "pswd", "tkn"},
                   new String[] {user, pswd, Utils.getTkn(requireContext())}, false, resp -> {
@@ -712,12 +723,6 @@ public class HomeContentFragment extends Fragment {
                             stock.setTransformationMethod(new StockHiding());
                           }
                         }
-                      } else {
-                        Toast
-                            .makeText(getContext(),
-                                requireActivity().getString(R.string.connect_error),
-                                Toast.LENGTH_SHORT)
-                            .show();
                       }
                       // Check min stat
                       Utils.connectToServer(getActivity(), ONEX.GET_STAT,
@@ -736,12 +741,14 @@ public class HomeContentFragment extends Fragment {
                                   .show();
                             }
                           });
+                      refresh();
                     } catch (JSONException e) {
                       Toast
                           .makeText(getContext(), requireActivity().getString(R.string.data_error),
                               Toast.LENGTH_SHORT)
                           .show();
                     }
+                    refresh();
                   });
             } catch (JSONException je) {
               Toast
@@ -749,12 +756,7 @@ public class HomeContentFragment extends Fragment {
                       Toast.LENGTH_SHORT)
                   .show();
             }
-            final int hs = history.size();
-            if (LastHistSize != hs) {
-              LastHistSize = hs;
-              ArrayAdapter<HistoryItem> la = new HistoryAdapter(getActivity(), history);
-              historylist.setAdapter(la);
-            }
+            refresh();
           });
     }
   }

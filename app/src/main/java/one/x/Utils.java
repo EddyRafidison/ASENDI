@@ -224,37 +224,35 @@ public class Utils {
       if (showProgress) {
         prog.show(ctx);
       }
-      final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,
-          post(keys, values),
-          response
-          -> {
-            if (showProgress) {
-              prog.dismiss();
+      final JsonObjectRequest jsonObjectRequest =
+          new JsonObjectRequest(Request.Method.POST, url, post(keys, values),
+              response
+              -> {
+                if (showProgress) {
+                  prog.dismiss();
+                }
+                slistener.OnDataLoaded(response);
+              },
+              error -> {
+                if (showProgress) {
+                  prog.dismiss();
+                }
+                try {
+                  slistener.OnDataLoaded(null);
+                } catch (Exception ignored) {
+                }
+              }) {
+            @NonNull
+            @Override
+            public Map<String, String> getHeaders() {
+              // Build the headers
+              final Map<String, String> params = new HashMap<>();
+              params.put("Content-Type", "application/json");
+              return params;
             }
-            slistener.OnDataLoaded(response);
-          },
-          error -> {
-            if (showProgress) {
-              prog.dismiss();
-            }
-            try {
-              slistener.OnDataLoaded(null);
-            } catch (Exception e) {
-              Toast.makeText(ctx, ctx.getString(R.string.connect_error), Toast.LENGTH_SHORT).show();
-            }
-          }) {
-        @NonNull
-        @Override
-        public Map<String, String> getHeaders() {
-          // Build the headers
-          final Map<String, String> params = new HashMap<>();
-          params.put("Content-Type", "application/json");
-          return params;
-        }
-      };
+          };
       Volley.newRequestQueue(ctx).add(jsonObjectRequest);
-    } catch (Exception e) {
-      Toast.makeText(ctx, ctx.getString(R.string.connect_error), Toast.LENGTH_SHORT).show();
+    } catch (Exception ignored) {
     }
   }
 
@@ -265,13 +263,9 @@ public class Utils {
           response
           -> lt.setText(HtmlCompat.fromHtml(response, HtmlCompat.FROM_HTML_MODE_LEGACY),
               TextView.BufferType.SPANNABLE),
-          error -> {
-            lt.setText("( … )");
-            Toast.makeText(ctx, ctx.getString(R.string.connect_error), Toast.LENGTH_SHORT).show();
-          });
+          error -> { lt.setText("( ? )"); });
       queue.add(sr);
-    } catch (Exception e) {
-      Toast.makeText(ctx, ctx.getString(R.string.connect_error), Toast.LENGTH_SHORT).show();
+    } catch (Exception ignored) {
     }
   }
 
@@ -558,5 +552,4 @@ public class Utils {
 
     return countryCode != null ? countryCode.toUpperCase() : "";
   }
-
 }

@@ -14,6 +14,7 @@ import android.provider.Settings;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -61,7 +62,7 @@ public class Signup extends AppCompatActivity {
   private EditText fullname, birthdate, address, cin, email, pswd1, pswd2, sk;
   private ImageButton cin1, cin2;
   private CheckBox check;
-  private Button signup;
+  private Button signup, male, female;
   private int cin_code = 0;
   private String cin_bytes_1 = "", cin_bytes_2 = "";
 
@@ -97,6 +98,18 @@ public class Signup extends AppCompatActivity {
     cin2 = findViewById(R.id.cin2);
     check = findViewById(R.id.checkbox);
     signup = findViewById(R.id.Signup);
+    male = findViewById(R.id.male);
+    female = findViewById(R.id.female);
+
+    View.OnClickListener toggleListener = v0 -> {
+      male.setEnabled(true);
+      female.setEnabled(true);
+      v0.setEnabled(false);
+    };
+
+    male.setOnClickListener(toggleListener);
+    female.setOnClickListener(toggleListener);
+
     TextView textCheck = findViewById(R.id.textCheck);
     TextView fulladdTitle = findViewById(R.id.fulladdT);
     String fullAdd = getString(R.string.fullAddress);
@@ -173,6 +186,12 @@ public class Signup extends AppCompatActivity {
     });
 
     signup.setOnClickListener(v -> {
+      String gender = "";
+      if (!male.isEnabled()) {
+        gender = "M";
+      } else if (!female.isEnabled()) {
+        gender = "F";
+      }
       String fulln = fullname.getText().toString();
       String birth = birthdate.getText().toString();
       String addrs = address.getText().toString();
@@ -183,85 +202,94 @@ public class Signup extends AppCompatActivity {
       String secretkey = sk.getText().toString();
       if (!fulln.isEmpty()) {
         if (!birth.isEmpty()) {
-          if (!addrs.isEmpty()) {
-            if (!Cin.isEmpty()) {
-              if (!mailAd.isEmpty()) {
-                if (!cin_bytes_1.isEmpty()) {
-                  if (!cin_bytes_2.isEmpty()) {
-                    if (!psd1.isEmpty()) {
-                      if (!psd2.isEmpty()) {
-                        if (!secretkey.isEmpty()) {
-                          if (psd1.equals(psd2)) {
-                            if (psd1.length() >= 4) {
-                              if (!check.isChecked()) {
-                                Toast
-                                    .makeText(getApplicationContext(),
-                                        getString(R.string.check_termsPolicy), Toast.LENGTH_SHORT)
-                                    .show();
-                              } else {
-                                if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
-                                  Utils.showNoConnectionAlert(getApplicationContext(), signup);
+          if (!gender.isEmpty()) {
+            if (!addrs.isEmpty()) {
+              if (!Cin.isEmpty()) {
+                if (!mailAd.isEmpty()) {
+                  if (!cin_bytes_1.isEmpty()) {
+                    if (!cin_bytes_2.isEmpty()) {
+                      if (!psd1.isEmpty()) {
+                        if (!psd2.isEmpty()) {
+                          if (!secretkey.isEmpty()) {
+                            if (psd1.equals(psd2)) {
+                              if (psd1.length() >= 4) {
+                                if (!check.isChecked()) {
+                                  Toast
+                                      .makeText(getApplicationContext(),
+                                          getString(R.string.check_termsPolicy), Toast.LENGTH_SHORT)
+                                      .show();
                                 } else {
-                                  // process signup
-                                  Utils.connectToServer(Signup.this, ONEX.SIGNUP,
-                                      new String[] {"email", "birth", "addr", "name", "cin", "pswd",
-                                          "sk", "cinimg1", "cinimg2"},
-                                      new String[] {mailAd, birth, addrs + " " + loc, fulln, Cin,
-                                          psd1, secretkey, cin_bytes_1, cin_bytes_2},
-                                      true, response -> {
-                                        if (response != null) {
-                                          try {
-                                            String msg = response.getString("msg");
-                                            if (msg.equals("ok")) {
-                                              signup.setClickable(false);
-                                              Utils.showMessage(getApplicationContext(), signup,
-                                                  getString(R.string.check_signup_mail), true);
-                                            } else if (msg.equals("retry")) {
+                                  if (Utils.isConnectionAvailable(getApplicationContext())
+                                      == false) {
+                                    Utils.showNoConnectionAlert(getApplicationContext(), signup);
+                                  } else {
+                                    // process signup
+                                    Utils.connectToServer(Signup.this, ONEX.SIGNUP,
+                                        new String[] {"email", "birth", "addr", "name", "cin",
+                                            "pswd", "sk", "cinimg1", "cinimg2"},
+                                        new String[] {mailAd, birth, addrs + " " + loc,
+                                            fulln + " " + gender, Cin, psd1, secretkey, cin_bytes_1,
+                                            cin_bytes_2},
+                                        true, response -> {
+                                          if (response != null) {
+                                            try {
+                                              String msg = response.getString("msg");
+                                              if (msg.equals("ok")) {
+                                                signup.setClickable(false);
+                                                Utils.showMessage(getApplicationContext(), signup,
+                                                    getString(R.string.check_signup_mail), true);
+                                              } else if (msg.equals("retry")) {
+                                                Toast
+                                                    .makeText(getApplicationContext(),
+                                                        getString(R.string.retry_signup),
+                                                        Toast.LENGTH_SHORT)
+                                                    .show();
+                                              } else if (msg.contains("unsupported")) {
+                                                Toast
+                                                    .makeText(getApplicationContext(),
+                                                        getString(R.string.unsupported_country),
+                                                        Toast.LENGTH_SHORT)
+                                                    .show();
+                                              } else if (msg.contains("what")) {
+                                                Toast
+                                                    .makeText(getApplicationContext(),
+                                                        getString(R.string.country_null),
+                                                        Toast.LENGTH_SHORT)
+                                                    .show();
+                                              } else {
+                                                Toast
+                                                    .makeText(getApplicationContext(),
+                                                        getString(R.string.failed),
+                                                        Toast.LENGTH_SHORT)
+                                                    .show();
+                                              }
+                                            } catch (JSONException je) {
                                               Toast
                                                   .makeText(getApplicationContext(),
-                                                      getString(R.string.retry_signup),
-                                                      Toast.LENGTH_SHORT)
-                                                  .show();
-                                            } else if (msg.contains("unsupported")) {
-                                              Toast
-                                                  .makeText(getApplicationContext(),
-                                                      getString(R.string.unsupported_country),
-                                                      Toast.LENGTH_SHORT)
-                                                  .show();
-                                            } else if (msg.contains("what")) {
-                                              Toast
-                                                  .makeText(getApplicationContext(),
-                                                      getString(R.string.country_null),
-                                                      Toast.LENGTH_SHORT)
-                                                  .show();
-                                            } else {
-                                              Toast
-                                                  .makeText(getApplicationContext(),
-                                                      getString(R.string.failed),
+                                                      getString(R.string.data_error),
                                                       Toast.LENGTH_SHORT)
                                                   .show();
                                             }
-                                          } catch (JSONException je) {
-                                            Toast
-                                                .makeText(getApplicationContext(),
-                                                    getString(R.string.data_error),
-                                                    Toast.LENGTH_SHORT)
-                                                .show();
                                           }
-                                        }
-                                      });
+                                        });
+                                  }
                                 }
+                              } else {
+                                Toast
+                                    .makeText(getApplicationContext(),
+                                        getString(R.string.tooShortPswd), Toast.LENGTH_SHORT)
+                                    .show();
                               }
                             } else {
                               Toast
                                   .makeText(getApplicationContext(),
-                                      getString(R.string.tooShortPswd), Toast.LENGTH_SHORT)
+                                      getString(R.string.not_matched_pswd), Toast.LENGTH_SHORT)
                                   .show();
                             }
                           } else {
                             Toast
                                 .makeText(getApplicationContext(),
-                                    getString(R.string.not_matched_pswd), Toast.LENGTH_SHORT)
+                                    getString(R.string.check_entries), Toast.LENGTH_SHORT)
                                 .show();
                           }
                         } else {
@@ -334,12 +362,12 @@ public class Signup extends AppCompatActivity {
       checkPermissions();
     });
   }
-  
+
   @Override
   protected void attachBaseContext(Context newBase) {
     super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
-  
+
   private void checkPermissions() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
       // As the device is Android 13 and above so I want the permission of accessing Audio, Images,

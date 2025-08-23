@@ -60,7 +60,7 @@ public class HomeActivity
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
-    
+
     if (!isOnCreate) {
       isOnCreate = true;
     }
@@ -210,12 +210,13 @@ public class HomeActivity
     navigationView = findViewById(R.id.navigation_view);
     Menu menu = navigationView.getMenu();
     for (int i = 0; i < menu.size(); i++) {
-    MenuItem menuItem = menu.getItem(i);
-    SpannableString spanString = new SpannableString(menuItem.getTitle());
-    Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/ralewayRegular.ttf");
-    spanString.setSpan(new ItemTypefaceSpan("", typeface), 0, spanString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-    menuItem.setTitle(spanString);
-}
+      MenuItem menuItem = menu.getItem(i);
+      SpannableString spanString = new SpannableString(menuItem.getTitle());
+      Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/ralewayRegular.ttf");
+      spanString.setSpan(new ItemTypefaceSpan("", typeface), 0, spanString.length(),
+          Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+      menuItem.setTitle(spanString);
+    }
     navigationView.setNavigationItemSelectedListener(this);
     setDefaultMenuItem();
     setupHeader();
@@ -435,7 +436,8 @@ public class HomeActivity
   private Spannable title(String s) {
     Spannable ss = new SpannableStringBuilder(s);
     Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/RobotoRegular.ttf");
-    ss.setSpan(new ItemTypefaceSpan("", typeface), 0, ss.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+    ss.setSpan(
+        new ItemTypefaceSpan("", typeface), 0, ss.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
     ss.setSpan(
         new ForegroundColorSpan(Color.WHITE), 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     return ss;
@@ -522,6 +524,7 @@ public class HomeActivity
     }
     int notif_size = notif_list.size();
     setBadgeCount(notif_size);
+    refreshFeed();
   }
 
   private void appInfo(View v) {
@@ -561,6 +564,11 @@ public class HomeActivity
         });
       }
     };
-    ONEX.TIMER.schedule(doAsynchronousTask, 0, 30000);
+    if (ONEX.TIMER != null) {
+      ONEX.TIMER.cancel();
+      ONEX.TIMER = null;
+    }
+    ONEX.TIMER = new Timer();
+    ONEX.TIMER.schedule(doAsynchronousTask, 3000);
   }
 }
