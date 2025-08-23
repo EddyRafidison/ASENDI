@@ -47,7 +47,6 @@ public class HistoryItem {
   }
 
   public CharSequence getDetail() {
-    // Note : AE = ARIARY-EQUIVALENCE
     if (type.equals("1")) {
       return HtmlCompat.fromHtml("<b>" + amount + "</b>"
               + "&nbsp;" + ctx.getString(R.string.to) + "&nbsp;" + receiver

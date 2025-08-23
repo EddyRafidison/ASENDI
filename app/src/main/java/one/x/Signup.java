@@ -1,6 +1,7 @@
 package one.x;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -36,6 +37,7 @@ import androidx.core.text.HtmlCompat;
 import com.developer.filepicker.model.DialogConfigs;
 import com.developer.filepicker.model.DialogProperties;
 import com.developer.filepicker.view.FilePickerDialog;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import java.io.File;
 import java.util.Locale;
 import org.json.JSONException;
@@ -332,7 +334,12 @@ public class Signup extends AppCompatActivity {
       checkPermissions();
     });
   }
-
+  
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+  }
+  
   private void checkPermissions() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
       // As the device is Android 13 and above so I want the permission of accessing Audio, Images,

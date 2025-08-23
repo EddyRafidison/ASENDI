@@ -1,10 +1,15 @@
 package one.x;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,6 +17,7 @@ import androidx.annotation.NonNull;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.ViewfinderView;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 /** Custom Scanner Activity extending from Activity to display a custom layout form scanner view. */
 public class BarcodeScanner extends Activity implements DecoratedBarcodeView.TorchListener {
@@ -26,6 +32,12 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.scanner_activity);
+
+    ActionBar ab = getActionBar();
+    SpannableString spanString = new SpannableString("QR Scanner");
+    Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/RobotoRegular.ttf");
+    spanString.setSpan(new ItemTypefaceSpan("", typeface), 0, spanString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+    ab.setTitle(spanString);  
 
     barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
     barcodeScannerView.setTorchListener(this);
@@ -49,6 +61,11 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
     changeLaserVisibility(false);
   }
 
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+  }
+  
   @Override
   protected void onResume() {
     super.onResume();

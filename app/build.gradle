@@ -63,5 +63,7 @@ dependencies {
     implementation 'io.github.tutorialsandroid:filepicker:9.2.5'
     implementation 'androidx.core:core-splashscreen:1.1.0-alpha02'
     implementation 'com.scottyab:rootbeer-lib:0.1.1'
+    implementation 'io.github.inflationx:calligraphy3:3.1.1'
+    implementation 'io.github.inflationx:viewpump:2.0.3'
 	implementation project(':TopSheet')
 }

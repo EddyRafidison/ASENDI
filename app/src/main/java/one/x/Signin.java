@@ -3,6 +3,7 @@ package one.x;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -40,6 +41,7 @@ import androidx.core.content.FileProvider;
 import androidx.core.content.pm.PackageInfoCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.text.HtmlCompat;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -168,6 +170,11 @@ public class Signin extends AppCompatActivity {
             .show();
       }
     });
+  }
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
 
   @SuppressLint("SetTextI18n")

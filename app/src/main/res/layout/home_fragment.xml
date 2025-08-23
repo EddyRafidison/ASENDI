@@ -223,6 +223,7 @@
              android:textSize="15sp"
              android:focusable="true"
              android:lines="1"
+             app:fontPath="fonts/RobotoRegular.ttf"
              android:textColor="#FD0"
              android:paddingLeft="7dp"
              android:layout_alignParentBottom="true"

@@ -32,6 +32,7 @@
         tools:ignore="ScopedStorage" />
 
     <application
+        android:name=".AppFont"
 		android:usesCleartextTraffic="true"
 		android:supportsRtl="true"
 		android:requestLegacyExternalStorage="true"

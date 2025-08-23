@@ -1,17 +1,21 @@
 package one.x;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -31,6 +35,7 @@ import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.navigation.NavigationView;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -47,13 +52,15 @@ public class HomeActivity
   private NavigationView navigationView;
   private Toolbar toolbar;
   private BadgeDrawable notif_badge;
-  private String titlefrag, user, pswd;
+  private String user, pswd;
+  private CharSequence titlefrag;
   private boolean isYesClicked = false, isOnCreate = false, doubleBackToExitPressedOnce = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
+    
     if (!isOnCreate) {
       isOnCreate = true;
     }
@@ -144,31 +151,36 @@ public class HomeActivity
           new String[] {user, pswd}, true, HomeActivity.this);
       // restart Fragment here
       if (titlefrag.equals(getString(R.string.home))) {
-        showHomeFragment(titlefrag);
+        showHomeFragment(String.valueOf(titlefrag));
       } else {
         if (titlefrag.equals(getString(R.string.modpassword))) {
-          showPswdFragment(titlefrag);
+          showPswdFragment(String.valueOf(titlefrag));
         }
         if (titlefrag.equals(getString(R.string.modsecretkey))) {
-          showSKFragment(titlefrag);
+          showSKFragment(String.valueOf(titlefrag));
         }
         if (titlefrag.equals(getString(R.string.terms))) {
-          showTermsFragment(titlefrag);
+          showTermsFragment(String.valueOf(titlefrag));
         }
         if (titlefrag.equals(getString(R.string.privacy))) {
-          showPrivacyFragment(titlefrag);
+          showPrivacyFragment(String.valueOf(titlefrag));
         }
         if (titlefrag.equals(getString(R.string.delete))) {
-          showDeleteActFragment(titlefrag);
+          showDeleteActFragment(String.valueOf(titlefrag));
         }
         if (titlefrag.equals(getString(R.string.mail_us))) {
-          showMsgFragment(titlefrag);
+          showMsgFragment(String.valueOf(titlefrag));
         }
       }
     } catch (Exception e) {
       Toast.makeText(getApplicationContext(), getString(R.string.errorFragment), Toast.LENGTH_LONG)
           .show();
     }
+  }
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
 
   @OptIn(markerClass = ExperimentalBadgeUtils.class)
@@ -196,6 +208,14 @@ public class HomeActivity
 
   private void setupNavigationView() {
     navigationView = findViewById(R.id.navigation_view);
+    Menu menu = navigationView.getMenu();
+    for (int i = 0; i < menu.size(); i++) {
+    MenuItem menuItem = menu.getItem(i);
+    SpannableString spanString = new SpannableString(menuItem.getTitle());
+    Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/ralewayRegular.ttf");
+    spanString.setSpan(new ItemTypefaceSpan("", typeface), 0, spanString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+    menuItem.setTitle(spanString);
+}
     navigationView.setNavigationItemSelectedListener(this);
     setDefaultMenuItem();
     setupHeader();
@@ -282,7 +302,7 @@ public class HomeActivity
   }
 
   private void showHomeFragment(String title) {
-    titlefrag = title;
+    titlefrag = title(title);
     if (!isOnCreate) {
       if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
         Utils.showNoConnectionAlert(getApplicationContext(), drawerLayout);
@@ -313,11 +333,11 @@ public class HomeActivity
       isOnCreate = false;
     }
     setTitle(titlefrag);
-    toolbar.setTitle(title());
+    toolbar.setTitle(titlefrag);
   }
 
   private void showPrivacyFragment(String title) {
-    titlefrag = title;
+    titlefrag = title(title);
     if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
       Utils.showNoConnectionAlert(getApplicationContext(), drawerLayout);
     } else {
@@ -328,12 +348,12 @@ public class HomeActivity
           .replace(R.id.home_content, fragment)
           .commit();
       setTitle(titlefrag);
-      toolbar.setTitle(title());
+      toolbar.setTitle(titlefrag);
     }
   }
 
   private void showTermsFragment(String title) {
-    titlefrag = title;
+    titlefrag = title(title);
     if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
       Utils.showNoConnectionAlert(getApplicationContext(), drawerLayout);
     } else {
@@ -344,12 +364,12 @@ public class HomeActivity
           .replace(R.id.home_content, fragment)
           .commit();
       setTitle(titlefrag);
-      toolbar.setTitle(title());
+      toolbar.setTitle(titlefrag);
     }
   }
 
   private void showPswdFragment(String title) {
-    titlefrag = title;
+    titlefrag = title(title);
     Fragment fragment = new ChangePswd();
     Bundle mBundle = new Bundle();
     mBundle.putString("act", user);
@@ -361,11 +381,11 @@ public class HomeActivity
         .replace(R.id.home_content, fragment)
         .commit();
     setTitle(titlefrag);
-    toolbar.setTitle(title());
+    toolbar.setTitle(titlefrag);
   }
 
   private void showSKFragment(String title) {
-    titlefrag = title;
+    titlefrag = title(title);
     Fragment fragment = new ChangeSK();
     Bundle mBundle = new Bundle();
     mBundle.putString("act", user);
@@ -377,11 +397,11 @@ public class HomeActivity
         .replace(R.id.home_content, fragment)
         .commit();
     setTitle(titlefrag);
-    toolbar.setTitle(title());
+    toolbar.setTitle(titlefrag);
   }
 
   private void showMsgFragment(String title) {
-    titlefrag = title;
+    titlefrag = title(title);
     Fragment fragment = new Message();
     Bundle mBundle = new Bundle();
     mBundle.putString("act", user);
@@ -393,11 +413,11 @@ public class HomeActivity
         .replace(R.id.home_content, fragment)
         .commit();
     setTitle(titlefrag);
-    toolbar.setTitle(title());
+    toolbar.setTitle(titlefrag);
   }
 
   private void showDeleteActFragment(String title) {
-    titlefrag = title;
+    titlefrag = title(title);
     Fragment fragment = new DeleteAct();
     Bundle mBundle = new Bundle();
     mBundle.putString("act", user);
@@ -409,11 +429,13 @@ public class HomeActivity
         .replace(R.id.home_content, fragment)
         .commit();
     setTitle(titlefrag);
-    toolbar.setTitle(title());
+    toolbar.setTitle(titlefrag);
   }
 
-  private Spannable title() {
-    Spannable ss = new SpannableStringBuilder(titlefrag);
+  private Spannable title(String s) {
+    Spannable ss = new SpannableStringBuilder(s);
+    Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/RobotoRegular.ttf");
+    ss.setSpan(new ItemTypefaceSpan("", typeface), 0, ss.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
     ss.setSpan(
         new ForegroundColorSpan(Color.WHITE), 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     return ss;

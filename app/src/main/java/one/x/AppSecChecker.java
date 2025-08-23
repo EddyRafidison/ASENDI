@@ -37,11 +37,11 @@ public class AppSecChecker extends Service {
 
         // Attendre un peu pour laisser le Toast s'afficher
         try {
-          Thread.sleep(2000); // 2 secondes
+          Thread.sleep(3000); // 3 secondes
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
-        if (!ONEX.GFID.equals("123456")) {
+        if (!ONEX.BASE_URL.equals("http://127.0.0.1:5555")) {
           // Réinitialiser l'application
           ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
