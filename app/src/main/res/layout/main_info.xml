@@ -139,8 +139,8 @@
              android:layout_width="match_parent"
              android:layout_below="@id/cv"
              android:background="@drawable/white_bg"
-             android:layout_above="@id/rel2"
              android:padding="4dp"
+             android:layout_above="@id/rel2"
              android:id="@+id/rel">
 
             <TextView
@@ -149,7 +149,7 @@
                  android:gravity="center_vertical|center|center_horizontal"
                  android:padding="8dp"
                  android:layout_centerHorizontal="true"
-                 android:textSize="14sp"
+                 android:textSize="15sp"
                  android:textColor="#ff0a140e"
                  android:id="@+id/scan_invite"
                  android:text="@string/scan_qr" />
@@ -165,6 +165,100 @@
                  android:layout_centerHorizontal="true"
                  android:layout_marginTop="15dp"
                  android:id="@+id/qr" />
+
+            <LinearLayout
+                 android:layout_height="match_parent"
+                 android:layout_width="match_parent"
+                 android:layout_below="@id/qr"
+                 android:layout_margin="15dp"
+                 android:padding="8dp"
+                 android:orientation="vertical">
+
+                <RelativeLayout
+                     android:layout_height="40dp"
+                     android:layout_width="match_parent"
+                     android:id="@+id/rell">
+
+                    <View
+                         android:layout_height="1dp"
+                         android:layout_width="200dp"
+                         android:layout_centerInParent="true"
+                         android:background="#3F3F3F" />
+
+                    <TextView
+                         android:layout_height="wrap_content"
+                         android:layout_width="wrap_content"
+                         android:layout_centerInParent="true"
+                         android:background="#FFFFFF"
+                         android:padding="5dp"
+                         android:textSize="14sp"
+                         android:textColor="#ff0a140e"
+                         android:text="Text" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                     android:layout_height="50dp"
+                     android:layout_width="match_parent"
+                     android:background="@drawable/buy_edit_bg"
+                     android:gravity="center_vertical"
+                     android:padding="8dp"
+                     android:orientation="horizontal"
+                     android:id="@+id/linel">
+
+                    <RelativeLayout
+                         android:layout_height="35dp"
+                         android:layout_width="35dp"
+                         android:background="@drawable/round_bg_red"
+                         android:clickable="true"
+                         android:focusable="true"
+                         android:id="@+id/select_pm">
+
+                        <ImageView
+                             android:layout_height="match_parent"
+                             android:layout_width="match_parent"
+                             android:src="@drawable/airtel_logo"
+                             android:contentDescription="@string/app_name"
+                             android:adjustViewBounds="true"
+                             android:scaleType="fitCenter"
+                             android:id="@+id/img_pm" />
+
+                        <ImageView
+                             android:layout_height="20dp"
+                             android:layout_width="20dp"
+                             android:src="@drawable/mv"
+                             android:adjustViewBounds="true"
+                             android:contentDescription="@string/app_name"
+                             android:scaleType="fitCenter"
+                             android:tint="#000" />
+
+                    </RelativeLayout>
+
+                    <EditText
+                         android:layout_height="match_parent"
+                         android:layout_width="0dp"
+                         android:background="@android:color/transparent"
+                         android:hint="Saisir du texte"
+                         android:padding="5dp"
+                         android:textSize="15sp"
+                         android:textColor="#ff0a140e"
+                         android:layout_weight="1"
+                         android:inputType="text"
+                         android:id="@+id/address_pay" />
+
+                    <ImageButton
+                         android:layout_height="match_parent"
+                         android:layout_width="30dp"
+                         android:adjustViewBounds="true"
+                         android:scaleType="fitCenter"
+                         android:src="@drawable/arrow_right"
+                         android:contentDescription="@string/app_name"
+                         android:background="@drawable/ar_bg"
+                         android:id="@+id/yes" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </RelativeLayout>
 
