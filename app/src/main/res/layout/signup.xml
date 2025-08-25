@@ -124,34 +124,49 @@
                      android:layout_height="56dp"
                      android:layout_width="match_parent"
                      android:weightSum="2"
+                     android:padding="3dp"
                      android:background="@drawable/edt_bg"
+                     android:gravity="center"
                      android:orientation="horizontal"
                      android:id="@+id/btns_layout">
 
-                    <Button
+                    <TextView
                          android:layout_height="match_parent"
                          android:layout_width="match_parent"
-                         android:layout_marginBottom="2dp"
-                         android:background="@drawable/button_selector"
+                         android:layout_marginBottom="1dp"
                          android:textAllCaps="true"
                          android:textColor="#ffffffff"
-                         android:layout_marginLeft="2dp"
-                         android:layout_marginRight="1dp"
-                         android:layout_marginTop="2dp"
+                         android:focusable="true"
+                         android:clickable="true"
+                         android:gravity="center"
+                         android:textSize="15sp"
+                         android:background="@drawable/button_selector_left"
+                         android:layout_marginLeft="1dp"
+                         android:layout_marginTop="1dp"
                          android:layout_weight="1"
                          android:id="@+id/male"
                          android:text="@string/male" />
 
-                    <Button
+                    <View
+                         android:layout_height="match_parent"
+                         android:layout_width="1dp"
+                         android:layout_marginBottom="1dp"
+                         android:background="@android:color/transparent"
+                         android:layout_marginTop="1dp" />
+
+                    <TextView
                          android:layout_height="match_parent"
                          android:layout_width="match_parent"
-                         android:layout_marginBottom="2dp"
-                         android:background="@drawable/button_selector"
+                         android:layout_marginBottom="1dp"
                          android:textAllCaps="true"
+                         android:focusable="true"
+                         android:clickable="true"
+                         android:gravity="center"
+                         android:textSize="15sp"
                          android:textColor="#ffffffff"
-                         android:layout_marginLeft="1dp"
-                         android:layout_marginRight="2dp"
-                         android:layout_marginTop="2dp"
+                         android:background="@drawable/button_selector_right"
+                         android:layout_marginRight="1dp"
+                         android:layout_marginTop="1dp"
                          android:layout_weight="1"
                          android:id="@+id/female"
                          android:text="@string/female" />

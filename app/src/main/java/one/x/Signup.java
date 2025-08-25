@@ -62,7 +62,8 @@ public class Signup extends AppCompatActivity {
   private EditText fullname, birthdate, address, cin, email, pswd1, pswd2, sk;
   private ImageButton cin1, cin2;
   private CheckBox check;
-  private Button signup, male, female;
+  private Button signup;
+  private TextView male, female;
   private int cin_code = 0;
   private String cin_bytes_1 = "", cin_bytes_2 = "";
 
@@ -105,6 +106,14 @@ public class Signup extends AppCompatActivity {
       male.setEnabled(true);
       female.setEnabled(true);
       v0.setEnabled(false);
+      if(v0.getId() == R.id.female){
+         v0.setBackground(getDrawable(R.drawable.button_pressed_right));
+         male.setBackground(getDrawable(R.drawable.button_default_left));
+      }else{
+         v0.setBackground(getDrawable(R.drawable.button_pressed_left));
+         female.setBackground(getDrawable(R.drawable.button_default_right));
+      }
+      
     };
 
     male.setOnClickListener(toggleListener);

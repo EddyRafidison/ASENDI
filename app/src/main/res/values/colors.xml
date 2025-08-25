@@ -6,7 +6,4 @@
 	<item name="accent" type="color">#1E95F8</item>
 	<item name="grey" type="color">#848482</item>
     <color name="md_theme_dark_background">#1C1B1F</color>
-    <color name="button_pressed">#FFBB86FC</color>
-    <color name="button_disabled">#FF888888</color>
-    <color name="button_default">#FF444444</color>
 </resources>

@@ -68,8 +68,8 @@
     <string name="change">Modifier</string>
     <string name="new_sk">Nouveau mot secret</string>
     <string name="dlt">Supprimer</string>
-    <string name="note_msg">Des questions ou des idées ? Veuillez-nous écrire. Votre message reste privé et confidentiel et on vous répondra dès que possible à l\'adresse email liée à votre compte.</string>
-    <string name="note_delete">Êtes-vous vouloir supprimer votre compte de nos serveurs ? Ce processus est irreversible et toutes les informations concernant votre compte seront non récupérables. Pour continuer vers la suppression, veuillez entrer votre PIN.</string>
+    <string name="note_msg">Des questions ou des idées ? Veuillez-nous écrire. Nous vous assurons que votre message reste privé et confidentiel et on vous répondra dès que possible à l\'adresse email liée à votre compte.</string>
+    <string name="note_delete">Êtes-vous vraiment sûr(e) de supprimer votre compte de nos serveurs ? Ce processus est irréversible et toutes les informations concernant votre compte (sauf une partie de vos récentes données de transaction) seront non récupérables. Pour continuer vers la suppression, veuillez entrer votre PIN.</string>
     <string name="subject">Sujet ou titre</string>
     <string name="message_here">Votre message ici</string>
     <string name="send_msg">Envoyer</string>
