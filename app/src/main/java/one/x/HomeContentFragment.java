@@ -35,6 +35,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListPopupWindow;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -134,7 +135,7 @@ public class HomeContentFragment extends Fragment {
   private Bitmap user_qr = null, dest_qr = null;
   private Vibrator vib = null;
   private View select_pm, confirm_pm;
-  
+
   @SuppressLint("ResourceAsColor")
   @Override
   public View onCreateView(
@@ -161,6 +162,8 @@ public class HomeContentFragment extends Fragment {
     if (v != null) {
       v.setVisibility(View.INVISIBLE);
     }
+
+    select_pm.setOnClickListener(v9 -> { showPmList(v9); });
 
     historylist = layout.findViewById(R.id.history_list);
     user = Utils.getAccount(requireContext());
@@ -986,5 +989,45 @@ public class HomeContentFragment extends Fragment {
     stat.setMovementMethod(LinkMovementMethod.getInstance());
     stat.setHighlightColor(Color.YELLOW);
     refresh();
+  }
+
+  private void showPmList(View anchorv) {
+    ArrayList<String> listPm = new ArrayList<>();
+    listPm.add("AirtelMoney");
+    listPm.add("Tether (USDT)");
+    ContextThemeWrapper theme =
+        new ContextThemeWrapper(requireContext(), android.R.style.Theme_Material_Light);
+    ListPopupWindow listPmD = new ListPopupWindow(theme);
+    listPmD.setAdapter(
+        new ArrayAdapter<String>(requireActivity(), R.layout.popup_textview, listPm) {
+          @Override
+          public View getView(int position, View convertView, ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+            TextView text = view.findViewById(R.id.textItem);
+
+            if (position == 0) {
+              text.setTextColor(Color.parseColor("#E11E11"));
+            } else {
+              text.setTextColor(Color.parseColor("#D3B25B"));
+            }
+
+            return view;
+          };
+        });
+    listPmD.setAnchorView(anchorv);
+    listPmD.setWidth(200);
+    listPmD.setVerticalOffset(anchorv.getHeight() / (-2));
+    listPmD.setHeight(ListPopupWindow.WRAP_CONTENT);
+    listPmD.setOnItemClickListener((parent, view, position, id) -> {
+      if (position == 0) {
+        select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_red));
+        pm_src.setImageResource(R.drawable.airtel_logo);
+      } else {
+        select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_or));
+        pm_src.setImageResource(R.drawable.tether_logo);
+      }
+      listPmD.dismiss();
+    });
+    listPmD.show();
   }
 }

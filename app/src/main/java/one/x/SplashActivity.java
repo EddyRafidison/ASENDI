@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.splashscreen.SplashScreen;
+import java.util.Currency;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -74,27 +76,36 @@ public class SplashActivity extends AppCompatActivity {
   }
 
   private void gotoNext() {
-  final String loc = Utils.getCountryCode(getApplicationContext());
-    if (loc.isEmpty()) {
+    final String loc = Utils.getCountryCode(getApplicationContext());
+    if (!loc.isEmpty()) {
+      Locale locale = new Locale("", loc);
+      final String curr = Currency.getInstance(locale).getCurrencyCode();
+      if (curr == null || curr.isEmpty()) {
+        Toast.makeText(getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
+            .show();
+        finish();
+      }
+      scheduler.schedule(() -> {
+        // Lancer l'activité Signin
+        Intent signinIntent = new Intent(SplashActivity.this, Signin.class);
+        signinIntent.putExtra("loc", loc);
+        signinIntent.putExtra("curr", curr);
+        startActivity(signinIntent);
+        finish();
+
+        // Démarrer le service AppSecChecker
+        Intent serviceIntent = new Intent(SplashActivity.this, AppSecChecker.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+          startForegroundService(serviceIntent);
+        } else {
+          startService(serviceIntent);
+        }
+      }, 3, TimeUnit.SECONDS);
+    } else {
       Toast.makeText(getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
           .show();
       finish();
     }
-    scheduler.schedule(() -> {
-      // Lancer l'activité Signin
-      Intent signinIntent = new Intent(SplashActivity.this, Signin.class);
-      signinIntent.putExtra("loc", loc);
-      startActivity(signinIntent);
-      finish();
-
-      // Démarrer le service AppSecChecker
-      Intent serviceIntent = new Intent(SplashActivity.this, AppSecChecker.class);
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        startForegroundService(serviceIntent);
-      } else {
-        startService(serviceIntent);
-      }
-    }, 3, TimeUnit.SECONDS);
   }
 
   @Override

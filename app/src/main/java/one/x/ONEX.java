@@ -6,6 +6,7 @@ import java.util.Timer;
 public class ONEX {
   public static Locale TPLANG = Locale.ENGLISH;
   public static String COUNTRY = "";
+  public static String CURRENCY = "";
   public static boolean isNetworkConnected = false;
   public static String PSWD = "", ID = "";
   public static String BASE_URL = "http://127.0.0.1:5555";

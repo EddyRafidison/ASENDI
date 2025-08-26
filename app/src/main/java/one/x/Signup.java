@@ -106,14 +106,13 @@ public class Signup extends AppCompatActivity {
       male.setEnabled(true);
       female.setEnabled(true);
       v0.setEnabled(false);
-      if(v0.getId() == R.id.female){
-         v0.setBackground(getDrawable(R.drawable.button_pressed_right));
-         male.setBackground(getDrawable(R.drawable.button_default_left));
-      }else{
-         v0.setBackground(getDrawable(R.drawable.button_pressed_left));
-         female.setBackground(getDrawable(R.drawable.button_default_right));
+      if (v0.getId() == R.id.female) {
+        v0.setBackground(getDrawable(R.drawable.button_pressed_right));
+        male.setBackground(getDrawable(R.drawable.button_default_left));
+      } else {
+        v0.setBackground(getDrawable(R.drawable.button_pressed_left));
+        female.setBackground(getDrawable(R.drawable.button_default_right));
       }
-      
     };
 
     male.setOnClickListener(toggleListener);
@@ -133,35 +132,10 @@ public class Signup extends AppCompatActivity {
     fullname.requestFocus();
     fullname.setAllCaps(true);
 
-    String[] strs = new String[] {
-        getString(R.string.terms).toLowerCase(), getString(R.string.privacy).toLowerCase()};
-    final String t = getString(R.string.notice_terms_policy);
-    final String tlc = t.toLowerCase();
-    SpannableStringBuilder ss = new SpannableStringBuilder(t);
-    for (int i = 0; i < strs.length; i++) {
-      String s = strs[i];
-      int start = tlc.indexOf(s);
-      int end = tlc.lastIndexOf(s) + s.length();
-      ss.setSpan(new Clickables(textCheck, strs, i, string -> {
-        Intent browserIntent;
-        if (string.equals(strs[0])) {
-          // show terms of use
-          browserIntent = new Intent(Intent.ACTION_VIEW,
-              Uri.parse(ONEX.INFO + "?r=terms"
-                  + "&l=" + ONEX.TPLANG));
-        } else {
-          // show policy
-          browserIntent = new Intent(Intent.ACTION_VIEW,
-              Uri.parse(ONEX.INFO + "?r=privacy"
-                  + "&l=" + ONEX.TPLANG));
-        }
-        startActivity(browserIntent);
-      }, Color.MAGENTA), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-    }
-
-    textCheck.setText(ss, TextView.BufferType.SPANNABLE);
+    String t = getString(R.string.notice_terms_policy).replaceAll("-fr", "-" + ONEX.TPLANG);
+    textCheck.setText(HtmlCompat.fromHtml(t, HtmlCompat.FROM_HTML_MODE_LEGACY));
     textCheck.setMovementMethod(LinkMovementMethod.getInstance());
-    textCheck.setHighlightColor(Color.YELLOW);
+
     properties.selection_mode = DialogConfigs.SINGLE_MODE;
     properties.selection_type = DialogConfigs.FILE_SELECT;
     properties.root = new File(DialogConfigs.DEFAULT_DIR);
