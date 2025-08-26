@@ -74,9 +74,16 @@ public class SplashActivity extends AppCompatActivity {
   }
 
   private void gotoNext() {
+  final String loc = Utils.getCountryCode(getApplicationContext());
+    if (loc.isEmpty()) {
+      Toast.makeText(getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
+          .show();
+      finish();
+    }
     scheduler.schedule(() -> {
       // Lancer l'activité Signin
       Intent signinIntent = new Intent(SplashActivity.this, Signin.class);
+      signinIntent.putExtra("loc", loc);
       startActivity(signinIntent);
       finish();
 

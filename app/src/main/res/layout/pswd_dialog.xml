@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:paddingTop="8dp"
         android:textColor="#DDE0E0"
-        android:textSize="14sp"/>
+        android:textSize="15sp"/>
 
     <LinearLayout
         android:id="@+id/l1"

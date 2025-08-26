@@ -15,6 +15,6 @@
         android:linksClickable="true"
         android:padding="10dp"
         android:textColor="@android:color/white"
-        android:textSize="14sp" />
+        android:textSize="15sp" />
 
 </LinearLayout>

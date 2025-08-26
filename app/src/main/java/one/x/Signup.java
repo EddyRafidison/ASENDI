@@ -123,10 +123,8 @@ public class Signup extends AppCompatActivity {
     TextView fulladdTitle = findViewById(R.id.fulladdT);
     String fullAdd = getString(R.string.fullAddress);
 
-    final String loc = Utils.getCountryCode(getApplicationContext());
+    final String loc = ONEX.COUNTRY;
     if (loc.isEmpty()) {
-      Toast.makeText(getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
-          .show();
       finish();
     }
     Locale locale = new Locale("", loc);

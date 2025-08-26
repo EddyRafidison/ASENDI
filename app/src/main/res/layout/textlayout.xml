@@ -17,7 +17,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:id="@+id/textdata"
-		android:textSize="14sp"
+		android:textSize="15sp"
 		app:width_weight="1"
 		app:height_weight="1"
 		app:custom_color="#D2F5FFFB"

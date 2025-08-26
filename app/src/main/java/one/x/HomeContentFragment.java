@@ -82,7 +82,7 @@ public class HomeContentFragment extends Fragment {
   private View rel_;
   private BottomSheetBehavior<View> behavior;
   private TopSheetBehavior<View> tsb;
-  private ImageView topsheet_arrow;
+  private ImageView topsheet_arrow, pm_src;
   private ImageView topsheet_profile;
   private ImageView qr_dest;
   private ImageView bottomsheet_arrow;
@@ -133,7 +133,8 @@ public class HomeContentFragment extends Fragment {
   private DecimalFormat df;
   private Bitmap user_qr = null, dest_qr = null;
   private Vibrator vib = null;
-
+  private View select_pm, confirm_pm;
+  
   @SuppressLint("ResourceAsColor")
   @Override
   public View onCreateView(
@@ -153,6 +154,9 @@ public class HomeContentFragment extends Fragment {
     rel_ = layout.findViewById(R.id.rel_);
     stat = layout.findViewById(R.id.stat);
     go = layout.findViewById(R.id.go);
+    select_pm = layout.findViewById(R.id.select_pm);
+    confirm_pm = layout.findViewById(R.id.yes_pm);
+    pm_src = layout.findViewById(R.id.img_pm);
     View v = requireActivity().findViewById(R.id.empty_data_layout);
     if (v != null) {
       v.setVisibility(View.INVISIBLE);

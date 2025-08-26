@@ -69,8 +69,7 @@
                      android:layout_width="match_parent"
                      android:paddingRight="2dp"
                      android:layout_centerVertical="true"
-                     android:textSize="16sp"
-                     android:singleLine="true"
+                     android:textSize="15sp"
                      android:textColor="#ffffffff"
                      android:ems="10"
                      tools:ignore="Autofill,HardcodedText"
@@ -122,8 +121,7 @@
                      android:layout_height="match_parent"
                      android:layout_width="match_parent"
                      android:paddingRight="2dp"
-                     android:textSize="16sp"
-                     android:singleLine="true"
+                     android:textSize="15sp"
                      android:textColor="#ffffffff"
                      android:ems="10"
                      tools:ignore="Autofill"
@@ -165,7 +163,7 @@
                      android:layout_width="match_parent"
                      android:gravity="center_vertical|center|center_horizontal"
                      android:padding="7dp"
-                     android:textSize="14sp"
+                     android:textSize="15sp"
                      android:textColor="#FF0A140E"
                      android:text="@string/scan_qr_send" />
 

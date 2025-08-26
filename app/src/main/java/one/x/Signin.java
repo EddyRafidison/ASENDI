@@ -91,6 +91,14 @@ public class Signin extends AppCompatActivity {
     if (lang.startsWith("fr")) {
       ONEX.TPLANG = Locale.FRENCH;
     }
+    
+    Intent getData  = getIntent();
+    if(getData != null) {
+        ONEX.COUNTRY = getData.getStringExtra("loc");
+    } else {
+        finish();
+    }
+    
     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
     StrictMode.setThreadPolicy(policy);
     CheckNetwork network_ = new CheckNetwork(getApplicationContext());

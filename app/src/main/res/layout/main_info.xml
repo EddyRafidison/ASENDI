@@ -64,7 +64,7 @@
                          android:gravity="center_vertical"
                          android:layout_centerVertical="true"
                          android:padding="8dp"
-                         android:textSize="14sp"
+                         android:textSize="15sp"
                          android:textColor="#ff0a140e"
                          android:id="@+id/user_id" />
 
@@ -90,7 +90,7 @@
                          android:layout_width="match_parent"
                          android:gravity="center_vertical"
                          android:padding="8dp"
-                         android:textSize="14sp"
+                         android:textSize="15sp"
                          android:textColor="#ff0a140e"
                          android:id="@+id/user_group" />
 
@@ -191,32 +191,36 @@
                          android:layout_centerInParent="true"
                          android:background="#FFFFFF"
                          android:padding="5dp"
-                         android:textSize="14sp"
+                         android:textSize="15sp"
                          android:textColor="#ff0a140e"
-                         android:text="Text" />
+                         android:text="@string/select_pm_text" />
 
                 </RelativeLayout>
 
                 <LinearLayout
-                     android:layout_height="50dp"
+                     android:layout_height="56dp"
                      android:layout_width="match_parent"
                      android:background="@drawable/buy_edit_bg"
                      android:gravity="center_vertical"
-                     android:padding="8dp"
+                     android:paddingRight="8dp"
                      android:orientation="horizontal"
+                     android:paddingBottom="4dp"
+                     android:paddingLeft="8dp"
+                     android:paddingTop="4dp"
                      android:id="@+id/linel">
 
                     <RelativeLayout
-                         android:layout_height="35dp"
-                         android:layout_width="35dp"
+                         android:layout_height="40dp"
+                         android:layout_width="40dp"
                          android:background="@drawable/round_bg_red"
                          android:clickable="true"
                          android:focusable="true"
                          android:id="@+id/select_pm">
 
                         <ImageView
-                             android:layout_height="match_parent"
-                             android:layout_width="match_parent"
+                             android:layout_height="35dp"
+                             android:layout_width="35dp"
+                             android:layout_centerInParent="true"
                              android:src="@drawable/airtel_logo"
                              android:contentDescription="@string/app_name"
                              android:adjustViewBounds="true"
@@ -226,11 +230,12 @@
                         <ImageView
                              android:layout_height="20dp"
                              android:layout_width="20dp"
+                             android:layout_centerInParent="true"
                              android:src="@drawable/mv"
                              android:adjustViewBounds="true"
                              android:contentDescription="@string/app_name"
                              android:scaleType="fitCenter"
-                             android:tint="#000" />
+                             android:tint="#100F0F" />
 
                     </RelativeLayout>
 
@@ -238,23 +243,27 @@
                          android:layout_height="match_parent"
                          android:layout_width="0dp"
                          android:background="@android:color/transparent"
-                         android:hint="Saisir du texte"
+                         android:hint="@string/mm_pm_hint"
+                         android:textColorHint="#636363"
                          android:padding="5dp"
                          android:textSize="15sp"
+                         android:lines="1"
+                         android:ems="10"
+                         tools:ignore="Autofill"
                          android:textColor="#ff0a140e"
                          android:layout_weight="1"
                          android:inputType="text"
                          android:id="@+id/address_pay" />
 
                     <ImageButton
-                         android:layout_height="match_parent"
-                         android:layout_width="30dp"
+                         android:layout_height="34dp"
+                         android:layout_width="34dp"
                          android:adjustViewBounds="true"
                          android:scaleType="fitCenter"
                          android:src="@drawable/arrow_right"
                          android:contentDescription="@string/app_name"
                          android:background="@drawable/ar_bg"
-                         android:id="@+id/yes" />
+                         android:id="@+id/yes_pm" />
 
                 </LinearLayout>
 

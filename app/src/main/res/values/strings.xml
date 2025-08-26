@@ -140,6 +140,9 @@
     <string name="gender">Genre</string>
     <string name="male">Homme</string>
     <string name="female">Femme</string>
+   <string name="select_pm_text">Ou recharger via</string>
+   <string name="pk_pm_hint">Votre adresse publique Wallet </string>
+   <string name="mm_pm_hint">Votre numéro mobile</string>
 
 </resources>
 
