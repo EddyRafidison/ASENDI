@@ -21,6 +21,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
@@ -30,6 +31,7 @@ import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -92,7 +94,7 @@ public class HomeContentFragment extends Fragment {
                   isBSopen = false, isNextLoad = false;
   private TextView user_id, stat;
   private LoaderTextView stock;
-  private EditText user_dest, value;
+  private EditText user_dest, value, addressPay;
   private FloatingActionButton go;
   private final ActivityResultLauncher<ScanOptions> barcodeLauncher =
       registerForActivityResult(new ScanContract(), result -> {
@@ -158,6 +160,7 @@ public class HomeContentFragment extends Fragment {
     select_pm = layout.findViewById(R.id.select_pm);
     confirm_pm = layout.findViewById(R.id.yes_pm);
     pm_src = layout.findViewById(R.id.img_pm);
+    addressPay = layout.findViewById(R.id.address_pay);
     View v = requireActivity().findViewById(R.id.empty_data_layout);
     if (v != null) {
       v.setVisibility(View.INVISIBLE);
@@ -1008,7 +1011,7 @@ public class HomeContentFragment extends Fragment {
             if (position == 0) {
               text.setTextColor(Color.parseColor("#E11E11"));
             } else {
-              text.setTextColor(Color.parseColor("#D3B25B"));
+              text.setTextColor(Color.parseColor("#FF51AF95"));
             }
 
             return view;
@@ -1022,10 +1025,18 @@ public class HomeContentFragment extends Fragment {
       if (position == 0) {
         select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_red));
         pm_src.setImageResource(R.drawable.airtel_logo);
+        addressPay.setHint(R.string.mm_pm_hint);
+        addressPay.setInputType(InputType.TYPE_CLASS_PHONE);
       } else {
-        select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_or));
+        select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_green));
         pm_src.setImageResource(R.drawable.tether_logo);
+        addressPay.setHint(R.string.pk_pm_hint);
+        addressPay.setInputType(InputType.TYPE_CLASS_TEXT);
       }
+      addressPay.setText("");
+      addressPay.requestFocus();
+      InputMethodManager imm  = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+      imm.showSoftInput(addressPay, InputMethodManager.SHOW_IMPLICIT);
       listPmD.dismiss();
     });
     listPmD.show();

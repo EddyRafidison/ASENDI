@@ -40,6 +40,7 @@ import com.developer.filepicker.model.DialogProperties;
 import com.developer.filepicker.view.FilePickerDialog;
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import java.io.File;
+import java.util.List;
 import java.util.Locale;
 import org.json.JSONException;
 
@@ -132,9 +133,37 @@ public class Signup extends AppCompatActivity {
     fullname.requestFocus();
     fullname.setAllCaps(true);
 
-    String t = getString(R.string.notice_terms_policy).replaceAll("-fr", "-" + ONEX.TPLANG);
-    textCheck.setText(HtmlCompat.fromHtml(t, HtmlCompat.FROM_HTML_MODE_LEGACY));
+    String t = getString(R.string.notice_terms_policy);
+    List<Integer> indexes = Utils.getIndexes(t, '%');
+    String terms = t.substring(indexes.get(0), indexes.get(1)).replaceAll("%", "");
+    String privacy = t.substring(indexes.get(2), indexes.get(3)).replaceAll("%", "");
+    t = t.replaceAll("%", "");
+    String[] strs = new String[] {terms, privacy};
+    SpannableStringBuilder ss = new SpannableStringBuilder(t);
+    for (int i = 0; i < strs.length; i++) {
+      String s = strs[i];
+      int start = t.indexOf(s);
+      int end = t.lastIndexOf(s) + s.length();
+      ss.setSpan(new Clickables(textCheck, strs, i, string -> {
+        Intent browserIntent;
+        if (string.equals(strs[0])) {
+          // show terms of use
+          browserIntent = new Intent(Intent.ACTION_VIEW,
+              Uri.parse(ONEX.INFO + "?r=terms"
+                  + "&l=" + ONEX.TPLANG));
+        } else {
+          // show policy
+          browserIntent = new Intent(Intent.ACTION_VIEW,
+              Uri.parse(ONEX.INFO + "?r=privacy"
+                  + "&l=" + ONEX.TPLANG));
+        }
+        startActivity(browserIntent);
+      }, Color.MAGENTA), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
+
+    textCheck.setText(ss, TextView.BufferType.SPANNABLE);
     textCheck.setMovementMethod(LinkMovementMethod.getInstance());
+    textCheck.setHighlightColor(Color.YELLOW);
 
     properties.selection_mode = DialogConfigs.SINGLE_MODE;
     properties.selection_type = DialogConfigs.FILE_SELECT;

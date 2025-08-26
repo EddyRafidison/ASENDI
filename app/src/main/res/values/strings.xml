@@ -100,7 +100,7 @@
 	<string name="fullAddress">Full address - X</string>
 	<string name="cin_with_photos">CIN: Number and 2 double-sided photos</string>
 	<string name="mailAddress">Email</string>
-	<string name="notice_terms_policy">By creating the account, I have read and accept the terms of use and privacy policies.</string>
+	<string name="notice_terms_policy" formatted="false">By creating the account, I have read and accept the %terms of use% and %privacy policies%.</string>
 	<string name="selection">Select.</string>
 	<string name="download_failed">Download failed</string>
 	<string name="downloaded">Download successful</string>

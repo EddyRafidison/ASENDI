@@ -77,6 +77,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -551,5 +552,16 @@ public class Utils {
     }
 
     return countryCode != null ? countryCode.toUpperCase() : "";
+  }
+
+  public static List<Integer> getIndexes(String text, char delimiter) {
+    List<Integer> indexes = new ArrayList<Integer>();
+    int tlength = text.length();
+    for (int i = 0; i < tlength; i++) {
+      if (text.charAt(i) == delimiter) {
+        indexes.add(i);
+      }
+    }
+    return indexes;
   }
 }

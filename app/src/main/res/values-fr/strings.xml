@@ -99,8 +99,8 @@
     <string name="birthDate">Date de naissance (exemple: 31/12/1995)</string>
     <string name="fullAddress">Adresse complète - X</string>
     <string name="cin_with_photos">CIN : Numéro et 2 photos recto-verso</string>
-    <string name="mailAddress">Email</string>
-    <string name="notice_terms_policy">En créant le compte, j\'ai lu et accepte les &lt;a href=\"https://onex.com/app/privacy-terms-info?r=terms-fr\"&gt;conditions d\'utilisation&lt;/a&gt; et &lt;a href=\"https://onex.com/app/privacy-terms-info?r=privacy-fr\"&gt;politiques de confidentialité&lt;/a&gt;.</string>
+    <string name="mailAddress">Email</string> 
+    <string name="notice_terms_policy" formatted="false">En créant le compte, j\'ai lu et accepte les %conditions d\'utilisation% et %politiques de confidentialité%.</string>
     <string name="selection">Sélect.</string>
     <string name="download_failed">Téléchargement échoué</string>
     <string name="downloaded">Téléchargement réussi</string>

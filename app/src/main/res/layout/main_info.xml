@@ -252,7 +252,7 @@
                          tools:ignore="Autofill"
                          android:textColor="#ff0a140e"
                          android:layout_weight="1"
-                         android:inputType="text"
+                         android:inputType="phone"
                          android:id="@+id/address_pay" />
 
                     <ImageButton
