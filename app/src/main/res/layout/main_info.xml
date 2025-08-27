@@ -242,15 +242,15 @@
                     <EditText
                          android:layout_height="match_parent"
                          android:layout_width="0dp"
+                         android:padding="5dp"
+                         android:textSize="15sp"
+                         android:textColor="#ff0a140e"
+                         android:ems="10"
+                         tools:ignore="Autofill"
                          android:background="@android:color/transparent"
                          android:hint="@string/mm_pm_hint"
                          android:textColorHint="#636363"
-                         android:padding="5dp"
-                         android:textSize="15sp"
                          android:lines="1"
-                         android:ems="10"
-                         tools:ignore="Autofill"
-                         android:textColor="#ff0a140e"
                          android:layout_weight="1"
                          android:inputType="phone"
                          android:id="@+id/address_pay" />
@@ -266,6 +266,26 @@
                          android:id="@+id/yes_pm" />
 
                 </LinearLayout>
+
+                <TextView
+                     android:layout_height="wrap_content"
+                     android:layout_width="match_parent"
+                     android:paddingRight="3dp"
+                     android:textSize="12sp"
+                     android:lines="1"
+                     android:textColor="#5E615F"
+                     android:paddingLeft="3dp"
+                     android:id="@+id/phone_input_limit"
+                     android:text="@string/phone_input_filter" />
+
+                <TextView
+                     android:layout_height="wrap_content"
+                     android:layout_width="match_parent"
+                     android:padding="3dp"
+                     android:textSize="14sp"
+                     android:textColor="#0060BA"
+                     android:layout_marginTop="15dp"
+                     android:text="@string/address_pm_use" />
 
             </LinearLayout>
 

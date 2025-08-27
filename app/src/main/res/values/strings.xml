@@ -14,7 +14,7 @@
 	<string name="check_vers_failed">Unable to search for update</string>
 	<string name="navigation_drawer_open">Open navigation drawer</string>
 	<string name="navigation_drawer_close">Close navigation drawer</string>
-	<string name="copy">Copied ID</string>
+	<string name="copied">Copied</string>
 	<string name="home">Home</string>
 	<string name="app_update_available">A new update to install</string>
 	<string name="download_vers">Download version</string>
@@ -143,6 +143,11 @@
    <string name="select_pm_text">Ou recharger via</string>
    <string name="pk_pm_hint">Votre adresse publique Wallet </string>
    <string name="mm_pm_hint">Votre numéro mobile</string>
-
+   <string name="phone_input_filter">Ne doit pas contenir  le préfixe "\0\" ni le code du pays</string>
+   <string name="address_pm_use">Veuillez soumettre une adresse de paiement valide sur laquelle vous avez le bon droit de contrôle. Nous utiliserons votre dernière adresse d\'achat en cas d\'un disbursement,</string>
+   <string name="check_entry">Vérifier l\'entrée</string>
+   <string name="val_in_loc">Pour continuer vers l\'achat, entrer le montant selon la monnaie locale du pays:</string>
+   <string name="copy_pk">Pour continuer vers l\'achat, merci de copier et coller cette adresse unique de paiement dans votre porte-feuille préféré:</string>
+   <string name="copy">Copy</string>
 </resources>
 

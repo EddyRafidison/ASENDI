@@ -137,6 +137,7 @@ public class HomeContentFragment extends Fragment {
   private Bitmap user_qr = null, dest_qr = null;
   private Vibrator vib = null;
   private View select_pm, confirm_pm;
+  private int selected_pm = 0;
 
   @SuppressLint("ResourceAsColor")
   @Override
@@ -167,6 +168,11 @@ public class HomeContentFragment extends Fragment {
     }
 
     select_pm.setOnClickListener(v9 -> { showPmList(v9); });
+    confirm_pm.setOnClickListener(v10 -> {
+      if (selected_pm == 0) {
+      } else {
+      }
+    });
 
     historylist = layout.findViewById(R.id.history_list);
     user = Utils.getAccount(requireContext());
@@ -412,7 +418,7 @@ public class HomeContentFragment extends Fragment {
           (ClipboardManager) requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
       ClipData clip = ClipData.newPlainText("oneval_user_id", user_id.getText().toString());
       clipboard.setPrimaryClip(clip);
-      Toast.makeText(getActivity(), getString(R.string.copy), Toast.LENGTH_SHORT).show();
+      Toast.makeText(getActivity(), getString(R.string.copied), Toast.LENGTH_SHORT).show();
     });
 
     scan_but.setOnClickListener(v3 -> {
@@ -998,6 +1004,7 @@ public class HomeContentFragment extends Fragment {
     ArrayList<String> listPm = new ArrayList<>();
     listPm.add("AirtelMoney");
     listPm.add("Tether (USDT)");
+    final View txtv = requireActivity().findViewById(R.id.phone_input_limit);
     ContextThemeWrapper theme =
         new ContextThemeWrapper(requireContext(), android.R.style.Theme_Material_Light);
     ListPopupWindow listPmD = new ListPopupWindow(theme);
@@ -1022,20 +1029,30 @@ public class HomeContentFragment extends Fragment {
     listPmD.setVerticalOffset(anchorv.getHeight() / (-2));
     listPmD.setHeight(ListPopupWindow.WRAP_CONTENT);
     listPmD.setOnItemClickListener((parent, view, position, id) -> {
-      if (position == 0) {
+      selected_pm = position;
+      if (selected_pm == 0) {
         select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_red));
         pm_src.setImageResource(R.drawable.airtel_logo);
         addressPay.setHint(R.string.mm_pm_hint);
+        int visibility = txtv.getVisibility();
+        if (visibility == 4) {
+          txtv.setVisibility(0);
+        }
         addressPay.setInputType(InputType.TYPE_CLASS_PHONE);
       } else {
         select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_green));
         pm_src.setImageResource(R.drawable.tether_logo);
         addressPay.setHint(R.string.pk_pm_hint);
+        int visibility = txtv.getVisibility();
+        if (visibility == 0) {
+          txtv.setVisibility(4);
+        }
         addressPay.setInputType(InputType.TYPE_CLASS_TEXT);
       }
       addressPay.setText("");
       addressPay.requestFocus();
-      InputMethodManager imm  = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+      InputMethodManager imm =
+          (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
       imm.showSoftInput(addressPay, InputMethodManager.SHOW_IMPLICIT);
       listPmD.dismiss();
     });
