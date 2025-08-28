@@ -508,6 +508,7 @@ public class HomeActivity
   public void OnDataLoaded(JSONObject response) {
     notif_list.clear();
     List<String> lastNotifs = Utils.getLastNotifs(getApplicationContext());
+    String content = null;
     try {
       JSONArray jSONArray = response.getJSONArray("feed");
       int jsonArrLength = jSONArray.length();
@@ -517,11 +518,11 @@ public class HomeActivity
         String dtime = obj.getString("dtime");
         String ptime =
             dtime.substring(0, 2) + ":" + dtime.substring(2, 4) + "." + dtime.substring(4, 6);
-        String content = cont + "<br><i>(" + getString(R.string.bc_time) + " " + ptime + ")</i>";
+        content = cont + "<br><i>(" + getString(R.string.bc_time) + " " + ptime + ")</i>";
         if (!lastNotifs.contains(content)) {
           Utils.saveLastNotifs(getApplicationContext(), content);
           if (i == jsonArrLength - 1) {
-            Utils.saveLastNotifTime(getApplicationContext(), dtime)
+            Utils.saveLastNotifTime(getApplicationContext(), dtime);
           }
         }
       }

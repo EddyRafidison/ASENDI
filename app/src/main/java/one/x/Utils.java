@@ -389,9 +389,8 @@ public class Utils {
 
   public static List<String> getLastNotifs(Context ctx) {
     SharedPreferences sp = ctx.getSharedPreferences("datavalues", Context.MODE_PRIVATE);
-    SharedPreferences.Editor se = sp.edit();
     Gson gson = new Gson();
-    String jsonString = se.getString("lns", null);
+    String jsonString = sp.getString("lns", null);
     Type type = new TypeToken<List<String>>() {}.getType();
     return gson.fromJson(jsonString, type);
   }

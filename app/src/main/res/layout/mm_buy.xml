@@ -35,7 +35,7 @@
 			android:layout_margin="4dp"
 			android:background="@android:color/transparent"
 			android:ems="10"
-			android:gravity="start"
+			android:gravity="center_horizontal|center_vertical|center|start"
 			android:inputType="number|numberDecimal"
 			android:lines="1"
 			android:maxLength="10"

@@ -39,6 +39,8 @@
 	<string name="check_connection_error">OneX uses mobile data/Wi-Fi</string>
 	<string name="from">sent by</string>
 	<string name="to">sent to</string>
+     <string name="push_type">Raison: Push</string>
+     <string name="next">Continuer</string>
 	<string name="burn_type">Raison: Burning</string>
 	<string name="not_matched_pswd">PINs do not match</string>
 	<string name="filter">Filter</string>

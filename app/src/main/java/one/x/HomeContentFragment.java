@@ -175,6 +175,10 @@ public class HomeContentFragment extends Fragment {
         } else {
         }
       } else {
+        Toast
+            .makeText(getActivity(), requireActivity().getString(R.string.check_entry),
+                Toast.LENGTH_SHORT)
+            .show();
       }
     });
 
@@ -663,14 +667,14 @@ public class HomeContentFragment extends Fragment {
 
   private void showMMTopup(String mobile) {
     AlertDialog.Builder builder =
-        new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme_Dialog));
+        new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme_Dialog2));
     final View customLayout = getLayoutInflater().inflate(R.layout.mm_buy, null, false);
     builder.setView(customLayout);
     builder.setCancelable(true);
     final EditText am = customLayout.findViewById(R.id.mm_val);
     am.setHint(ONEX.CURRENCY);
     int resId = getResources().getIdentifier(
-        codePays + "_flag", "drawable", requireActivity().getPackageName());
+        ONEX.COUNTRY.toLowerCase() + "_flag", "drawable", requireActivity().getPackageName());
     ImageView flag = customLayout.findViewById(R.id.cflag);
     flag.setImageResource(resId);
     am.requestFocus();
@@ -679,7 +683,8 @@ public class HomeContentFragment extends Fragment {
                                   HtmlCompat.FROM_HTML_MODE_LEGACY),
         (arg0, arg1) -> {
           final String val = am.getText().toString();
-          if (!val.isEmpty()) {
+          if (!val.isEmpty() && !val.startsWith("0") && !val.startsWith(".")
+              && !val.startsWith(",")) {
             if (Utils.isConnectionAvailable(requireContext()) == false) {
               Utils.showNoConnectionAlert(requireContext(), rel);
             } else {
@@ -690,6 +695,19 @@ public class HomeContentFragment extends Fragment {
                   response -> {
                     try {
                       String status = response.getString("transf");
+                      switch (status) {
+                        case "ok":
+                          reloadUpdate();
+                          Utils.showMessage(getContext(), topSheet,
+                              requireActivity().getString(R.string.successed_transfer), true);
+                          break;
+                        case "bad":
+                          Utils.showMessage(getContext(), topSheet,
+                              requireActivity().getString(R.string.failed_transfer), false);
+                          break;
+                        default:
+                          return;
+                      }
 
                     } catch (JSONException e) {
                       Toast
