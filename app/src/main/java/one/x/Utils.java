@@ -56,6 +56,8 @@ import com.android.volley.toolbox.Volley;
 import com.elyeproj.loaderviewlibrary.LoaderTextView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.EncodeHintType;
@@ -77,6 +79,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -371,6 +374,38 @@ public class Utils {
     SharedPreferences.Editor se = sp.edit();
     se.putString("tkn", tkn);
     se.apply();
+  }
+
+  public static void saveLastNotifs(Context ctx, String notif) {
+    SharedPreferences sp = ctx.getSharedPreferences("datavalues", Context.MODE_PRIVATE);
+    SharedPreferences.Editor se = sp.edit();
+    List<String> lns = getLastNotifs(ctx);
+    lns.add(notif);
+    Gson gson = new Gson();
+    String json = gson.toJson(lns);
+    se.putString("lns", json);
+    se.apply();
+  }
+
+  public static List<String> getLastNotifs(Context ctx) {
+    SharedPreferences sp = ctx.getSharedPreferences("datavalues", Context.MODE_PRIVATE);
+    SharedPreferences.Editor se = sp.edit();
+    Gson gson = new Gson();
+    String jsonString = se.getString("lns", null);
+    Type type = new TypeToken<List<String>>() {}.getType();
+    return gson.fromJson(jsonString, type);
+  }
+
+  public static void saveLastNotifTime(Context ctx, String notif) {
+    SharedPreferences sp = ctx.getSharedPreferences("datavalues", Context.MODE_PRIVATE);
+    SharedPreferences.Editor se = sp.edit();
+    se.putString("lnd", notif);
+    se.apply();
+  }
+
+  public static String getLastNotifTime(Context ctx) {
+    SharedPreferences sp = ctx.getSharedPreferences("datavalues", Context.MODE_PRIVATE);
+    return sp.getString("lnd", "000000");
   }
 
   public static String getTkn(Context ctx) {

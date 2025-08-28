@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:paddingBottom="8dp"
+	android:paddingStart="10dp"
+	android:paddingEnd="10dp">
+
+	<TextView
+		android:id="@+id/mm_text"
+		android:layout_width="@dimen/field_size"
+		android:layout_height="wrap_content"
+		android:paddingBottom="8dp"
+		android:layout_centerHorizontal="true"
+		android:paddingTop="8dp"
+		android:textColor="#DDE0E0"
+		android:textSize="15sp"/>
+
+	<RelativeLayout
+		android:id="@+id/l1"
+		android:layout_width="@dimen/field_size"
+		android:layout_height="56dp"
+		android:layout_below="@id/mm_text"
+		android:layout_centerHorizontal="true"
+		android:background="@drawable/edt_bg"
+		android:gravity="center">
+
+		<EditText
+			android:id="@+id/mm_val"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_margin="4dp"
+			android:background="@android:color/transparent"
+			android:ems="10"
+			android:gravity="start"
+			android:inputType="number|numberDecimal"
+			android:lines="1"
+			android:maxLength="10"
+			android:textColor="#ffffffff"
+			android:textSize="15sp"
+			tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck"
+			android:paddingLeft="53dp"
+			android:paddingRight="10dp"
+			android:textColorHint="#878787"/>
+
+		<ImageView
+			android:layout_width="35dp"
+			android:layout_height="wrap_content"
+			android:id="@+id/cflag"
+			android:scaleType="fitCenter"
+			android:adjustViewBounds="true"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="5dp"
+			android:src="@drawable/mg"/>
+
+	</RelativeLayout>
+
+</RelativeLayout>
+

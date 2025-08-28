@@ -33,7 +33,7 @@
             android:layout_margin="4dp"
             android:background="@android:color/transparent"
             android:ems="10"
-            android:gravity="center_vertical|center|center_horizontal|start"
+            android:gravity="start"
             android:inputType="numberPassword"
             android:lines="1"
             android:maxLength="10"

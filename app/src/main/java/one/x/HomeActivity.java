@@ -507,23 +507,37 @@ public class HomeActivity
   @Override
   public void OnDataLoaded(JSONObject response) {
     notif_list.clear();
+    List<String> lastNotifs = Utils.getLastNotifs(getApplicationContext());
     try {
       JSONArray jSONArray = response.getJSONArray("feed");
-      for (int i = 0; i < jSONArray.length(); i++) {
+      int jsonArrLength = jSONArray.length();
+      for (int i = 0; i < jsonArrLength; i++) {
         JSONObject obj = jSONArray.getJSONObject(i);
         String cont = obj.getString("content");
         String dtime = obj.getString("dtime");
         String ptime =
             dtime.substring(0, 2) + ":" + dtime.substring(2, 4) + "." + dtime.substring(4, 6);
         String content = cont + "<br><i>(" + getString(R.string.bc_time) + " " + ptime + ")</i>";
-        notif_list.add(HtmlCompat.fromHtml(content, HtmlCompat.FROM_HTML_MODE_LEGACY));
+        if (!lastNotifs.contains(content)) {
+          Utils.saveLastNotifs(getApplicationContext(), content);
+          if (i == jsonArrLength - 1) {
+            Utils.saveLastNotifTime(getApplicationContext(), dtime)
+          }
+        }
       }
+      lastNotifs = Utils.getLastNotifs(getApplicationContext());
+      if (lastNotifs != null || !lastNotifs.isEmpty()) {
+        int ns = lastNotifs.size();
+        for (String notif : lastNotifs) {
+          notif_list.add(HtmlCompat.fromHtml(content, HtmlCompat.FROM_HTML_MODE_LEGACY));
+        }
+      }
+      int notif_size = jsonArrLength;
+      setBadgeCount(notif_size);
     } catch (JSONException je) {
       Toast.makeText(getApplicationContext(), getString(R.string.data_error), Toast.LENGTH_SHORT)
           .show();
     }
-    int notif_size = notif_list.size();
-    setBadgeCount(notif_size);
     refreshFeed();
   }
 
@@ -555,9 +569,13 @@ public class HomeActivity
             } else {
               ONEX.ISCONNECTED = true;
               Utils.connectToServer(HomeActivity.this, ONEX.FEED,
-                  new String[] {"user", "pswd", "tkn"},
-                  new String[] {user, pswd, Utils.getTkn(getApplicationContext())}, false,
-                  HomeActivity.this);
+                  new String[] {"user", "pswd", "time", "tkn"},
+                  new String[] {user, pswd, Utils.getLastNotifTime(getApplicationContext()),
+                      Utils.getTkn(getApplicationContext())},
+                  false, HomeActivity.this);
+              // Must send last notif time to server to avoid overloading data
+              // Load only feed available in the day to avoid outdated notifs
+              //  Only the last new notifs after the date time sent will be loaded from server
             }
           } catch (Exception ignored) {
           }

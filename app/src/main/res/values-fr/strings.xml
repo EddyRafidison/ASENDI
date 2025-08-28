@@ -39,7 +39,7 @@
     <string name="check_connection_error">OneX utilise les données mobiles/Wi-Fi</string>
     <string name="from">envoyé par</string>
     <string name="to">envoyé à</string>
-    <string name="burn_type">Raison: Burning</string>
+    <string name="push_type">Raison: Push</string>
     <string name="not_matched_pswd">Les PINs ne se correspondent pas</string>
     <string name="filter">Filtrer</string>
     <string name="empty">Rien à afficher</string>
@@ -78,6 +78,7 @@
     <string name="pswd_required">PIN requis</string>
     <string name="sk_required">Mot secret requis</string>
     <string name="yes">Oui</string>
+    <string name="continue">Continuer</string>
     <string name="cancel">Annuler</string>
     <string name="off_msg">Vos données personnelles enregistrées sur l\'application seront effacées de cet appareil. Êtes-vous vraiment sûr(e) d\'exécuter cette décision ?</string>
     <string name="cleared">Données effacées</string>
@@ -143,11 +144,11 @@
     <string name="select_pm_text">Ou recharger via</string>
     <string name="pk_pm_hint">Votre adresse publique Wallet </string>
     <string name="mm_pm_hint">Votre numéro mobile</string>
-   <string name="phone_input_filter">Ne doit pas contenir  le préfixe "\0\" ni le code du pays</string>
+   <string name="phone_input_filter">Sans le préfixe 0 ni le code du pays</string>
    <string name="address_pm_use">Veuillez soumettre une adresse de paiement valide sur laquelle vous avez le bon droit de contrôle. Nous utiliserons votre dernière adresse d\'achat en cas d\'un disbursement,</string>
    <string name="check_entry">Vérifier l\'entrée</string>
-   <string name="val_in_loc">Pour continuer vers l\'achat, entrer le montant selon la monnaie locale du pays:</string>
-   <string name="copy_pk">Pour continuer vers l\'achat, merci de copier et coller cette adresse unique de paiement dans votre porte-feuille préféré:</string>
+   <string name="val_in_loc">Pour continuer vers l\'achat, veuillez entrer le montant en monnaie locale de votre pays. (À noter que les cours de change et des frais peuvent s\'appliquer lors du transfert dépendant de votre opérateur et de la localisation.) Une fois reçue, OneX traîtera la valeur en la convertissant automatiquement en actifs OneVal.</string>
+   <string name="copy_pk">Pour continuer vers l\'achat, merci de copier l\'adresse unique de paiement affichée et la coller dans votre porte-feuille préféré. Une fois reçue, la valeur sera convertie automatiquement en actifs OneVal.</string>
    <string name="copy">Copier</string>
 
 
