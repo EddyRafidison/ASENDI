@@ -169,7 +169,11 @@ public class HomeContentFragment extends Fragment {
 
     select_pm.setOnClickListener(v9 -> { showPmList(v9); });
     confirm_pm.setOnClickListener(v10 -> {
-      if (selected_pm == 0) {
+      if (addressPay.length() > 7) {
+        if (selected_pm == 0) {
+          showMMTopup(addressPay.getText().toString());
+        } else {
+        }
       } else {
       }
     });
@@ -645,6 +649,60 @@ public class HomeContentFragment extends Fragment {
           } else {
             Toast
                 .makeText(getActivity(), requireActivity().getString(R.string.pswd_required),
+                    Toast.LENGTH_SHORT)
+                .show();
+          }
+        });
+    builder.setNeutralButton(
+        HtmlCompat.fromHtml("<font color='#848482'>" + getString(R.string.cancel) + "</font>",
+            HtmlCompat.FROM_HTML_MODE_LEGACY),
+        (dialog, which) -> dialog.cancel());
+    AlertDialog dialogpswd = builder.create();
+    dialogpswd.show();
+  }
+
+  private void showMMTopup(String mobile) {
+    AlertDialog.Builder builder =
+        new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme_Dialog));
+    final View customLayout = getLayoutInflater().inflate(R.layout.mm_buy, null, false);
+    builder.setView(customLayout);
+    builder.setCancelable(true);
+    final EditText am = customLayout.findViewById(R.id.mm_val);
+    am.setHint(ONEX.CURRENCY);
+    int resId = getResources().getIdentifier(
+        codePays + "_flag", "drawable", requireActivity().getPackageName());
+    ImageView flag = customLayout.findViewById(R.id.cflag);
+    flag.setImageResource(resId);
+    am.requestFocus();
+    builder.setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"
+                                      + requireActivity().getString(R.string.next) + "</font>",
+                                  HtmlCompat.FROM_HTML_MODE_LEGACY),
+        (arg0, arg1) -> {
+          final String val = am.getText().toString();
+          if (!val.isEmpty()) {
+            if (Utils.isConnectionAvailable(requireContext()) == false) {
+              Utils.showNoConnectionAlert(requireContext(), rel);
+            } else {
+              arg0.dismiss();
+              Utils.connectToServer(getActivity(), ONEX.MBUY,
+                  new String[] {"user", "pswd", "mobile", "amount", "tkn"},
+                  new String[] {user, pswd, mobile, val, Utils.getTkn(requireContext())}, true,
+                  response -> {
+                    try {
+                      String status = response.getString("transf");
+
+                    } catch (JSONException e) {
+                      Toast
+                          .makeText(getContext(), requireActivity().getString(R.string.data_error),
+                              Toast.LENGTH_SHORT)
+                          .show();
+                    }
+                  });
+            }
+
+          } else {
+            Toast
+                .makeText(getActivity(), requireActivity().getString(R.string.check_entry),
                     Toast.LENGTH_SHORT)
                 .show();
           }

@@ -13,6 +13,7 @@
 		android:layout_width="@dimen/field_size"
 		android:layout_height="wrap_content"
 		android:paddingBottom="8dp"
+        android:text="@string/val_in_loc"
 		android:layout_centerHorizontal="true"
 		android:paddingTop="8dp"
 		android:textColor="#DDE0E0"
@@ -53,7 +54,7 @@
 			android:adjustViewBounds="true"
 			android:layout_centerVertical="true"
 			android:layout_marginLeft="5dp"
-			android:src="@drawable/mg"/>
+			android:src="@drawable/mg_flag"/>
 
 	</RelativeLayout>
 

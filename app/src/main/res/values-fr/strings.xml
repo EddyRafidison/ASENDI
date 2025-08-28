@@ -78,7 +78,7 @@
     <string name="pswd_required">PIN requis</string>
     <string name="sk_required">Mot secret requis</string>
     <string name="yes">Oui</string>
-    <string name="continue">Continuer</string>
+    <string name="next">Continuer</string>
     <string name="cancel">Annuler</string>
     <string name="off_msg">Vos données personnelles enregistrées sur l\'application seront effacées de cet appareil. Êtes-vous vraiment sûr(e) d\'exécuter cette décision ?</string>
     <string name="cleared">Données effacées</string>
