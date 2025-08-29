@@ -151,5 +151,10 @@
    <string name="val_in_loc">Pour continuer vers l\'achat, entrer le montant selon la monnaie locale du pays:</string>
    <string name="copy_pk">Pour continuer vers l\'achat, merci de copier et coller cette adresse unique de paiement dans votre porte-feuille préféré:</string>
    <string name="copy">Copy</string>
+   <string name="no_addr">Adresse indisponible</string>
+    <string name="epl_text">Le système est basé sur les activités des participants. OneX ne vous paiera pas de son propre argent pour vous récompenser mais maintient l\'équilibre des ressources à travers la méthode développée appelée Equité Progressive Logarithmique. C\'est un mode innovant de la contribution, l\'interdépendance dans la communauté, et la redistribution plus réaliste et équitable des actifs. La participation vale 10% de votre solde actuel payable une fois par campagne. Une campagne est dite valide jusqu\'à ce que l\'accumulation atteigne sa limite ou une nouvelle vente aurait été effectuée depuis votre compte. Si vous voulez entrer une nouvelle campagne, veuillez taper le code PIN:</string>
+   <string name="select_lang">Sélectionner langue</string>
+    <string name="know_more">En savoir plus</string>
+      <string name="buy_campaign">L\'activité est payante. Vous pouvez créer de nouvelle campagne en entrant votre code PIN puis continuer:</string>
 </resources>
 

@@ -173,6 +173,33 @@ public class HomeContentFragment extends Fragment {
         if (selected_pm == 0) {
           showMMTopup(addressPay.getText().toString());
         } else {
+          if (Utils.isConnectionAvailable(requireContext()) == false) {
+            Utils.showNoConnectionAlert(requireContext(), rel);
+          } else {
+            Utils.connectToServer(getActivity(), ONEX.TBUY,
+                new String[] {"user", "pswd", "user_addr", "tkn"},
+                new String[] {
+                    user, pswd, addressPay.getText().toString(), Utils.getTkn(requireContext())},
+                true, response -> {
+                  try {
+                    String msg = response.getString("onaddr");
+                    if (!msg.isEmpty()) {
+                      showOneXAddress(msg);
+                    } else {
+                      Toast
+                          .makeText(getContext(), requireActivity().getString(R.string.no_addr),
+                              Toast.LENGTH_SHORT)
+                          .show();
+                    }
+
+                  } catch (JSONException e) {
+                    Toast
+                        .makeText(getContext(), requireActivity().getString(R.string.data_error),
+                            Toast.LENGTH_SHORT)
+                        .show();
+                  }
+                });
+          }
         }
       } else {
         Toast
@@ -424,7 +451,7 @@ public class HomeContentFragment extends Fragment {
     copy.setOnClickListener(v2 -> {
       ClipboardManager clipboard =
           (ClipboardManager) requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-      ClipData clip = ClipData.newPlainText("oneval_user_id", user_id.getText().toString());
+      ClipData clip = ClipData.newPlainText("onex_user_id", user_id.getText().toString());
       clipboard.setPrimaryClip(clip);
       Toast.makeText(getActivity(), getString(R.string.copied), Toast.LENGTH_SHORT).show();
     });
@@ -724,6 +751,33 @@ public class HomeContentFragment extends Fragment {
                     Toast.LENGTH_SHORT)
                 .show();
           }
+        });
+    builder.setNeutralButton(
+        HtmlCompat.fromHtml("<font color='#848482'>" + getString(R.string.cancel) + "</font>",
+            HtmlCompat.FROM_HTML_MODE_LEGACY),
+        (dialog, which) -> dialog.cancel());
+    AlertDialog dialogpswd = builder.create();
+    dialogpswd.show();
+  }
+
+  private void showOneXAddress(String address) {
+    AlertDialog.Builder builder =
+        new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme_Dialog2));
+    final View customLayout = getLayoutInflater().inflate(R.layout.usdt_buy, null, false);
+    builder.setView(customLayout);
+    builder.setCancelable(false);
+    final EditText pk = customLayout.findViewById(R.id.pk);
+    pk.setText(address);
+    builder.setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"
+                                      + requireActivity().getString(R.string.copy) + "</font>",
+                                  HtmlCompat.FROM_HTML_MODE_LEGACY),
+        (arg0, arg1) -> {
+          ClipboardManager clipboard =
+              (ClipboardManager) requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+          ClipData clip = ClipData.newPlainText("onex_ad", address);
+          clipboard.setPrimaryClip(clip);
+          Toast.makeText(getActivity(), getString(R.string.copied), Toast.LENGTH_SHORT).show();
+          arg0.dismiss();
         });
     builder.setNeutralButton(
         HtmlCompat.fromHtml("<font color='#848482'>" + getString(R.string.cancel) + "</font>",

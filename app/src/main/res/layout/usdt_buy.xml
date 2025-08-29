@@ -34,12 +34,12 @@
              android:padding="5dp"
              android:textSize="15sp"
              android:textColor="#E4CA09"
-             android:focusable="true"
              tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck"
              android:background="#747171"
              android:gravity="center_horizontal|center_vertical|center|start"
              android:layout_margin="4dp"
              android:lines="1"
+             android:singleLine="true"
              android:inputType="none"
              android:id="@+id/pk" />
 
