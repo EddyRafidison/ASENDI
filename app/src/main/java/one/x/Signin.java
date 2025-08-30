@@ -86,6 +86,7 @@ public class Signin extends AppCompatActivity {
       w.setNavigationBarColor(R.color.primary);
     }
     setContentView(R.layout.signin);
+
     Locale langForTP = Locale.getDefault();
     String lang = langForTP.getLanguage();
     if (lang.startsWith("fr")) {

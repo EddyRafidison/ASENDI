@@ -67,7 +67,7 @@
                 <EditText
                      android:layout_height="match_parent"
                      android:layout_width="match_parent"
-                     android:paddingRight="2dp"
+                     android:paddingRight="40dp"
                      android:layout_centerVertical="true"
                      android:textSize="15sp"
                      android:textColor="#ffffffff"
@@ -78,7 +78,7 @@
                      android:hint="A-A00Z"
                      android:layout_margin="4dp"
                      android:lines="1"
-                     android:paddingLeft="2dp"
+                     android:paddingLeft="10dp"
                      android:inputType="textCapCharacters"
                      android:id="@+id/user_id_dest" />
 
@@ -120,7 +120,7 @@
                 <EditText
                      android:layout_height="match_parent"
                      android:layout_width="match_parent"
-                     android:paddingRight="2dp"
+                     android:paddingRight="10dp"
                      android:textSize="15sp"
                      android:textColor="#ffffffff"
                      android:ems="10"
@@ -130,7 +130,7 @@
                      android:hint="@string/min_am"
                      android:layout_margin="4dp"
                      android:lines="1"
-                     android:paddingLeft="2dp"
+                     android:paddingLeft="10dp"
                      android:inputType="numberDecimal"
                      android:id="@+id/value" />
 

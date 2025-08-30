@@ -134,10 +134,12 @@ public class Signup extends AppCompatActivity {
     fullname.setAllCaps(true);
 
     String t = getString(R.string.notice_terms_policy);
-    List<Integer> indexes = Utils.getIndexes(t, '%');
-    String terms = t.substring(indexes.get(0), indexes.get(1)).replaceAll("%", "");
-    String privacy = t.substring(indexes.get(2), indexes.get(3)).replaceAll("%", "");
-    t = t.replaceAll("%", "");
+    List<Integer> indexes = Utils.getIndexes(t, '«', '»');
+    String terms =
+        t.substring(indexes.get(0), indexes.get(1)).replaceAll("«", "").replaceAll("»", "");
+    String privacy =
+        t.substring(indexes.get(2), indexes.get(3)).replaceAll("«", "").replaceAll("»", "");
+    t = t.replaceAll("«", "").replaceAll("»", "");
     String[] strs = new String[] {terms, privacy};
     SpannableStringBuilder ss = new SpannableStringBuilder(t);
     for (int i = 0; i < strs.length; i++) {

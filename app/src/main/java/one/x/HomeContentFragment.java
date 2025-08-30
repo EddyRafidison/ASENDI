@@ -130,7 +130,7 @@ public class HomeContentFragment extends Fragment {
   private String user;
   private String pswd;
   private String user_;
-  private String Fees = "?";
+  private String Fees = "?", Fees2 = "?";
   private ListView historylist;
   private int days = 0, LastHistSize = 0, cursor = 0, codeClick = 0;
   private DecimalFormat df;
@@ -445,8 +445,7 @@ public class HomeContentFragment extends Fragment {
       }
     });
 
-    go.setOnClickListener(
-        v4 -> { Toast.makeText(getActivity(), "go", Toast.LENGTH_SHORT).show(); });
+    go.setOnClickListener(v4 -> { showLPEActivity(); });
 
     copy.setOnClickListener(v2 -> {
       ClipboardManager clipboard =
@@ -622,8 +621,8 @@ public class HomeContentFragment extends Fragment {
             if (Utils.isConnectionAvailable(requireContext()) == false) {
               Utils.showNoConnectionAlert(requireContext(), rel);
             } else {
-              arg0.dismiss();
               if (ps.equals(pswd)) {
+                arg0.dismiss();
                 Utils.connectToServer(getActivity(), ONEX.TRANSFER,
                     new String[] {"sender", "pswd", "dest", "amount", "tkn"},
                     new String[] {user, pswd, des, am, Utils.getTkn(requireContext())}, true,
@@ -697,7 +696,7 @@ public class HomeContentFragment extends Fragment {
         new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme_Dialog2));
     final View customLayout = getLayoutInflater().inflate(R.layout.mm_buy, null, false);
     builder.setView(customLayout);
-    builder.setCancelable(true);
+    builder.setCancelable(false);
     final EditText am = customLayout.findViewById(R.id.mm_val);
     am.setHint(ONEX.CURRENCY);
     int resId = getResources().getIdentifier(
@@ -787,6 +786,101 @@ public class HomeContentFragment extends Fragment {
     dialogpswd.show();
   }
 
+  private void showLPEActivity() {
+    AlertDialog.Builder builder =
+        new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme_Dialog2));
+    final View customLayout = getLayoutInflater().inflate(R.layout.lpe_activity, null, false);
+    builder.setView(customLayout);
+    builder.setCancelable(false);
+    final EditText pswdval = customLayout.findViewById(R.id.pswdD);
+    final TextView tx = customLayout.findViewById(R.id.lpe_text);
+
+    final String more = requireActivity().getString(R.string.know_more);
+    final String t = String.valueOf(HtmlCompat.fromHtml(
+        requireActivity().getString(R.string.buy_campaign) + "<br><br>(" + more + ")",
+        HtmlCompat.FROM_HTML_MODE_LEGACY));
+    String[] strs = new String[] {more};
+    SpannableStringBuilder ss = new SpannableStringBuilder(t);
+    for (int i = 0; i < strs.length; i++) {
+      String s = strs[i];
+      int start = t.indexOf(s);
+      int end = t.lastIndexOf(s) + s.length();
+      ss.setSpan(new Clickables(tx, strs, i, string -> {
+        if (string.equals(strs[0])) {
+          tx.setText(
+              t.replace(more, requireActivity().getString(R.string.lpe_text).replace("10", Fees2)));
+        }
+      }, Color.MAGENTA), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
+
+    tx.setText(ss, TextView.BufferType.SPANNABLE);
+    tx.setMovementMethod(LinkMovementMethod.getInstance());
+    tx.setHighlightColor(Color.YELLOW);
+
+    builder.setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"
+                                      + requireActivity().getString(R.string.next) + "</font>",
+                                  HtmlCompat.FROM_HTML_MODE_LEGACY),
+        (arg0, arg1) -> {
+          if (pswdval.getText().toString().equals(pswd)) {
+            if (Utils.isConnectionAvailable(requireContext()) == false) {
+              Utils.showNoConnectionAlert(requireContext(), rel);
+            } else {
+              arg0.dismiss();
+              Utils.connectToServer(getActivity(), ONEX.BUY_CAMPAIGN,
+                  new String[] {"user", "pswd", "tkn"},
+                  new String[] {user, pswd, Utils.getTkn(requireContext())}, true, response -> {
+                    try {
+                      String status = response.getString("transf");
+                      switch (status) {
+                        case "sent":
+                          reloadUpdate();
+                          Utils.showMessage(getContext(), topSheet,
+                              requireActivity().getString(R.string.successed_transfer), true);
+                          break;
+                        case "failed":
+                          Utils.showMessage(getContext(), topSheet,
+                              requireActivity().getString(R.string.failed_transfer), false);
+                          break;
+                        case "occupied":
+                          Utils.showMessage(getContext(), topSheet,
+                              requireActivity().getString(R.string.campaign_still_running), false);
+                          break;
+                        default:
+                          Utils.showMessage(getContext(), topSheet,
+                              requireActivity().getString(R.string.missing_balance), false);
+                          break;
+                      }
+
+                    } catch (JSONException e) {
+                      Toast
+                          .makeText(getContext(), requireActivity().getString(R.string.data_error),
+                              Toast.LENGTH_SHORT)
+                          .show();
+                    }
+                  });
+            }
+          } else {
+            if (pswdval.length() == 0) {
+              Toast
+                  .makeText(getActivity(), requireActivity().getString(R.string.check_entry),
+                      Toast.LENGTH_SHORT)
+                  .show();
+            } else {
+              Toast
+                  .makeText(getContext(), requireActivity().getString(R.string.error_pswd),
+                      Toast.LENGTH_SHORT)
+                  .show();
+            }
+          }
+        });
+    builder.setNeutralButton(
+        HtmlCompat.fromHtml("<font color='#848482'>" + getString(R.string.cancel) + "</font>",
+            HtmlCompat.FROM_HTML_MODE_LEGACY),
+        (dialog, which) -> dialog.cancel());
+    AlertDialog dialogpswd = builder.create();
+    dialogpswd.show();
+  }
+
   private void refresh() {
     ONEX.TIMER2 = new Timer();
     final Handler handler = new Handler(Looper.getMainLooper());
@@ -862,6 +956,7 @@ public class HomeContentFragment extends Fragment {
                       String bal = resp.getString("msg");
                       if (!bal.equals("error")) {
                         Fees = resp.getString("fees");
+                        Fees2 = resp.getString("fees2");
                         stock.setText(df.format(Double.parseDouble(bal)));
                         if (isBSopen) {
                           if (user_dest.length() > 0) {

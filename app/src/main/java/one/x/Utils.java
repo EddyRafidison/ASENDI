@@ -32,12 +32,14 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
+import android.text.InputFilter;
 import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -588,14 +590,29 @@ public class Utils {
     return countryCode != null ? countryCode.toUpperCase() : "";
   }
 
-  public static List<Integer> getIndexes(String text, char delimiter) {
+  public static List<Integer> getIndexes(String text, char start, char end) {
     List<Integer> indexes = new ArrayList<Integer>();
     int tlength = text.length();
     for (int i = 0; i < tlength; i++) {
-      if (text.charAt(i) == delimiter) {
+      if (text.charAt(i) == start) {
+        indexes.add(i);
+      }
+      if (text.charAt(i) == end) {
         indexes.add(i);
       }
     }
     return indexes;
+  }
+
+  public static void applyLatinFilterToAllEditTexts(Activity activity) {
+    View view = activity.findViewById(android.R.id.content);
+    if (view instanceof EditText) {
+      ((EditText) view).setFilters(new InputFilter[] {new StrictLatinFilter()});
+    } else if (view instanceof ViewGroup) {
+      ViewGroup group = (ViewGroup) view;
+      for (int i = 0; i < group.getChildCount(); i++) {
+        applyLatinFilterToAllEditTexts(activity);
+      }
+    }
   }
 }

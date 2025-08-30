@@ -56,6 +56,8 @@
 			android:gravity="center_vertical|center|center_horizontal|start"
 			android:inputType="textPassword"
 			android:lines="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
 			android:textColor="#ffffffff"
 			android:textSize="15sp"
 			tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck" />

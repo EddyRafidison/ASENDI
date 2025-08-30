@@ -51,7 +51,7 @@
   <string name="check_termsPolicy">Vérifier nos conditions du service et politiques de confidentialité</string>
   <string name="top_sheet_behavior" translatable="false">com.topsheet.TopSheetBehavior</string>
   <string name="at">à</string>
-  <string name="min_am" translatable="false">min. 100</string>
+  <string name="min_am" translatable="false">minimum 100</string>
   <string name="pswd">PIN</string>
   <string name="error_pswd">PIN incorrect</string>
   <string name="error_sk">Clé secrète incorrect</string>
@@ -63,7 +63,7 @@
   <string name="note_change_sk">Vous pouvez à tout moment modifier votre clé secrète. Soyez vigilant(e) à ne pas le partager afin de maintenir la confidentialité de votre compte.</string>
   <string name="cur_pswd">PIN actuel</string>
   <string name="new_pswd">Nouveau PIN</string>
-  <string name="confirm_new_pswd">Confirmer nouv. PIN</string>
+  <string name="confirm_new_pswd">Confirmer nouveau PIN</string>
   <string name="change">Modifier</string>
   <string name="new_sk">Nouvelle clé secrète</string>
   <string name="dlt">Supprimer</string>
@@ -96,9 +96,9 @@
   <string name="requestPermText">OneX requiert l\’accès aux fichiers. Veuillez l\’accepter pour continuer.</string>
   <string name="select_file">Sélectionner</string>
   <string name="fullName">Nom complet</string>
-  <string name="birthDate">Date de naissance (ex. 31/12/1995)</string>
+  <string name="birthDate">Date de naissance (ex : 31/12/1995)</string>
   <string name="fullAddress">Adresse complète - X</string>
-  <string name="cin_with_photos">CIN : numéro et 2 photos (recto-verso)</string>
+  <string name="cin_with_photos">ID National : numéro et 2 photos (recto-verso)</string>
   <string name="mailAddress">Courriel</string>
   <string name="notice_terms_policy" formatted="false">En créant le compte, j\’ai lu et j\’accepte les «conditions d\’utilisation» et les «politiques de confidentialité».</string>
   <string name="selection">Valider</string>
@@ -150,7 +150,7 @@
   <string name="copy_pk">Pour finaliser l\’achat, copiez l\’adresse unique affichée et collez-la dans votre portefeuille :</string>
   <string name="copy">Copier</string>
   <string name="no_addr">Adresse indisponible</string>
-  <string name="epl_text">
+  <string name="lpe_text">
         Le système repose sur l\’activité des participants. OneX équilibre les ressources via la méthode « Équité Progressive Logarithmique ».  
         Ce modèle innovant favorise la contribution et la redistribution équitable des actifs.  
         La participation représente 10 % de votre solde actuel, payable une fois par campagne.  
@@ -159,4 +159,6 @@
   <string name="buy_campaign">Cette activité est payante. Entrez votre PIN pour créer une nouvelle campagne :</string>
   <string name="select_lang">Sélectionner langue</string>
   <string name="know_more">En savoir plus</string>
+  <string name="campaign_still_running">Opération échouée. Une campagne est en cours</string>
+  <string name="settings">Paramètres</string>
 </resources>

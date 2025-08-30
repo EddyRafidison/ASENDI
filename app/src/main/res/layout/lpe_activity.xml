@@ -1,51 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="8dp"
     android:paddingStart="10dp"
-    android:paddingEnd="10dp"
-    android:paddingBottom="8dp">
+    android:paddingEnd="10dp" >
 
     <TextView
-        android:id="@+id/t2"
+        android:id="@+id/lpe_text"
         android:layout_width="@dimen/field_size"
         android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:focusable="true"
+        android:text="@string/lpe_text"
         android:layout_centerHorizontal="true"
         android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:text="@string/confirm_login"
         android:textColor="#DDE0E0"
-        android:textSize="15sp"
-        tools:ignore="TextContrastCheck,TextSizeCheck" />
+        android:textSize="15sp"/>
 
     <LinearLayout
-        android:id="@+id/l2"
+        android:id="@+id/l1"
         android:layout_width="@dimen/field_size"
         android:layout_height="56dp"
-        android:layout_below="@id/t2"
+        android:layout_below="@id/lpe_text"
         android:layout_centerHorizontal="true"
         android:background="@drawable/edt_bg"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <EditText
-            android:id="@+id/skEdt"
+            android:id="@+id/pswdD"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="4dp"
             android:background="@android:color/transparent"
             android:ems="10"
+            android:gravity="start|center|center_horizontal|center_vertical"
+            android:inputType="numberPassword"
+            android:lines="1"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:gravity="center_vertical|center|center_horizontal|start"
-            android:inputType="textPassword"
-            android:lines="1"
+            android:maxLength="10"
             android:textColor="#ffffffff"
             android:textSize="15sp"
             tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck" />
-
     </LinearLayout>
 
 </RelativeLayout>

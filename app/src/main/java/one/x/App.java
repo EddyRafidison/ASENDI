@@ -1,11 +1,17 @@
 package one.x;
 
+import android.app.Activity;
 import android.app.Application;
+import android.os.Bundle;
+import android.text.InputFilter;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import io.github.inflationx.calligraphy3.CalligraphyConfig;
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
 import io.github.inflationx.viewpump.ViewPump;
 
-public class AppFont extends Application {
+public class App extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
