@@ -17,6 +17,10 @@
   <string name="fees">Frais : 100</string>
    
   <string name="punct">.</string>
+  
+  <string name="firstname">Prénom(s)</string>
+  
+  <string name="lastname">Nom de famille</string>
    
   <string name="fees_notice">4 % du montant transféré seront prélevés sur votre compte à titre de frais de service.</string>
    
@@ -193,8 +197,6 @@
   <string name="requestPermText">OneX requiert l\’accès aux fichiers. Veuillez l\’accepter pour continuer.</string>
    
   <string name="select_file">Sélectionner</string>
-   
-  <string name="fullName">Nom complet</string>
    
   <string name="birthDate">Date de naissance (ex : 31/12/1995)</string>
    

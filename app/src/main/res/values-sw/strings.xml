@@ -17,6 +17,10 @@
   <string name="fees">Ada: 100</string>
    
   <string name="punct">.</string>
+  
+  <string name="firstname">Jina la kwanza</string>
+  
+  <string name="lastname">Jina la ukoo</string>
    
   <string name="fees_notice">4% ya kiasi kilichohamishwa kitatolewa kama ada ya huduma.</string>
    
@@ -193,8 +197,6 @@
   <string name="requestPermText">OneX inahitaji ufikiaji wa faili. Tafadhali kubali kuendelea.</string>
    
   <string name="select_file">Chagua</string>
-   
-  <string name="fullName">Jina kamili</string>
    
   <string name="birthDate">Tarehe ya kuzaliwa (mf: 31/12/1995)</string>
    

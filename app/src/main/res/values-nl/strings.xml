@@ -17,6 +17,10 @@
   <string name="fees">Kosten: 100</string>
    
   <string name="punct">.</string>
+  
+  <string name="firstname">Voornaam</string>
+  
+  <string name="lastname">Achternaam</string>
    
   <string name="fees_notice">4% van het overgemaakt bedrag wordt in mindering gebracht als servicekosten.</string>
    
@@ -193,8 +197,6 @@
   <string name="requestPermText">OneX heeft bestandstoegang nodig. Accepteer dit om door te gaan.</string>
    
   <string name="select_file">Selecteren</string>
-   
-  <string name="fullName">Volledige naam</string>
    
   <string name="birthDate">Geboortedatum (bijv. 31/12/1995)</string>
    

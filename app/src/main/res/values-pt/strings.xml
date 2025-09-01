@@ -17,6 +17,10 @@
   <string name="fees">Taxa: 100</string>
    
   <string name="punct">.</string>
+  
+  <string name="firstname">Primeiro nome</string>
+  
+  <string name="lastname">Sobrenome</string>
    
   <string name="fees_notice">4% do valor transferido será deduzido como taxas de serviço.</string>
    
@@ -193,8 +197,6 @@
   <string name="requestPermText">OneX requer acesso aos arquivos. Por favor aceite para continuar.</string>
    
   <string name="select_file">Selecionar</string>
-   
-  <string name="fullName">Nome completo</string>
    
   <string name="birthDate">Data de nascimento (ex: 31/12/1995)</string>
    

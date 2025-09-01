@@ -17,6 +17,10 @@
   <string name="fees">Commissione: 100</string>
    
   <string name="punct">.</string>
+  
+  <string name="firstname">Nome</string>
+  
+  <string name="lastname">Cognome</string>
    
   <string name="fees_notice">Il 4% dell\'importo trasferito verrà detratto come commissioni di servizio.</string>
    
@@ -193,8 +197,6 @@
   <string name="requestPermText">OneX richiede l\'accesso ai file. Si prega di accettare per continuare.</string>
    
   <string name="select_file">Seleziona</string>
-   
-  <string name="fullName">Nome completo</string>
    
   <string name="birthDate">Data di nascita (es: 31/12/1995)</string>
    

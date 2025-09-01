@@ -48,7 +48,7 @@
                      android:padding="2dp"
                      android:textSize="15sp"
                      android:textColor="#ff57d6ff"
-                     android:text="@string/fullName" />
+                     android:text="@string/firstname" />
 
                 <RelativeLayout
                      android:layout_height="56dp"
@@ -58,6 +58,7 @@
                     <EditText
                          android:layout_height="match_parent"
                          android:layout_width="match_parent"
+                         android:paddingRight="10dp"
                          android:layout_centerVertical="true"
                          android:textSize="15sp"
                          android:textColor="#FDFDFD"
@@ -67,10 +68,41 @@
                          android:gravity="center_vertical|center|center_horizontal|start"
                          android:layout_margin="4dp"
                          android:lines="1"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+                         android:paddingLeft="10dp"
                          android:inputType="textPersonName|textCapCharacters"
-                         android:id="@+id/fullname" />
+                         android:id="@+id/firstname" />
+
+                </RelativeLayout>
+
+                <TextView
+                     android:layout_height="wrap_content"
+                     android:layout_width="wrap_content"
+                     android:padding="2dp"
+                     android:textSize="15sp"
+                     android:textColor="#ff57d6ff"
+                     android:text="@string/lastname" />
+
+                <RelativeLayout
+                     android:layout_height="56dp"
+                     android:layout_width="match_parent"
+                     android:background="@drawable/edt_bg">
+
+                    <EditText
+                         android:layout_height="match_parent"
+                         android:layout_width="match_parent"
+                         android:paddingRight="10dp"
+                         android:layout_centerVertical="true"
+                         android:textSize="15sp"
+                         android:textColor="#FDFDFD"
+                         android:ems="10"
+                         tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck"
+                         android:background="@android:color/transparent"
+                         android:gravity="center_vertical|center|center_horizontal|start"
+                         android:layout_margin="4dp"
+                         android:lines="1"
+                         android:paddingLeft="10dp"
+                         android:inputType="textPersonName|textCapCharacters"
+                         android:id="@+id/lastname" />
 
                 </RelativeLayout>
 
@@ -97,16 +129,16 @@
                         <EditText
                              android:layout_height="match_parent"
                              android:layout_width="match_parent"
+                             android:paddingRight="10dp"
                              android:textSize="15sp"
                              android:textColor="#FDFDFD"
                              android:ems="10"
                              tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck"
-                             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
                              android:background="@android:color/transparent"
                              android:gravity="center_vertical|center|center_horizontal|start"
                              android:layout_margin="4dp"
                              android:lines="1"
+                             android:paddingLeft="10dp"
                              android:maxLength="10"
                              android:inputType="date"
                              android:id="@+id/birthday" />
@@ -128,25 +160,25 @@
                      android:layout_height="56dp"
                      android:layout_width="match_parent"
                      android:weightSum="2"
-                     android:padding="3dp"
                      android:background="@drawable/edt_bg"
                      android:gravity="center"
+                     android:padding="3dp"
                      android:orientation="horizontal"
                      android:id="@+id/btns_layout">
 
                     <TextView
                          android:layout_height="match_parent"
                          android:layout_width="match_parent"
-                         android:layout_marginBottom="1dp"
-                         android:textAllCaps="true"
-                         android:textColor="#FDFDFD"
-                         android:focusable="true"
                          android:clickable="true"
-                         android:gravity="center"
                          android:textSize="15sp"
-                         android:background="@drawable/button_selector_left"
+                         android:textColor="#FDFDFD"
                          android:layout_marginLeft="1dp"
                          android:layout_marginTop="1dp"
+                         android:focusable="true"
+                         android:layout_marginBottom="1dp"
+                         android:gravity="center"
+                         android:background="@drawable/button_selector_left"
+                         android:textAllCaps="true"
                          android:layout_weight="1"
                          android:id="@+id/male"
                          android:text="@string/male" />
@@ -161,16 +193,16 @@
                     <TextView
                          android:layout_height="match_parent"
                          android:layout_width="match_parent"
-                         android:layout_marginBottom="1dp"
-                         android:textAllCaps="true"
-                         android:focusable="true"
                          android:clickable="true"
-                         android:gravity="center"
                          android:textSize="15sp"
                          android:textColor="#FDFDFD"
-                         android:background="@drawable/button_selector_right"
-                         android:layout_marginRight="1dp"
                          android:layout_marginTop="1dp"
+                         android:focusable="true"
+                         android:layout_marginBottom="1dp"
+                         android:gravity="center"
+                         android:background="@drawable/button_selector_right"
+                         android:textAllCaps="true"
+                         android:layout_marginRight="1dp"
                          android:layout_weight="1"
                          android:id="@+id/female"
                          android:text="@string/female" />
@@ -195,6 +227,7 @@
                     <EditText
                          android:layout_height="match_parent"
                          android:layout_width="match_parent"
+                         android:paddingRight="10dp"
                          android:layout_centerVertical="true"
                          android:textSize="15sp"
                          android:textColor="#FDFDFD"
@@ -203,10 +236,9 @@
                          android:layout_toEndOf="@id/acc_icon"
                          android:background="@android:color/transparent"
                          android:gravity="center_vertical|center|center_horizontal|start"
-                         android:paddingLeft="10dp"
-            android:paddingRight="10dp"
                          android:layout_margin="4dp"
                          android:lines="1"
+                         android:paddingLeft="10dp"
                          android:inputType="textPostalAddress"
                          android:id="@+id/address" />
 
@@ -229,17 +261,17 @@
                     <EditText
                          android:layout_height="match_parent"
                          android:layout_width="match_parent"
+                         android:paddingRight="10dp"
                          android:layout_centerVertical="true"
                          android:textSize="15sp"
                          android:textColor="#FDFDFD"
                          android:ems="10"
                          tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck"
-                         android:paddingLeft="10dp"
-            android:paddingRight="10dp"
                          android:background="@android:color/transparent"
                          android:gravity="center_vertical|center|center_horizontal|start"
                          android:layout_margin="4dp"
                          android:lines="1"
+                         android:paddingLeft="10dp"
                          android:maxLength="12"
                          android:inputType="number"
                          android:id="@+id/cin" />
@@ -293,17 +325,17 @@
                     <EditText
                          android:layout_height="match_parent"
                          android:layout_width="match_parent"
+                         android:paddingRight="10dp"
                          android:layout_centerVertical="true"
                          android:textSize="15sp"
                          android:textColor="#FDFDFD"
                          android:ems="10"
                          tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck"
-                         android:paddingLeft="10dp"
-            android:paddingRight="10dp"
                          android:background="@android:color/transparent"
                          android:gravity="center_vertical|center|center_horizontal|start"
                          android:layout_margin="4dp"
                          android:lines="1"
+                         android:paddingLeft="10dp"
                          android:inputType="textEmailAddress"
                          android:id="@+id/mailAddress" />
 
@@ -326,18 +358,18 @@
                     <EditText
                          android:layout_height="match_parent"
                          android:layout_width="match_parent"
+                         android:paddingRight="10dp"
                          android:layout_centerVertical="true"
                          android:textSize="15sp"
                          android:textColor="#FDFDFD"
                          android:ems="10"
                          tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck"
-                         android:paddingLeft="10dp"
-            android:paddingRight="10dp"
                          android:layout_toEndOf="@id/acc_icon"
                          android:background="@android:color/transparent"
                          android:gravity="center_vertical|center|center_horizontal|start"
                          android:layout_margin="4dp"
                          android:lines="1"
+                         android:paddingLeft="10dp"
                          android:maxLength="10"
                          android:inputType="numberPassword"
                          android:id="@+id/new_Pswd" />
@@ -361,18 +393,18 @@
                     <EditText
                          android:layout_height="match_parent"
                          android:layout_width="match_parent"
+                         android:paddingRight="10dp"
                          android:layout_centerVertical="true"
                          android:textSize="15sp"
                          android:textColor="#FDFDFD"
                          android:ems="10"
                          tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck"
-                         android:paddingLeft="10dp"
-            android:paddingRight="10dp"
                          android:layout_toEndOf="@id/acc_icon"
                          android:background="@android:color/transparent"
                          android:gravity="center_vertical|center|center_horizontal|start"
                          android:layout_margin="4dp"
                          android:lines="1"
+                         android:paddingLeft="10dp"
                          android:maxLength="10"
                          android:inputType="numberPassword"
                          android:id="@+id/new_Pswd2" />
@@ -396,18 +428,18 @@
                     <EditText
                          android:layout_height="match_parent"
                          android:layout_width="match_parent"
+                         android:paddingRight="10dp"
                          android:layout_centerVertical="true"
                          android:textSize="15sp"
                          android:textColor="#FDFDFD"
                          android:ems="10"
                          tools:ignore="Autofill,LabelFor,NotSibling"
-                         android:paddingLeft="10dp"
-            android:paddingRight="10dp"
                          android:layout_toEndOf="@id/acc_icon"
                          android:background="@android:color/transparent"
                          android:gravity="center_vertical|center|center_horizontal|start"
                          android:layout_margin="4dp"
                          android:lines="1"
+                         android:paddingLeft="10dp"
                          android:inputType="textVisiblePassword"
                          android:id="@+id/new_Sk" />
 

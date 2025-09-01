@@ -60,7 +60,7 @@ public class Signup extends AppCompatActivity {
           }
         }
       });
-  private EditText fullname, birthdate, address, cin, email, pswd1, pswd2, sk;
+  private EditText firstname, lastname, birthdate, address, cin, email, pswd1, pswd2, sk;
   private ImageButton cin1, cin2;
   private CheckBox check;
   private Button signup;
@@ -88,7 +88,8 @@ public class Signup extends AppCompatActivity {
 
     CheckNetwork network_ = new CheckNetwork(getApplicationContext());
     network_.registerNetworkCallback();
-    fullname = findViewById(R.id.fullname);
+    firstname = findViewById(R.id.firstname);
+    lastname = findViewById(R.id.lastname);
     birthdate = findViewById(R.id.birthday);
     address = findViewById(R.id.address);
     cin = findViewById(R.id.cin);
@@ -130,8 +131,7 @@ public class Signup extends AppCompatActivity {
     Locale locale = new Locale("", loc);
     fulladdTitle.setText(fullAdd.replace(" X", " " + locale.getDisplayCountry()));
     DrawableCompat.setTint(signup.getBackground(), Color.parseColor("#D32F2F"));
-    fullname.requestFocus();
-    fullname.setAllCaps(true);
+    firstname.requestFocus();
 
     String t = getString(R.string.notice_terms_policy);
     List<Integer> indexes = Utils.getIndexes(t, '«', '»');
@@ -204,7 +204,8 @@ public class Signup extends AppCompatActivity {
       } else if (!female.isEnabled()) {
         gender = "F";
       }
-      String fulln = fullname.getText().toString();
+      String fn = firstname.getText().toString();
+      String ln = lastname.getText().toString();
       String birth = birthdate.getText().toString();
       String addrs = address.getText().toString();
       String Cin = cin.getText().toString();
@@ -212,7 +213,7 @@ public class Signup extends AppCompatActivity {
       String psd1 = pswd1.getText().toString();
       String psd2 = pswd2.getText().toString();
       String secretkey = sk.getText().toString();
-      if (!fulln.isEmpty()) {
+      if (!fn.isEmpty() || !ln.isEmpty()) {
         if (!birth.isEmpty()) {
           if (!gender.isEmpty()) {
             if (!addrs.isEmpty()) {
@@ -240,7 +241,7 @@ public class Signup extends AppCompatActivity {
                                         new String[] {"email", "birth", "addr", "name", "cin",
                                             "pswd", "sk", "cinimg1", "cinimg2"},
                                         new String[] {mailAd, birth, addrs + " " + loc,
-                                            fulln + " " + gender, Cin, psd1, secretkey, cin_bytes_1,
+                                            fn + "$" + ln + "$" + gender, Cin, psd1, secretkey, cin_bytes_1,
                                             cin_bytes_2},
                                         true, response -> {
                                           if (response != null) {

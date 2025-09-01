@@ -17,6 +17,10 @@
   <string name="fees">Fee: 100</string>
    
   <string name="punct">.</string>
+  
+  <string name="firstname">First name</string>
+  
+  <string name="lastname">Last name</string>
    
   <string name="fees_notice">4% of the transferred amount will be deducted as service fees.</string>
    
@@ -193,8 +197,6 @@
   <string name="requestPermText">OneX requires file access. Please accept to continue.</string>
    
   <string name="select_file">Select</string>
-   
-  <string name="fullName">Full name</string>
    
   <string name="birthDate">Date of birth (e.g., 12/31/1995)</string>
    

@@ -17,6 +17,10 @@
   <string name="fees">Gebühr: 100</string>
    
   <string name="punct">.</string>
+  
+  <string name="firstname">Vorname</string>
+  
+  <string name="lastname">Nachname</string>
    
   <string name="fees_notice">4 % des überwiesenen Betrags werden als Servicegebühren abgezogen.</string>
    
@@ -193,8 +197,6 @@
   <string name="requestPermText">OneX benötigt Dateizugriff. Bitte erlauben Sie dies zum Fortfahren.</string>
    
   <string name="select_file">Auswählen</string>
-   
-  <string name="fullName">Vollständiger Name</string>
    
   <string name="birthDate">Geburtsdatum (z.B. 31.12.1995)</string>
    
