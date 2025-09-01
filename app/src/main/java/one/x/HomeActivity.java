@@ -570,11 +570,12 @@ public class HomeActivity
             } else {
               ONEX.ISCONNECTED = true;
               Utils.connectToServer(HomeActivity.this, ONEX.FEED,
-                  new String[] {"user", "pswd", "time", "tkn"},
+                  new String[] {"user", "pswd", "time", "lang", "tkn"},
                   new String[] {user, pswd, Utils.getLastNotifTime(getApplicationContext()),
-                      Utils.getTkn(getApplicationContext())},
+                      "" + ONEX.TPLANG, Utils.getTkn(getApplicationContext())},
                   false, HomeActivity.this);
               // Must send last notif time to server to avoid overloading data
+              // Notif is translated from the server
               // Load only feed available in the day to avoid outdated notifs
               //  Only the last new notifs after the date time sent will be loaded from server
             }

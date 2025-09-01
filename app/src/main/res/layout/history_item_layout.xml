@@ -53,7 +53,7 @@
         android:layout_marginStart="4dp"
         android:layout_toEndOf="@id/layout1ImageView1"
         android:gravity="top|start"
-        android:textColor="#FFFFFF"
+        android:textColor="#FDFDFD"
         android:textSize="13sp"
         android:typeface="monospace" />
 

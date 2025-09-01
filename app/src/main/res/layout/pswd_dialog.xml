@@ -39,7 +39,7 @@
             android:inputType="numberPassword"
             android:lines="1"
             android:maxLength="10"
-            android:textColor="#ffffffff"
+            android:textColor="#FDFDFD"
             android:textSize="15sp"
             tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck" />
     </LinearLayout>

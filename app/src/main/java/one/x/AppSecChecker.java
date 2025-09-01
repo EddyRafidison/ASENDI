@@ -17,6 +17,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.app.NotificationCompat;
 import androidx.core.text.HtmlCompat;
 import com.scottyab.rootbeer.RootBeer;
@@ -105,21 +106,8 @@ public class AppSecChecker extends Service {
   }
 
   public void showSecuritySettingsDialog() {
-    new AlertDialog.Builder(getApplicationContext())
-        .setTitle(getString(R.string.set_device_security_title))
-        .setMessage(getString(R.string.set_device_security))
-        .setPositiveButton(HtmlCompat.fromHtml("<font color='yellow'>"
-                                   + "Ok"
-                                   + "</font>",
-                               HtmlCompat.FROM_HTML_MODE_LEGACY),
-            (dialog, which) -> {
-              Intent securityIntent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
-              startActivity(securityIntent);
-            })
-        .setNeutralButton(
-            HtmlCompat.fromHtml("<font color='red'>" + getString(R.string.cancel) + "</font>",
-                HtmlCompat.FROM_HTML_MODE_LEGACY),
-            (dialog, which) -> { dialog.dismiss(); })
-        .show();
+    Intent intent = new Intent(this, NotSecureDialog.class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(intent);
   }
 }

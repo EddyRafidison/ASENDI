@@ -1,30 +1,7 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-		android:width="24.0dp"
-		android:height="24.0dp"
-		android:viewportWidth="24.0"
-		android:viewportHeight="24.0">
-	<path
-		android:fillColor="#00FFFFFF"
-		android:strokeColor="#FFFFFFFF"
-		android:strokeWidth="1.4399999"
-		android:strokeLineJoin="miter"
-		android:fillType="nonZero"
-		android:strokeLineCap="square"
-		android:pathData="M4.36,8.55L4.36,4.04L19.74,4.04L19.74,8.55"/>
-	<path
-		android:fillColor="#00FFFFFF"
-		android:strokeColor="#FFFFFFFF"
-		android:strokeWidth="1.4399999"
-		android:strokeLineJoin="miter"
-		android:fillType="nonZero"
-		android:strokeLineCap="square"
-		android:pathData="M19.78,15.57L19.75,19.48L4.33,19.39L4.35,15.49"/>
-	<path
-		android:fillColor="#00FFFFFF"
-		android:strokeColor="#FFFFFA0A"
-		android:strokeWidth="1.2"
-		android:strokeLineJoin="miter"
-		android:fillType="nonZero"
-		android:strokeLineCap="square"
-		android:pathData="M3.42,12.00L20.90,12.00"/>
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Created by NP Manager -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
+	 
+  <path android:fillColor="#FDFDFD" android:pathData="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,15H9V21H3V15M5,17V19H7V17H5Z"/>
 </vector>

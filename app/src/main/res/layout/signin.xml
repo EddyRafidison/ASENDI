@@ -68,7 +68,7 @@
                      android:adjustViewBounds="true"
                      android:contentDescription="@string/app_name"
                      android:scaleType="fitCenter"
-                     android:src="@drawable/name_white"
+                     android:src="@drawable/user2"
                      android:background="@android:color/transparent"
                      android:layout_centerVertical="true"
                      android:padding="7dp"
@@ -77,10 +77,10 @@
                 <EditText
                      android:layout_height="match_parent"
                      android:layout_width="match_parent"
-                  
+                     android:paddingRight="10dp"
                      android:layout_centerVertical="true"
                      android:textSize="15sp"
-                     android:textColor="#ffffffff"
+                     android:textColor="#FDFDFD"
                      android:ems="10"
                      tools:ignore="Autofill,HardcodedText,NotSibling"
                      android:layout_toEndOf="@id/acc_icon"
@@ -91,7 +91,6 @@
                      android:textColorHint="#64B5F6"
                      android:lines="1"
                      android:paddingLeft="10dp"
-                     android:paddingRight="10dp"
                      android:inputType="textCapCharacters"
                      android:id="@+id/account_name" />
 
@@ -126,7 +125,7 @@
                          android:layout_height="match_parent"
                          android:layout_width="match_parent"
                          android:textSize="15sp"
-                         android:textColor="#ffffffff"
+                         android:textColor="#FDFDFD"
                          android:ems="10"
                          tools:ignore="Autofill"
                          android:background="@android:color/transparent"
@@ -162,7 +161,7 @@
                  android:padding="5dp"
                  android:textSize="15sp"
                  android:textAllCaps="false"
-                 android:textColor="#FCFEFF"
+                 android:textColor="#FFFFFF"
                  android:layout_marginTop="20dp"
                  tools:ignore="TextContrastCheck"
                  android:id="@+id/login"
@@ -182,7 +181,7 @@
                      android:gravity="center_vertical|center|center_horizontal"
                      android:padding="8dp"
                      android:textSize="18sp"
-                     android:textColor="#ffffffff"
+                     android:textColor="#FDFDFD"
                      android:id="@+id/layoutTextView1"
                      android:text="@string/or" />
 
@@ -208,7 +207,7 @@
                  android:padding="5dp"
                  android:textSize="15sp"
                  android:textAllCaps="false"
-                 android:textColor="#ffffffff"
+                 android:textColor="#FDFDFD"
                  android:layout_marginTop="5dp"
                  tools:ignore="TextContrastCheck"
                  android:id="@+id/signup"

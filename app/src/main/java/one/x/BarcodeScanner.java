@@ -12,7 +12,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
@@ -23,7 +23,8 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 public class BarcodeScanner extends Activity implements DecoratedBarcodeView.TorchListener {
   private CaptureManager capture;
   private DecoratedBarcodeView barcodeScannerView;
-  private ImageButton switchFlashlightButton;
+  private ImageView switchFlashlight;
+  private View flashLayout;
   private ViewfinderView viewfinderView;
   private boolean flashON = false;
 
@@ -43,14 +44,15 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
     barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
     barcodeScannerView.setTorchListener(this);
 
-    switchFlashlightButton = findViewById(R.id.switch_flashlight);
+    switchFlashlight = findViewById(R.id.switch_flashlight);
+    flashLayout = findViewById(R.id.flashlayout);
 
     viewfinderView = findViewById(R.id.zxing_viewfinder_view);
 
     // if the device does not have flashlight in its camera,
     // then remove the switch flashlight button...
     if (!hasFlash()) {
-      switchFlashlightButton.setVisibility(View.GONE);
+      flashLayout.setVisibility(View.GONE);
     }
 
     capture = new CaptureManager(this, barcodeScannerView);
@@ -135,13 +137,13 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
   @Override
   public void onTorchOn() {
     flashON = true;
-    switchFlashlightButton.setImageResource(R.drawable.flash_on);
+    switchFlashlight.setImageResource(R.drawable.flash_on);
   }
 
   @Override
   public void onTorchOff() {
     flashON = false;
-    switchFlashlightButton.setImageResource(R.drawable.flash_off);
+    switchFlashlight.setImageResource(R.drawable.flash_off);
   }
 
   @Override

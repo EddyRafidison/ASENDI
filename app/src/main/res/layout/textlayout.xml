@@ -23,7 +23,7 @@
 		app:custom_color="#D2F5FFFB"
 		app:use_gradient="true"
 		app:corners="4"
-		android:textColor="#FFFFFF"
+		android:textColor="#FDFDFD"
 		android:padding="8dp"
 />
 

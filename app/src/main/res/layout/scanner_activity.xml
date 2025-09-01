@@ -11,19 +11,28 @@
          app:zxing_scanner_layout="@layout/viewfinder"
          android:id="@+id/zxing_barcode_scanner" />
 
-    <ImageButton
-         android:layout_height="48dp"
-         android:layout_width="48dp"
-         android:adjustViewBounds="true"
-         android:src="@drawable/flash_off"
+    <LinearLayout
+         android:layout_height="46dp"
+         android:layout_width="46dp"
+         android:layout_marginBottom="40dp"
+         android:background="@drawable/flash_bg"
          android:clickable="true"
+         android:padding="8dp"
+         android:gravity="center"
          android:onClick="switchFlash"
          android:layout_centerHorizontal="true"
-         android:focusable="true"
-         android:layout_marginBottom="35dp"
-         android:scaleType="fitCenter"
-         android:background="@drawable/flash_bg"
          android:layout_alignParentBottom="true"
-         android:id="@+id/switch_flashlight" />
+         android:focusable="true"
+         android:id="@+id/flashlayout">
+
+        <ImageView
+             android:layout_height="32dp"
+             android:layout_width="32dp"
+             android:adjustViewBounds="true"
+             android:src="@drawable/flash_off"
+             android:scaleType="fitCenter"
+             android:id="@+id/switch_flashlight" />
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -19,7 +19,7 @@
              android:layout_marginBottom="15dp"
              android:layout_margin="2dp"
              app:cardElevation="2dp"
-             app:cardBackgroundColor="#ABC1B6"
+             app:cardBackgroundColor="@color/primary"
              app:cardCornerRadius="3dp"
              android:id="@+id/cv">
 
@@ -37,9 +37,8 @@
                      android:id="@+id/l">
 
                     <ImageButton
-                         android:layout_height="48dp"
-                         android:layout_width="48dp"
-                         android:layout_marginEnd="5dp"
+                         android:layout_height="45dp"
+                         android:layout_width="45dp"
                          android:contentDescription="@string/app_name"
                          android:scaleType="fitCenter"
                          android:layout_centerVertical="true"
@@ -49,11 +48,11 @@
                          android:id="@+id/copy" />
 
                     <ImageView
-                         android:layout_height="20dp"
-                         android:layout_width="20dp"
+                         android:layout_height="32dp"
+                         android:layout_width="32dp"
                          android:contentDescription="@string/app_name"
                          android:scaleType="fitCenter"
-                         android:src="@drawable/name"
+                         android:src="@drawable/user2"
                          android:layout_centerVertical="true"
                          android:id="@+id/im" />
 
@@ -64,8 +63,8 @@
                          android:gravity="center_vertical"
                          android:layout_centerVertical="true"
                          android:padding="8dp"
-                         android:textSize="15sp"
-                         android:textColor="#ff0a140e"
+                         android:textSize="18sp"
+                         android:textColor="#FFFFFF"
                          android:id="@+id/user_id" />
 
                 </RelativeLayout>
@@ -79,8 +78,8 @@
                      android:orientation="horizontal">
 
                     <ImageView
-                         android:layout_height="20dp"
-                         android:layout_width="20dp"
+                         android:layout_height="28dp"
+                         android:layout_width="28dp"
                          android:contentDescription="@string/app_name"
                          android:scaleType="fitCenter"
                          android:src="@drawable/group" />
@@ -90,8 +89,8 @@
                          android:layout_width="match_parent"
                          android:gravity="center_vertical"
                          android:padding="8dp"
-                         android:textSize="15sp"
-                         android:textColor="#ff0a140e"
+                         android:textSize="16sp"
+                         android:textColor="#FFFFFF"
                          android:id="@+id/user_group" />
 
                 </LinearLayout>
@@ -125,7 +124,7 @@
                  android:layout_width="23dp"
                  android:contentDescription="@string/app_name"
                  android:scaleType="fitCenter"
-                 android:src="@drawable/profile"
+                 android:src="@drawable/topup"
                  android:background="@android:color/transparent"
                  android:layout_centerVertical="true"
                  android:layout_alignParentEnd="true"
@@ -189,7 +188,7 @@
                          android:layout_height="wrap_content"
                          android:layout_width="wrap_content"
                          android:layout_centerInParent="true"
-                         android:background="#FFFFFF"
+                         android:background="#FDFDFD"
                          android:padding="5dp"
                          android:textSize="15sp"
                          android:textColor="#ff0a140e"

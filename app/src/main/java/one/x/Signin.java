@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
 import android.provider.Settings;
+import android.text.InputFilter;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -86,7 +87,7 @@ public class Signin extends AppCompatActivity {
       w.setNavigationBarColor(R.color.primary);
     }
     setContentView(R.layout.signin);
-
+    
     Locale langForTP = Locale.getDefault();
     String lang = langForTP.getLanguage();
     if (lang.startsWith("fr")) {
@@ -106,6 +107,7 @@ public class Signin extends AppCompatActivity {
     CheckNetwork network_ = new CheckNetwork(getApplicationContext());
     network_.registerNetworkCallback();
     account = findViewById(R.id.account_name);
+    
     pswd = findViewById(R.id.account_pswd);
     login = findViewById(R.id.login);
     Button signup = findViewById(R.id.signup);

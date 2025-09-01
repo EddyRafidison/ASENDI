@@ -1,164 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
+   
   <string name="app_name" translatable="false">OneX</string>
+   
   <string name="off">Cerrar sesión en este dispositivo</string>
+   
   <string name="unsupported_country">País no compatible aún</string>
+   
   <string name="country_null">Ubicación no encontrada</string>
+   
   <string name="error_file">Error al procesar el archivo</string>
+   
   <string name="delete">Eliminar cuenta</string>
+   
   <string name="fees">Tarifa: 100</string>
+   
   <string name="punct">.</string>
+   
   <string name="fees_notice">Se deducirá un 4% del monto transferido como tarifa de servicio.</string>
+   
   <string name="Acc_deleted">Tu cuenta ha sido eliminada</string>
+   
   <string name="refresh">Actualizar</string>
+   
   <string name="check_vers_failed">No se pudo verificar actualizaciones</string>
+   
   <string name="navigation_drawer_open">Abrir menú de navegación</string>
+   
   <string name="navigation_drawer_close">Cerrar menú de navegación</string>
+   
   <string name="copied">copiado</string>
+   
   <string name="home">Inicio</string>
+   
   <string name="app_update_available">Nueva actualización disponible</string>
+   
   <string name="download_vers">Descargar versión</string>
+   
   <string name="install">Actualización lista para instalar</string>
+   
   <string name="slog">Comunidad - Intercambio - Interés</string>
+   
   <string name="disconnected">Desconectado</string>
+   
   <string name="bc_time">Transmitido a</string>
+   
   <string name="send">Transferir</string>
+   
   <string name="history">Actividades</string>
+   
   <string name="modpassword">Gestionar código PIN</string>
+   
   <string name="modsecretkey">Gestionar clave secreta</string>
+   
   <string name="terms">Términos de Servicio</string>
+   
   <string name="copyright" translatable="false">OneX ©2025 - Versión 1.0</string>
+   
   <string name="privacy">Políticas de Privacidad</string>
+   
   <string name="mail_us">Contáctanos</string>
+   
   <string name="scan_qr">O invitar a escanear el código QR para recargar la cuenta más rápido</string>
+   
   <string name="scan_qr_send">O invitar a escanear el código QR para recargar la cuenta especificada</string>
+   
   <string name="turn_on_flashlight">Encender flash</string>
+   
   <string name="turn_off_flashlight">Apagar flash</string>
+   
   <string name="data_error">Error al procesar datos</string>
+   
   <string name="no_connection">Sin datos móviles/Wi-Fi</string>
+   
   <string name="check_connection_error">OneX requiere datos móviles/Wi-Fi</string>
+   
   <string name="from">enviado por</string>
+   
   <string name="to">enviado a</string>
+   
   <string name="push_type">Motivo: Push</string>
+   
   <string name="not_matched_pswd">Los PIN no coinciden</string>
+   
   <string name="filter">Filtrar</string>
+   
   <string name="empty">Nada que mostrar</string>
+   
   <string name="today">--- Hoy</string>
+   
   <string name="last_week">--- Últimos 7 días</string>
+   
   <string name="last_month">--- Últimos 30 días</string>
+   
   <string name="last_3_days">--- Últimos 3 días</string>
+   
   <string name="empty_list">No hay notificaciones</string>
+   
   <string name="check_entries">Verificar campos</string>
+   
   <string name="check_termsPolicy">Revisar nuestros Términos de Servicio y Políticas de Privacidad</string>
+   
   <string name="top_sheet_behavior" translatable="false">com.topsheet.TopSheetBehavior</string>
+   
   <string name="at">a las</string>
+   
   <string name="min_am" translatable="false">mínimo 100</string>
+   
   <string name="pswd">PIN</string>
+   
   <string name="error_pswd">PIN incorrecto</string>
+   
   <string name="error_sk">Clave secreta incorrecta</string>
+   
   <string name="connect_error">Error de conexión, ¡por favor inténtalo de nuevo (más tarde)!</string>
+   
   <string name="error_account">Identificador incorrecto</string>
+   
   <string name="no_dest">Cuenta del destinatario no encontrada</string>
+   
   <string name="no_exp">Cuenta del remitente no identificada</string>
+   
   <string name="note_change_pswd">Puedes cambiar tu PIN en cualquier momento. Ten cuidado de no compartirlo para mantener la confidencialidad de tu cuenta.</string>
+   
   <string name="note_change_sk">Puedes cambiar tu clave secreta en cualquier momento. Ten cuidado de no compartirla para mantener la confidencialidad de tu cuenta.</string>
+   
   <string name="cur_pswd">PIN actual</string>
+   
   <string name="new_pswd">Nuevo PIN</string>
+   
   <string name="confirm_new_pswd">Confirmar nuevo PIN</string>
+   
   <string name="change">Cambiar</string>
+   
   <string name="new_sk">Nueva clave secreta</string>
+   
   <string name="dlt">Eliminar</string>
+   
   <string name="note_msg">¿Preguntas o ideas? Escríbenos. Tu mensaje permanecerá privado y confidencial, responderemos lo antes posible al correo electrónico vinculado a tu cuenta.</string>
+   
   <string name="note_delete">¿Estás seguro de que quieres eliminar tu cuenta? Este proceso es irreversible y toda la información se perderá (excepto el historial de transacciones recientes). Para continuar, ingresa tu PIN.</string>
+   
   <string name="subject">Asunto o título</string>
+   
   <string name="message_here">Tu mensaje aquí</string>
+   
   <string name="send_msg">Enviar</string>
+   
   <string name="retry_signup">Error del servidor, ¡por favor inténtalo de nuevo!</string>
+   
   <string name="errorFragment">Proceso bloqueado. Por favor, verifica la conexión y/o reinicia la aplicación.</string>
+   
   <string name="pswd_required">PIN requerido</string>
+   
   <string name="sk_required">Clave secreta requerida</string>
+   
   <string name="yes">Sí</string>
+   
   <string name="next">Continuar</string>
+   
   <string name="cancel">Cancelar</string>
+   
   <string name="off_msg">Los datos personales en este dispositivo serán borrados. ¿Realmente quieres continuar?</string>
+   
   <string name="cleared">Datos borrados</string>
+   
   <string name="clearNotDone">Operación no compatible</string>
+   
   <string name="enter_pswd">Ingresar PIN para confirmar</string>
+   
   <string name="click_twice_exit">Presiona nuevamente para salir o cerrar sesión</string>
+   
   <string name="or">O</string>
+   
   <string name="no_location">Error de ubicación</string>
+   
   <string name="not_allowed">Operación imposible: límite de transacción alcanzado</string>
+   
   <string name="notice_forgotten_pswd">Por favor, ingresa tu clave secreta para recuperar el acceso a tu cuenta.</string>
+   
   <string name="connect">Iniciar sesión</string>
+   
   <string name="signup">Crear cuenta</string>
+   
   <string name="notValidAccount">Cuenta no reconocida por este dispositivo</string>
+   
   <string name="tooShortPswd">PIN: mínimo 4 dígitos</string>
+   
   <string name="requestPermTitle">Permiso requerido</string>
+   
   <string name="requestPermText">OneX requiere acceso a archivos. Por favor, acéptalo para continuar.</string>
+   
   <string name="select_file">Seleccionar</string>
+   
   <string name="fullName">Nombre completo</string>
+   
   <string name="birthDate">Fecha de nacimiento (ej: 31/12/1995)</string>
+   
   <string name="fullAddress">Dirección completa - X</string>
+   
   <string name="cin_with_photos">ID Nacional: número y 2 fotos (frente y dorso)</string>
+   
   <string name="mailAddress">Correo electrónico</string>
+   
   <string name="notice_terms_policy" formatted="false">Al crear la cuenta, he leído y acepto los «Términos de Servicio» y las «Políticas de Privacidad».</string>
+   
   <string name="selection">Validar</string>
+   
   <string name="download_failed">Descarga fallida</string>
+   
   <string name="downloaded">Descarga exitosa</string>
+   
   <string name="downloading">Descargando…</string>
+   
   <string name="app_busy">Descarga en progreso</string>
+   
   <string name="failed">¡Operación fallida, por favor inténtalo de nuevo!</string>
+   
   <string name="signup_title">Registro</string>
+   
   <string name="successed_transfer">Enviado con éxito</string>
+   
   <string name="successed_msg">Mensaje enviado</string>
+   
   <string name="err_bal_dlt">Eliminación bloqueada porque tu saldo ≥ 1000 OV.</string>
+   
   <string name="failed_msg">Mensaje no enviado</string>
+   
   <string name="failed_transfer">Transferencia fallida</string>
+   
   <string name="missing_balance">Saldo insuficiente</string>
+   
   <string name="successed_update">Actualizado con éxito</string>
+   
   <string name="failed_update">Actualización fallida</string>
+   
   <string name="check_signup_mail">Felicidades, se ha creado un identificador único. Por favor, revisa tu correo electrónico para verificación.</string>
+   
   <string name="successed_recovery">Tu PIN ha sido restablecido a 123456. Inicia sesión para cambiarlo inmediatamente.</string>
+   
   <string name="weak_security_pswd">¡Advertencia! Tu PIN parece vulnerable. Cámbialo rápidamente.</string>
+   
   <string name="recovery_title">¿Olvidaste tu PIN?</string>
+   
   <string name="account_null">Esta cuenta no existe</string>
+   
   <string name="enter_Id_first">Por favor, ingresa primero tu identificador</string>
+   
   <string name="confirm_login">Por tu seguridad, ingresa tu clave secreta:</string>
+   
   <string name="transfer_not_allowed">Esta transferencia no está permitida</string>
+   
   <string name="join_session">Unirse a sesión activa</string>
+   
   <string name="stat_session">Número de sesión activa</string>
+   
   <string name="stat_clicks">Número de clics de la sesión</string>
+   
   <string name="stat_vpc">Valor promedio de clic en OneVal</string>
+   
   <string name="write_storage_missing">Por favor, concede el permiso e inténtalo de nuevo</string>
+   
   <string name="error_saving_image">Error al guardar</string>
+   
   <string name="saved">Guardado en la carpeta de Descargas</string>
+   
   <string name="invalid_img">Imagen inválida</string>
+   
   <string name="check_dest">Verificar destinatario</string>
+   
   <string name="not_secure">Este dispositivo parece vulnerable al robo de datos</string>
+   
   <string name="securi_check">Verificación de seguridad del dispositivo</string>
+   
   <string name="set_device_security_title">Seguridad del Dispositivo</string>
+   
   <string name="set_device_security">OneX recomienda activar la seguridad del dispositivo en ajustes.</string>
+   
   <string name="gender">Género</string>
+   
   <string name="male">Hombre</string>
+   
   <string name="female">Mujer</string>
+   
   <string name="select_pm_text">O recargar mediante</string>
+   
   <string name="pk_pm_hint">Tu dirección de cartera</string>
+   
   <string name="mm_pm_hint">Tu número móvil</string>
+   
   <string name="phone_input_filter">Sin el prefijo 0 ni el código de país</string>
+   
   <string name="address_pm_use">Por favor, proporciona una dirección de pago válida que controles. En caso de pago, usaremos tu última dirección.</string>
+   
   <string name="check_entry">Verificar entrada</string>
+   
   <string name="val_in_loc">Para finalizar la compra, ingresa el monto en tu moneda local: (pueden aplicar tarifas y tipo de cambio)</string>
+   
   <string name="copy_pk">Para finalizar la compra, copia la dirección única mostrada y pégala en tu cartera:</string>
+   
   <string name="copy">Copiar</string>
+   
   <string name="no_addr">Dirección no disponible</string>
+   
   <string name="lpe_text">
-        El sistema se basa en la actividad de los participantes. OneX equilibra recursos usando el método "Equidad Progresiva Logarítmica".
+        El sistema se basa en la actividad de los participantes. OneX equilibra recursos usando el método «Equidad Progresiva Logarítmica».
         Este modelo innovador fomenta la contribución y redistribución justa de activos.
         La participación representa el 10% de tu saldo actual, pagadero una vez por campaña.
         Una campaña es válida hasta su tope o hasta una nueva venta desde tu cuenta.
     </string>
+   
   <string name="buy_campaign">Esta actividad es de pago. Ingresa tu PIN para crear una nueva campaña:</string>
+   
   <string name="select_lang">Seleccionar idioma</string>
+   
   <string name="know_more">Saber más</string>
+   
   <string name="campaign_still_running">Operación fallida. Hay una campaña en curso</string>
+   
   <string name="settings">Ajustes</string>
 </resources>

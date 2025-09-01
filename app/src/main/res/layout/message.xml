@@ -48,7 +48,7 @@
 				android:paddingLeft="10dp"
                 android:paddingRight="10dp"
 				android:singleLine="true"
-				android:textColor="#ffffffff"
+				android:textColor="#FDFDFD"
 				android:textColorHint="#64B5F6"
 				android:textSize="15sp"
 				tools:ignore="Autofill" />
@@ -77,7 +77,7 @@
 				android:singleLine="true"
 				android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-				android:textColor="#ffffffff"
+				android:textColor="#FDFDFD"
 				android:textColorHint="#64B5F6"
 				android:textSize="15sp"
 				tools:ignore="Autofill,VisualLintBounds" />
@@ -94,7 +94,7 @@
 			android:padding="5dp"
 			android:text="@string/send_msg"
 			android:textAllCaps="false"
-			android:textColor="#ffffffff"
+			android:textColor="#FDFDFD"
 			android:textSize="15sp"
 			app:cornerRadius="15dp"
 			tools:ignore="TextContrastCheck" />

@@ -262,16 +262,18 @@ public class HomeContentFragment extends Fragment {
     user_dest.setAllCaps(true);
     value = layout.findViewById(R.id.value);
     final ImageButton copy = layout.findViewById(R.id.copy);
-    DrawableCompat.setTint(copy.getBackground(), Color.parseColor("#ABC1B6"));
+    DrawableCompat.setTint(copy.getBackground(), Color.parseColor("#214469"));
     TextView group = layout.findViewById(R.id.user_group);
     user_id.setText(user);
 
     final String grp = Utils.getCategory(requireContext());
     String user_gr = null;
     if (grp.equals("C")) {
-      user_gr = "Partner";
+      user_gr = "Standard";
     } else if (grp.equals("B")) {
-      user_gr = "Consumer";
+      user_gr = "Pro";
+    } else {
+        user_gr = "Standard";
     }
     group.setText(user_gr);
 
@@ -493,7 +495,7 @@ public class HomeContentFragment extends Fragment {
             break;
           case TopSheetBehavior.STATE_COLLAPSED:
             topsheet_arrow.setImageResource(R.drawable.arrow_down);
-            topsheet_profile.setImageResource(R.drawable.profile);
+            topsheet_profile.setImageResource(R.drawable.topup);
             break;
         }
       }

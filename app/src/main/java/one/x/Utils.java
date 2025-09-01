@@ -368,7 +368,7 @@ public class Utils {
 
   public static String getCategory(Context ctx) {
     SharedPreferences sp = ctx.getSharedPreferences("datavalues", Context.MODE_PRIVATE);
-    return sp.getString("cat", "0");
+    return sp.getString("cat", "---");
   }
 
   public static void saveTkn(Context ctx, String tkn) {
@@ -602,17 +602,5 @@ public class Utils {
       }
     }
     return indexes;
-  }
-
-  public static void applyLatinFilterToAllEditTexts(Activity activity) {
-    View view = activity.findViewById(android.R.id.content);
-    if (view instanceof EditText) {
-      ((EditText) view).setFilters(new InputFilter[] {new StrictLatinFilter()});
-    } else if (view instanceof ViewGroup) {
-      ViewGroup group = (ViewGroup) view;
-      for (int i = 0; i < group.getChildCount(); i++) {
-        applyLatinFilterToAllEditTexts(activity);
-      }
-    }
   }
 }

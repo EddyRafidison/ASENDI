@@ -58,7 +58,7 @@
 			android:lines="1"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-			android:textColor="#ffffffff"
+			android:textColor="#FDFDFD"
 			android:textSize="15sp"
 			tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck" />
 

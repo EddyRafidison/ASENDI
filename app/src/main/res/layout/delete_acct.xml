@@ -58,7 +58,7 @@
                 android:paddingRight="10dp"
                 android:maxLength="10"
                 android:singleLine="true"
-                android:textColor="#FFFFFF"
+                android:textColor="#FDFDFD"
                 android:textColorHint="#64B5F6"
                 android:textSize="15sp"
                 tools:ignore="Autofill" />
@@ -75,7 +75,7 @@
             android:padding="5dp"
             android:text="@string/dlt"
             android:textAllCaps="false"
-            android:textColor="#ffffffff"
+            android:textColor="#FDFDFD"
             android:textSize="15sp"
             tools:ignore="TextContrastCheck" />
     </LinearLayout>

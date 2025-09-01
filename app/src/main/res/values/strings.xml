@@ -1,164 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
+   
   <string name="app_name" translatable="false">OneX</string>
+   
   <string name="off">Sign out from this device</string>
+   
   <string name="unsupported_country">Country not supported yet</string>
+   
   <string name="country_null">Location not found</string>
+   
   <string name="error_file">Error processing file</string>
+   
   <string name="delete">Delete account</string>
+   
   <string name="fees">Fee: 100</string>
+   
   <string name="punct">.</string>
+   
   <string name="fees_notice">4% of the transferred amount will be deducted as service fees.</string>
+   
   <string name="Acc_deleted">Your account has been deleted</string>
+   
   <string name="refresh">Refresh</string>
+   
   <string name="check_vers_failed">Unable to check for updates</string>
+   
   <string name="navigation_drawer_open">Open navigation menu</string>
+   
   <string name="navigation_drawer_close">Close navigation menu</string>
+   
   <string name="copied">copied</string>
+   
   <string name="home">Home</string>
+   
   <string name="app_update_available">New update available</string>
+   
   <string name="download_vers">Download version</string>
+   
   <string name="install">Update ready to install</string>
+   
   <string name="slog">Community - Exchange - Interest</string>
+   
   <string name="disconnected">Disconnected</string>
+   
   <string name="bc_time">Broadcast at</string>
+   
   <string name="send">Transfer</string>
+   
   <string name="history">Activities</string>
+   
   <string name="modpassword">Manage PIN code</string>
+   
   <string name="modsecretkey">Manage secret key</string>
+   
   <string name="terms">Terms of Service</string>
+   
   <string name="copyright" translatable="false">OneX ©2025 - Version 1.0</string>
+   
   <string name="privacy">Privacy Policy</string>
+   
   <string name="mail_us">Contact us</string>
+   
   <string name="scan_qr">Or invite to scan QR code for faster account top-up</string>
+   
   <string name="scan_qr_send">Or invite to scan QR code to top-up the specified account</string>
+   
   <string name="turn_on_flashlight">Turn on flash</string>
+   
   <string name="turn_off_flashlight">Turn off flash</string>
+   
   <string name="data_error">Error processing data</string>
+   
   <string name="no_connection">No mobile/Wi-Fi data</string>
+   
   <string name="check_connection_error">OneX requires mobile/Wi-Fi data</string>
+   
   <string name="from">sent by</string>
+   
   <string name="to">sent to</string>
+   
   <string name="push_type">Reason: Push</string>
+   
   <string name="not_matched_pswd">PINs do not match</string>
+   
   <string name="filter">Filter</string>
+   
   <string name="empty">Nothing to display</string>
+   
   <string name="today">--- Today</string>
+   
   <string name="last_week">--- Last 7 days</string>
+   
   <string name="last_month">--- Last 30 days</string>
+   
   <string name="last_3_days">--- Last 3 days</string>
+   
   <string name="empty_list">No notifications to display</string>
+   
   <string name="check_entries">Check fields</string>
+   
   <string name="check_termsPolicy">Review our terms of service and privacy policy</string>
+   
   <string name="top_sheet_behavior" translatable="false">com.topsheet.TopSheetBehavior</string>
+   
   <string name="at">at</string>
+   
   <string name="min_am" translatable="false">minimum 100</string>
+   
   <string name="pswd">PIN</string>
+   
   <string name="error_pswd">Incorrect PIN</string>
+   
   <string name="error_sk">Incorrect secret key</string>
+   
   <string name="connect_error">Connection error, please try again (later)!</string>
+   
   <string name="error_account">Incorrect identifier</string>
+   
   <string name="no_dest">Recipient account not found</string>
+   
   <string name="no_exp">Sender account not identified</string>
+   
   <string name="note_change_pswd">You can change your PIN at any time. Be cautious not to share it to maintain your account\'s confidentiality.</string>
+   
   <string name="note_change_sk">You can change your secret key at any time. Be cautious not to share it to maintain your account\'s confidentiality.</string>
+   
   <string name="cur_pswd">Current PIN</string>
+   
   <string name="new_pswd">New PIN</string>
+   
   <string name="confirm_new_pswd">Confirm new PIN</string>
+   
   <string name="change">Change</string>
+   
   <string name="new_sk">New secret key</string>
+   
   <string name="dlt">Delete</string>
+   
   <string name="note_msg">Questions or ideas? Write to us. Your message remains private and confidential, we will respond as soon as possible to the email linked to your account.</string>
+   
   <string name="note_delete">Are you sure you want to delete your account? This process is irreversible and all information will be lost (except recent transaction history). To continue, enter your PIN.</string>
+   
   <string name="subject">Subject or title</string>
+   
   <string name="message_here">Your message here</string>
+   
   <string name="send_msg">Send</string>
+   
   <string name="retry_signup">Server error, please try again!</string>
+   
   <string name="errorFragment">Process blocked. Please check connection and/or restart the application.</string>
+   
   <string name="pswd_required">PIN required</string>
+   
   <string name="sk_required">Secret key required</string>
+   
   <string name="yes">Yes</string>
+   
   <string name="next">Continue</string>
+   
   <string name="cancel">Cancel</string>
+   
   <string name="off_msg">Personal data on this device will be erased. Do you really want to continue?</string>
+   
   <string name="cleared">Data cleared</string>
+   
   <string name="clearNotDone">Operation not supported</string>
+   
   <string name="enter_pswd">Enter PIN to confirm</string>
+   
   <string name="click_twice_exit">Press again to exit or sign out</string>
+   
   <string name="or">OR</string>
+   
   <string name="no_location">Location error</string>
+   
   <string name="not_allowed">Operation impossible: transaction limit reached</string>
+   
   <string name="notice_forgotten_pswd">Please enter your secret key to recover access to your account.</string>
+   
   <string name="connect">Sign in</string>
+   
   <string name="signup">Create account</string>
+   
   <string name="notValidAccount">Account not recognized by this device</string>
+   
   <string name="tooShortPswd">PIN: minimum 4 digits</string>
+   
   <string name="requestPermTitle">Permission required</string>
+   
   <string name="requestPermText">OneX requires file access. Please accept to continue.</string>
+   
   <string name="select_file">Select</string>
+   
   <string name="fullName">Full name</string>
+   
   <string name="birthDate">Date of birth (e.g., 12/31/1995)</string>
+   
   <string name="fullAddress">Complete address - X</string>
+   
   <string name="cin_with_photos">National ID: number and 2 photos (front/back)</string>
+   
   <string name="mailAddress">Email</string>
+   
   <string name="notice_terms_policy" formatted="false">By creating an account, I have read and accept the «Terms of Service» and «Privacy Policy».</string>
+   
   <string name="selection">Validate</string>
+   
   <string name="download_failed">Download failed</string>
+   
   <string name="downloaded">Download successful</string>
+   
   <string name="downloading">Downloading…</string>
+   
   <string name="app_busy">Download in progress</string>
+   
   <string name="failed">Operation failed, please try again!</string>
+   
   <string name="signup_title">Registration</string>
+   
   <string name="successed_transfer">Sent successfully</string>
+   
   <string name="successed_msg">Message sent</string>
+   
   <string name="err_bal_dlt">Deletion blocked because your balance ≥ 1000 OV.</string>
+   
   <string name="failed_msg">Message not sent</string>
+   
   <string name="failed_transfer">Transfer failed</string>
+   
   <string name="missing_balance">Insufficient balance</string>
+   
   <string name="successed_update">Successfully updated</string>
+   
   <string name="failed_update">Update failed</string>
+   
   <string name="check_signup_mail">Congratulations, a unique identifier has been created. Please check your email for verification.</string>
+   
   <string name="successed_recovery">Your PIN has been reset to 123456. Sign in to change it immediately.</string>
+   
   <string name="weak_security_pswd">Warning! Your PIN appears vulnerable. Change it quickly.</string>
+   
   <string name="recovery_title">Forgot PIN?</string>
+   
   <string name="account_null">This account does not exist</string>
+   
   <string name="enter_Id_first">Please enter your identifier first</string>
+   
   <string name="confirm_login">For your security, enter your secret key:</string>
+   
   <string name="transfer_not_allowed">This transfer is not allowed</string>
+   
   <string name="join_session">Join active session</string>
+   
   <string name="stat_session">Active session number</string>
+   
   <string name="stat_clicks">Session click count</string>
+   
   <string name="stat_vpc">Average click value in OneVal</string>
+   
   <string name="write_storage_missing">Please grant permission and try again</string>
+   
   <string name="error_saving_image">Error saving</string>
+   
   <string name="saved">Saved in Downloads folder</string>
+   
   <string name="invalid_img">Invalid image</string>
+   
   <string name="check_dest">Verify recipient</string>
+   
   <string name="not_secure">This device appears vulnerable to data theft</string>
+   
   <string name="securi_check">Device security check</string>
+   
   <string name="set_device_security_title">Device Security</string>
+   
   <string name="set_device_security">OneX recommends enabling device security in settings.</string>
+   
   <string name="gender">Gender</string>
+   
   <string name="male">Male</string>
+   
   <string name="female">Female</string>
+   
   <string name="select_pm_text">Or top-up via</string>
+   
   <string name="pk_pm_hint">Your wallet address</string>
+   
   <string name="mm_pm_hint">Your mobile number</string>
+   
   <string name="phone_input_filter">Without prefix 0 or country code</string>
+   
   <string name="address_pm_use">Please provide a valid payment address that you control. In case of payment, we will use your last address.</string>
+   
   <string name="check_entry">Check entry</string>
+   
   <string name="val_in_loc">To finalize purchase, enter amount in your local currency: (fees and exchange rate may apply)</string>
+   
   <string name="copy_pk">To finalize purchase, copy the displayed unique address and paste it in your wallet:</string>
+   
   <string name="copy">Copy</string>
+   
   <string name="no_addr">Address unavailable</string>
+   
   <string name="lpe_text">
-        The system relies on participant activity. OneX balances resources using the "Logarithmic Progressive Equity" method.
+        The system relies on participant activity. OneX balances resources using the «Logarithmic Progressive Equity» method.
         This innovative model encourages contribution and fair redistribution of assets.
         Participation represents 10% of your current balance, payable once per campaign.
         A campaign is valid until its cap is reached or until a new sale from your account.
     </string>
+   
   <string name="buy_campaign">This activity is paid. Enter your PIN to create a new campaign:</string>
+   
   <string name="select_lang">Select language</string>
+   
   <string name="know_more">Learn more</string>
+   
   <string name="campaign_still_running">Operation failed. A campaign is in progress</string>
+   
   <string name="settings">Settings</string>
 </resources>
