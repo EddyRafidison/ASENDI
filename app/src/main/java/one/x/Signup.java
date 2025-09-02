@@ -241,8 +241,8 @@ public class Signup extends AppCompatActivity {
                                         new String[] {"email", "birth", "addr", "name", "cin",
                                             "pswd", "sk", "cinimg1", "cinimg2"},
                                         new String[] {mailAd, birth, addrs + " " + loc,
-                                            fn + "$" + ln + "$" + gender, Cin, psd1, secretkey, cin_bytes_1,
-                                            cin_bytes_2},
+                                            fn + "$" + ln + "$" + gender, Cin, psd1, secretkey,
+                                            cin_bytes_1, cin_bytes_2},
                                         true, response -> {
                                           if (response != null) {
                                             try {

@@ -273,7 +273,7 @@ public class HomeContentFragment extends Fragment {
     } else if (grp.equals("B")) {
       user_gr = "Pro";
     } else {
-        user_gr = "Standard";
+      user_gr = "Standard";
     }
     group.setText(user_gr);
 

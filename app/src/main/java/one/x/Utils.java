@@ -522,7 +522,7 @@ public class Utils {
       File f = new File(context.getExternalFilesDir(null), "OneX.apk");
       InputStream inputStream = new FileInputStream(f);
       OutputStream out;
-      out = session.openWrite("oneval_session_install", 0, sizeBytes);
+      out = session.openWrite("onex_session_install", 0, sizeBytes);
 
       byte[] buffer = new byte[65536];
       int c;

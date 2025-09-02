@@ -13,8 +13,8 @@
          android:layout_width="match_parent">
 
         <LinearLayout
-             android:layout_height="60dp"
-             android:layout_width="113dp"
+             android:layout_height="50dp"
+             android:layout_width="95dp"
              android:gravity="center_horizontal"
              android:layout_centerHorizontal="true"
              android:layout_marginTop="25dp"
@@ -40,9 +40,41 @@
              android:layout_centerHorizontal="true"
              android:textSize="12sp"
              android:lines="1"
+             android:focusable="true"
              android:textColor="#fffffefe"
              android:id="@+id/myapp"
              android:text="@string/slog" />
+
+        <LinearLayout
+             android:layout_height="40dp"
+             android:layout_width="70dp"
+             android:gravity="center_vertical"
+             android:clickable="true"
+             android:padding="10dp"
+             android:orientation="horizontal"
+             android:onClick="chooseLang"
+             android:layout_marginTop="20dp"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentTop="true"
+             android:focusable="true">
+
+            <ImageView
+                 android:layout_height="20dp"
+                 android:layout_width="20dp"
+                 android:src="@drawable/ic_choose_language"
+                 android:scaleType="fitCenter"
+                 android:adjustViewBounds="true" />
+
+            <TextView
+                 android:layout_height="match_parent"
+                 android:layout_width="match_parent"
+                 android:gravity="center|center_vertical|center_horizontal"
+                 android:textSize="16sp"
+                 android:textColor="#C7C7C7"
+                 android:text=""
+                 android:id="@+id/Lang" />
+
+        </LinearLayout>
 
         <LinearLayout
              android:layout_height="wrap_content"

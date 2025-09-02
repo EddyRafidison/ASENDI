@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -20,9 +22,11 @@ import android.text.InputFilter;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -36,6 +40,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.appcompat.widget.ListPopupWindow;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -50,7 +55,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
+import one.x.helper.LocaleHelper;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,8 +71,8 @@ public class Signin extends AppCompatActivity {
           });
   private EditText account, pswd;
   private Button login;
-  private TextView myapp;
-  private String vers = "";
+  private TextView myapp, CurrentLang;
+  private String vers = "", currentLan = "";
   private int dld = 0;
   private boolean isDownloading = false, doubleBackToExitPressedOnce = false;
 
@@ -87,17 +95,12 @@ public class Signin extends AppCompatActivity {
       w.setNavigationBarColor(R.color.primary);
     }
     setContentView(R.layout.signin);
-    
-    Locale langForTP = Locale.getDefault();
-    String lang = langForTP.getLanguage();
-    if (lang.startsWith("fr")) {
-      ONEX.TPLANG = Locale.FRENCH;
-    }
 
     Intent getData = getIntent();
     if (getData != null) {
       ONEX.COUNTRY = getData.getStringExtra("loc");
       ONEX.CURRENCY = getData.getStringExtra("curr");
+      currentLan = getData.getStringExtra("lang");
     } else {
       finish();
     }
@@ -107,7 +110,7 @@ public class Signin extends AppCompatActivity {
     CheckNetwork network_ = new CheckNetwork(getApplicationContext());
     network_.registerNetworkCallback();
     account = findViewById(R.id.account_name);
-    
+    CurrentLang = findViewById(R.id.Lang);
     pswd = findViewById(R.id.account_pswd);
     login = findViewById(R.id.login);
     Button signup = findViewById(R.id.signup);
@@ -115,6 +118,9 @@ public class Signin extends AppCompatActivity {
     myapp.setMovementMethod(LinkMovementMethod.getInstance());
     myapp.setHighlightColor(Color.WHITE);
     ImageButton recover_pswd = findViewById(R.id.recover_pswd);
+
+    CurrentLang.setText(("" + ONEX.TPLANG).toUpperCase());
+
     OnBackPressedCallback onback = new OnBackPressedCallback(true) {
       @Override
       public void handleOnBackPressed() {
@@ -185,8 +191,8 @@ public class Signin extends AppCompatActivity {
   }
 
   @Override
-  protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+  protected void attachBaseContext(Context base) {
+    super.attachBaseContext(CommonTools.getInstance(base));
   }
 
   @SuppressLint("SetTextI18n")
@@ -357,6 +363,10 @@ public class Signin extends AppCompatActivity {
     dialogRecovery.show();
   }
 
+  public void chooseLang(View v) {
+    showLangList(v);
+  }
+
   private void downloadApp(String url_) {
     isDownloading = true;
     myapp.setTextColor(Color.GREEN);
@@ -508,12 +518,6 @@ public class Signin extends AppCompatActivity {
         ActivityOptions.makeCustomAnimation(Signin.this, R.anim.nav_enter, R.anim.nav_exit);
     final String acc = account.getText().toString();
     final String psd = pswd.getText().toString();
-
-    // Only test, to be removed later
-    intent.putExtra("act", acc);
-    intent.putExtra("psd", psd);
-    startActivity(intent, option.toBundle());
-
     if (!isDownloading) {
       if (account.length() > 0 && pswd.length() > 0) {
         if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
@@ -685,5 +689,55 @@ public class Signin extends AppCompatActivity {
         (dialog, which) -> dialog.cancel());
     AlertDialog adialog = builder.create();
     adialog.show();
+  }
+
+  private void showLangList(View anchorv) {
+    ArrayList<String> listLang = new ArrayList<>();
+    listLang.add("EN");
+    listLang.add("FR");
+    listLang.add("IT");
+    listLang.add("PT");
+    listLang.add("ES");
+    listLang.add("NL");
+    listLang.add("DE");
+    listLang.add("SW");
+    Collections.sort(listLang);
+    String clang = CurrentLang.getText().toString();
+    listLang.remove(clang);
+    ContextThemeWrapper theme = new ContextThemeWrapper(this, android.R.style.Theme_Material_Light);
+    ListPopupWindow listlang = new ListPopupWindow(theme);
+    listlang.setAdapter(new ArrayAdapter<String>(this, R.layout.popup_textview_lang, listLang));
+    listlang.setAnchorView(anchorv);
+    int wid = anchorv.getWidth();
+    listlang.setWidth(wid - ((int) wid / 8));
+    listlang.setHeight(ListPopupWindow.WRAP_CONTENT);
+    listlang.setOnItemClickListener((parent, view, position, id) -> {
+      String l = listLang.get(position);
+      listlang.dismiss();
+      if (!isDownloading) {
+        setLocale(l.toLowerCase());
+      } else {
+        Toast.makeText(getApplicationContext(), getString(R.string.app_busy), Toast.LENGTH_SHORT)
+            .show();
+      }
+    });
+    listlang.show();
+  }
+
+  public void setLocale(String localeName) {
+    if (!localeName.equals(currentLan)) {
+      Context context = LocaleHelper.setLocale(this, localeName);
+      // Resources resources = context.getResources();
+      Resources res = context.getResources();
+      DisplayMetrics dm = res.getDisplayMetrics();
+      Configuration conf = res.getConfiguration();
+      conf.locale = new Locale(localeName);
+      res.updateConfiguration(conf, dm);
+      Intent refresh = new Intent(this, Signin.class);
+      refresh.putExtra("lang", localeName);
+      refresh.putExtra("loc", ONEX.COUNTRY);
+      refresh.putExtra("curr", ONEX.CURRENCY);
+      startActivity(refresh);
+    }
   }
 }

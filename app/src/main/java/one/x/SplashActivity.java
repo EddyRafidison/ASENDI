@@ -1,6 +1,7 @@
 package one.x;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -15,11 +16,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.splashscreen.SplashScreen;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import one.x.helper.LocaleHelper;
 
 public class SplashActivity extends AppCompatActivity {
   private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
@@ -114,5 +117,10 @@ public class SplashActivity extends AppCompatActivity {
     if (scheduler != null) {
       scheduler.shutdown();
     }
+  }
+
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
 }

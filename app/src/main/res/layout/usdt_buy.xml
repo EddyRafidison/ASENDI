@@ -14,6 +14,7 @@
          android:paddingBottom="8dp"
          android:layout_centerHorizontal="true"
          android:textSize="15sp"
+         android:focusable="true"
          android:textColor="#DDE0E0"
          android:id="@+id/pk_text"
          android:paddingTop="8dp"
