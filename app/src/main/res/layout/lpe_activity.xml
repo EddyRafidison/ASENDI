@@ -38,6 +38,7 @@
             android:gravity="start|center|center_horizontal|center_vertical"
             android:inputType="numberPassword"
             android:lines="1"
+            android:singleLine="true"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:maxLength="10"

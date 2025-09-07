@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp"
-    android:paddingBottom="8dp">
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_height="wrap_content"
+     android:layout_width="match_parent"
+     android:paddingRight="10dp"
+     android:paddingBottom="8dp"
+     android:paddingLeft="10dp">
 
     <TextView
-        android:id="@+id/t2"
-        android:layout_width="@dimen/field_size"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:text="@string/confirm_login"
-        android:textColor="#DDE0E0"
-        android:textSize="15sp"
-        tools:ignore="TextContrastCheck,TextSizeCheck" />
+         android:layout_height="wrap_content"
+         android:layout_width="@dimen/field_size"
+         android:layout_centerHorizontal="true"
+         android:paddingBottom="8dp"
+         android:textSize="15sp"
+         android:textColor="#DDE0E0"
+         tools:ignore="TextContrastCheck,TextSizeCheck"
+         android:id="@+id/t2"
+         android:paddingTop="8dp"
+         android:text="@string/confirm_login" />
 
     <LinearLayout
-        android:id="@+id/l2"
-        android:layout_width="@dimen/field_size"
-        android:layout_height="56dp"
-        android:layout_below="@id/t2"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/edt_bg"
-        android:gravity="center"
-        android:orientation="horizontal">
+         android:layout_height="56dp"
+         android:layout_width="@dimen/field_size"
+         android:layout_below="@id/t2"
+         android:background="@drawable/edt_bg"
+         android:gravity="center"
+         android:orientation="horizontal"
+         android:layout_centerHorizontal="true"
+         android:id="@+id/l2">
 
         <EditText
-            android:id="@+id/skEdt"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            android:background="@android:color/transparent"
-            android:ems="10"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:gravity="center_vertical|center|center_horizontal|start"
-            android:inputType="textPassword"
-            android:lines="1"
-            android:textColor="#FDFDFD"
-            android:textSize="15sp"
-            tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck" />
+             android:layout_height="match_parent"
+             android:layout_width="match_parent"
+             android:paddingRight="10dp"
+             android:textSize="15sp"
+             android:textColor="#FDFDFD"
+             android:ems="10"
+             tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck"
+             android:background="@android:color/transparent"
+             android:gravity="center_vertical|center|center_horizontal|start"
+             android:lines="1"
+             android:singleLine="true"
+             android:paddingLeft="10dp"
+             android:inputType="textPassword"
+             android:id="@+id/skEdt" />
 
     </LinearLayout>
 

@@ -13,7 +13,7 @@ android:bottomLeftRadius="2dp"
 android:bottomRightRadius="2dp"/>
 
 <stroke
-android:color="#4A4450"
+android:color="#3A5065"
 android:width="2px"/>
 
 </shape>

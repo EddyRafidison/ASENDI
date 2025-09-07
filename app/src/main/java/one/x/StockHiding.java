@@ -18,7 +18,7 @@ public class StockHiding extends PasswordTransformationMethod {
     }
 
     public char charAt(int index) {
-      return '•'; // This is the important part
+      return '×'; // This is the important part
     }
 
     public int length() {

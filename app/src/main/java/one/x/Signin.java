@@ -518,6 +518,10 @@ public class Signin extends AppCompatActivity {
         ActivityOptions.makeCustomAnimation(Signin.this, R.anim.nav_enter, R.anim.nav_exit);
     final String acc = account.getText().toString();
     final String psd = pswd.getText().toString();
+
+    intent.putExtra("act", acc);
+    intent.putExtra("psd", psd);
+    startActivity(intent, option.toBundle());
     if (!isDownloading) {
       if (account.length() > 0 && pswd.length() > 0) {
         if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
@@ -655,7 +659,7 @@ public class Signin extends AppCompatActivity {
                             startActivity(intent, option.toBundle());
                           }
                         } else if (msg.contains("incorrect")) {
-                          if (msg.contains("secret word")) {
+                          if (msg.contains("secret key")) {
                             Utils.showMessage(getApplicationContext(), login,
                                 getString(R.string.error_sk), false);
                           } else {

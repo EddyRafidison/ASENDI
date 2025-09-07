@@ -33,7 +33,6 @@
                      android:layout_height="wrap_content"
                      android:layout_width="match_parent"
                      android:padding="2dp"
-                     android:orientation="horizontal"
                      android:id="@+id/l">
 
                     <ImageButton
@@ -52,7 +51,7 @@
                          android:layout_width="32dp"
                          android:contentDescription="@string/app_name"
                          android:scaleType="fitCenter"
-                         android:src="@drawable/user2"
+                         android:src="@drawable/user"
                          android:layout_centerVertical="true"
                          android:id="@+id/im" />
 
@@ -60,11 +59,14 @@
                          android:layout_height="wrap_content"
                          android:layout_width="match_parent"
                          android:layout_toEndOf="@id/im"
-                         android:gravity="center_vertical"
+                         android:gravity="center_horizontal"
+                         android:paddingRight="45dp"
                          android:layout_centerVertical="true"
-                         android:padding="8dp"
+                         android:paddingBottom="8dp"
                          android:textSize="18sp"
-                         android:textColor="#FFFFFF"
+                         android:paddingLeft="13dp"
+                         android:textColor="#FDFDFD"
+                         android:paddingTop="8dp"
                          android:id="@+id/user_id" />
 
                 </RelativeLayout>
@@ -87,10 +89,12 @@
                     <TextView
                          android:layout_height="wrap_content"
                          android:layout_width="match_parent"
-                         android:gravity="center_vertical"
-                         android:padding="8dp"
+                         android:gravity="center"
+                         android:paddingRight="28dp"
+                         android:paddingBottom="8dp"
                          android:textSize="16sp"
-                         android:textColor="#FFFFFF"
+                         android:textColor="#FDFDFD"
+                         android:paddingTop="8dp"
                          android:id="@+id/user_group" />
 
                 </LinearLayout>
@@ -169,9 +173,9 @@
                  android:layout_height="match_parent"
                  android:layout_width="@dimen/field_size"
                  android:layout_below="@id/qr"
-                 android:layout_margin="15dp"
-                 android:padding="5dp"
-                 android:orientation="vertical">
+                 android:gravity="center|center_horizontal|center_vertical"
+                 android:orientation="vertical"
+                 android:layout_centerHorizontal="true">
 
                 <RelativeLayout
                      android:layout_height="40dp"
@@ -200,12 +204,8 @@
                      android:layout_height="56dp"
                      android:layout_width="match_parent"
                      android:background="@drawable/buy_edit_bg"
-                     android:gravity="center_vertical"
-                     android:paddingRight="8dp"
+                     android:gravity="center_vertical|center_horizontal|center"
                      android:orientation="horizontal"
-                     android:paddingBottom="4dp"
-                     android:paddingLeft="8dp"
-                     android:paddingTop="4dp"
                      android:id="@+id/linel">
 
                     <RelativeLayout
@@ -213,6 +213,7 @@
                          android:layout_width="40dp"
                          android:background="@drawable/round_bg_red"
                          android:clickable="true"
+                         android:layout_marginLeft="3dp"
                          android:focusable="true"
                          android:id="@+id/select_pm">
 
@@ -241,28 +242,44 @@
                     <EditText
                          android:layout_height="match_parent"
                          android:layout_width="0dp"
-                         android:padding="5dp"
+                         android:paddingRight="10dp"
                          android:textSize="15sp"
                          android:textColor="#ff0a140e"
+                         android:singleLine="true"
                          android:ems="10"
                          tools:ignore="Autofill"
                          android:background="@android:color/transparent"
                          android:hint="@string/mm_pm_hint"
                          android:textColorHint="#636363"
                          android:lines="1"
+                         android:paddingLeft="10dp"
                          android:layout_weight="1"
                          android:inputType="phone"
                          android:id="@+id/address_pay" />
 
-                    <ImageButton
-                         android:layout_height="34dp"
-                         android:layout_width="34dp"
-                         android:adjustViewBounds="true"
-                         android:scaleType="fitCenter"
-                         android:src="@drawable/arrow_right"
-                         android:contentDescription="@string/app_name"
-                         android:background="@drawable/ar_bg"
-                         android:id="@+id/yes_pm" />
+                    <RelativeLayout
+                         android:layout_height="50dp"
+                         android:layout_width="50dp"
+                         android:gravity="center|center_horizontal|center_vertical"
+                         android:layout_marginRight="3dp"
+                         android:background="@null"
+                         android:id="@+id/cp_layout"
+                          >
+
+                        <ImageButton
+                             android:layout_height="36dp"
+                             android:layout_width="36dp"
+                             android:adjustViewBounds="true"
+                             android:scaleType="fitCenter"
+                             android:src="@drawable/go_button"
+                             android:contentDescription="@string/app_name"
+                             android:background="@android:color/transparent"
+                             android:clickable="true"
+                             android:focusable="true"
+                             android:id="@+id/yes_pm"
+                             tools:ignore="DuplicateSpeakableTextCheck"/>
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -272,6 +289,7 @@
                      android:paddingRight="3dp"
                      android:textSize="12sp"
                      android:lines="1"
+                     android:singleLine="true"
                      android:textColor="#5E615F"
                      android:paddingLeft="3dp"
                      android:id="@+id/phone_input_limit"

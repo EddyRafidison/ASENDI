@@ -1,47 +1,50 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp" >
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_height="wrap_content"
+     android:layout_width="match_parent"
+     android:paddingEnd="10dp"
+     android:paddingBottom="8dp"
+     android:paddingStart="10dp">
 
     <TextView
-        android:id="@+id/tdialog"
-        android:layout_width="@dimen/field_size"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="8dp"
-        android:textColor="#DDE0E0"
-        android:textSize="15sp"/>
+         android:layout_height="wrap_content"
+         android:layout_width="@dimen/field_size"
+         android:paddingBottom="8dp"
+         android:layout_centerHorizontal="true"
+         android:textSize="15sp"
+         android:textColor="#DDE0E0"
+         android:id="@+id/tdialog"
+         android:paddingTop="8dp" />
 
     <LinearLayout
-        android:id="@+id/l1"
-        android:layout_width="@dimen/field_size"
-        android:layout_height="56dp"
-        android:layout_below="@id/tdialog"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/edt_bg"
-        android:gravity="center"
-        android:orientation="horizontal" >
+         android:layout_height="56dp"
+         android:layout_width="@dimen/field_size"
+         android:layout_below="@id/tdialog"
+         android:background="@drawable/edt_bg"
+         android:gravity="center"
+         android:orientation="horizontal"
+         android:layout_centerHorizontal="true"
+         android:id="@+id/l1">
 
         <EditText
-            android:id="@+id/pswdDialog"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            android:background="@android:color/transparent"
-            android:ems="10"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:gravity="start|center|center_horizontal|center_vertical"
-            android:inputType="numberPassword"
-            android:lines="1"
-            android:maxLength="10"
-            android:textColor="#FDFDFD"
-            android:textSize="15sp"
-            tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck" />
+             android:layout_height="match_parent"
+             android:layout_width="match_parent"
+             android:paddingRight="10dp"
+             android:textSize="15sp"
+             android:textColor="#FDFDFD"
+             android:ems="10"
+             tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck"
+             android:background="@android:color/transparent"
+             android:gravity="start|center|center_horizontal|center_vertical"
+             android:lines="1"
+             android:singleLine="true"
+             android:paddingLeft="10dp"
+             android:maxLength="10"
+             android:inputType="numberPassword"
+             android:id="@+id/pswdDialog" />
+
     </LinearLayout>
 
 </RelativeLayout>

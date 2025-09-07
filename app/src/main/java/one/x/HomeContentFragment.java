@@ -130,7 +130,7 @@ public class HomeContentFragment extends Fragment {
   private String user;
   private String pswd;
   private String user_;
-  private String Fees = "?", Fees2 = "?";
+  private String Fees = "?", Fees2 = "?", op_index, laddr;
   private ListView historylist;
   private int days = 0, LastHistSize = 0, cursor = 0, codeClick = 0;
   private DecimalFormat df;
@@ -166,7 +166,7 @@ public class HomeContentFragment extends Fragment {
     if (v != null) {
       v.setVisibility(View.INVISIBLE);
     }
-
+    addressPay.setSelectAllOnFocus(true);
     select_pm.setOnClickListener(v9 -> { showPmList(v9); });
     confirm_pm.setOnClickListener(v10 -> {
       if (addressPay.length() > 7) {
@@ -177,9 +177,9 @@ public class HomeContentFragment extends Fragment {
             Utils.showNoConnectionAlert(requireContext(), rel);
           } else {
             Utils.connectToServer(getActivity(), ONEX.TBUY,
-                new String[] {"user", "pswd", "user_addr", "tkn"},
-                new String[] {
-                    user, pswd, addressPay.getText().toString(), Utils.getTkn(requireContext())},
+                new String[] {"user", "pswd", "user_addr", "pay_index", "tkn"},
+                new String[] {user, pswd, addressPay.getText().toString(), "" + selected_pm,
+                    Utils.getTkn(requireContext())},
                 true, response -> {
                   try {
                     String msg = response.getString("onaddr");
@@ -289,7 +289,9 @@ public class HomeContentFragment extends Fragment {
       checkPermissions();
       return true;
     });
-
+    go.setOnClickListener(v_ -> {
+        showLPEActivity(); 
+    });
     send.setOnClickListener(v1 -> {
       String val = value.getText().toString();
       if (user_dest.length() > 2) {
@@ -447,8 +449,6 @@ public class HomeContentFragment extends Fragment {
       }
     });
 
-    go.setOnClickListener(v4 -> { showLPEActivity(); });
-
     copy.setOnClickListener(v2 -> {
       ClipboardManager clipboard =
           (ClipboardManager) requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -457,6 +457,8 @@ public class HomeContentFragment extends Fragment {
       Toast.makeText(getActivity(), getString(R.string.copied), Toast.LENGTH_SHORT).show();
     });
 
+    DrawableCompat.setTint(scan_but.getBackground(), Color.parseColor("#214469"));
+    
     scan_but.setOnClickListener(v3 -> {
       ScanOptions options = new ScanOptions();
       options.setCaptureActivity(BarcodeScanner.class);
@@ -491,6 +493,7 @@ public class HomeContentFragment extends Fragment {
           case TopSheetBehavior.STATE_EXPANDED:
             topsheet_arrow.setImageResource(R.drawable.arrow_up);
             topsheet_profile.setImageResource(R.drawable.history);
+            getLastPAddress();
 
             break;
           case TopSheetBehavior.STATE_COLLAPSED:
@@ -581,7 +584,7 @@ public class HomeContentFragment extends Fragment {
     // process data loading (else history) here
     return layout;
   }
-
+  
   private String stockMasker() {
     String original = stock.getText().toString();
     StringBuilder filler = new StringBuilder();
@@ -718,9 +721,10 @@ public class HomeContentFragment extends Fragment {
             } else {
               arg0.dismiss();
               Utils.connectToServer(getActivity(), ONEX.MBUY,
-                  new String[] {"user", "pswd", "mobile", "amount", "tkn"},
-                  new String[] {user, pswd, mobile, val, Utils.getTkn(requireContext())}, true,
-                  response -> {
+                  new String[] {"user", "pswd", "mobile", "pay_index", "amount", "tkn"},
+                  new String[] {
+                      user, pswd, mobile, "" + selected_pm, val, Utils.getTkn(requireContext())},
+                  true, response -> {
                     try {
                       String status = response.getString("transf");
                       switch (status) {
@@ -1062,8 +1066,12 @@ public class HomeContentFragment extends Fragment {
         Toast.makeText(getContext(), statString, Toast.LENGTH_SHORT).show();
       }, Color.MAGENTA), indexStart, indexEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
-
+    stat.setFocusable(true);
+    stat.setClickable(true);
     stat.setText(spannableStringBuilder, TextView.BufferType.SPANNABLE);
+    stat.setMovementMethod(LinkMovementMethod.getInstance());
+    stat.requestFocus();
+    stat.setHighlightColor(Color.YELLOW);
   }
 
   private void checkPermissions() {
@@ -1222,8 +1230,6 @@ public class HomeContentFragment extends Fragment {
     // #S number of active session, #C Number of clicks in session
     // #Val/C Average value (OV) per click
     setStat("#S 0  |  #C 0  |  #Val/C 0");
-    stat.setMovementMethod(LinkMovementMethod.getInstance());
-    stat.setHighlightColor(Color.YELLOW);
     refresh();
   }
 
@@ -1235,6 +1241,7 @@ public class HomeContentFragment extends Fragment {
     ContextThemeWrapper theme =
         new ContextThemeWrapper(requireContext(), android.R.style.Theme_Material_Light);
     ListPopupWindow listPmD = new ListPopupWindow(theme);
+
     listPmD.setAdapter(
         new ArrayAdapter<String>(requireActivity(), R.layout.popup_textview, listPm) {
           @Override
@@ -1257,32 +1264,83 @@ public class HomeContentFragment extends Fragment {
     listPmD.setHeight(ListPopupWindow.WRAP_CONTENT);
     listPmD.setOnItemClickListener((parent, view, position, id) -> {
       selected_pm = position;
-      if (selected_pm == 0) {
-        select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_red));
-        pm_src.setImageResource(R.drawable.airtel_logo);
-        addressPay.setHint(R.string.mm_pm_hint);
-        int visibility = txtv.getVisibility();
-        if (visibility == 4) {
-          txtv.setVisibility(0);
-        }
-        addressPay.setInputType(InputType.TYPE_CLASS_PHONE);
-      } else {
-        select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_green));
-        pm_src.setImageResource(R.drawable.tether_logo);
-        addressPay.setHint(R.string.pk_pm_hint);
-        int visibility = txtv.getVisibility();
-        if (visibility == 0) {
-          txtv.setVisibility(4);
-        }
-        addressPay.setInputType(InputType.TYPE_CLASS_TEXT);
-      }
       addressPay.setText("");
-      addressPay.requestFocus();
-      InputMethodManager imm =
-          (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-      imm.showSoftInput(addressPay, InputMethodManager.SHOW_IMPLICIT);
+      if (!op_index.isEmpty()) {
+        if (selected_pm == 0) {
+          select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_red));
+          pm_src.setImageResource(R.drawable.airtel_logo);
+          addressPay.setHint(R.string.mm_pm_hint);
+          int visibility = txtv.getVisibility();
+          if (visibility == 4) {
+            txtv.setVisibility(0);
+          }
+          addressPay.setInputType(InputType.TYPE_CLASS_PHONE);
+        } else {
+          select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_green));
+          pm_src.setImageResource(R.drawable.tether_logo);
+          addressPay.setHint(R.string.pk_pm_hint);
+          int visibility = txtv.getVisibility();
+          if (visibility == 0) {
+            txtv.setVisibility(4);
+          }
+          addressPay.setInputType(InputType.TYPE_CLASS_TEXT);
+        }
+        if (("" + selected_pm).equals(op_index)) {
+          addressPay.setText(laddr);
+        }
+        addressPay.requestFocus();
+        InputMethodManager imm =
+            (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(addressPay, InputMethodManager.SHOW_IMPLICIT);
+      }
       listPmD.dismiss();
     });
     listPmD.show();
+  }
+
+  private void getLastPAddress() {
+    addressPay.setInputType(InputType.TYPE_NULL);
+    addressPay.setText("");
+    op_index = "";
+    laddr = "";
+    if (Utils.isConnectionAvailable(requireContext()) == false) {
+      Utils.showNoConnectionAlert(requireContext(), rel);
+    } else {
+      Utils.connectToServer(getActivity(), ONEX.LADDR, new String[] {"user", "pswd", "tkn"},
+          new String[] {user, pswd, Utils.getTkn(requireContext())}, false, response -> {
+            try {
+              String info = response.getString("iaddress");
+              if (!info.isEmpty()) {
+                op_index =
+                    info.substring(0, 1); // same reference as listed in available payments methods
+                laddr = info.substring(1, info.length());
+                if (op_index.equals("" + selected_pm)) {
+                  if (op_index.equals("0")) {
+                    addressPay.setText(laddr);
+                    addressPay.setInputType(InputType.TYPE_CLASS_PHONE);
+                  } else {
+                    addressPay.setInputType(InputType.TYPE_CLASS_TEXT);
+                  }
+                } else {
+                  if (selected_pm == 0) {
+                    addressPay.setInputType(InputType.TYPE_CLASS_PHONE);
+                  } else {
+                    addressPay.setInputType(InputType.TYPE_CLASS_TEXT);
+                  }
+                }
+                addressPay.requestFocus();
+                InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(addressPay, InputMethodManager.SHOW_IMPLICIT);
+              }
+
+            } catch (JSONException e) {
+              Toast
+                  .makeText(getContext(), requireActivity().getString(R.string.data_error),
+                      Toast.LENGTH_SHORT)
+                  .show();
+            }
+          });
+    }
   }
 }

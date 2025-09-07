@@ -28,6 +28,7 @@ public class ONEX {
   public static String MBUY = BASE_URL + "/app/mtopup";
   public static String TBUY = BASE_URL + "/app/ttopup";
   public static String BUY_CAMPAIGN = BASE_URL + "/app/ncamp";
+  public static String LADDR = BASE_URL + "/app/last-addr";
   public static Timer TIMER = new Timer();
   public static Timer TIMER2 = new Timer();
   public static boolean ISCONNECTED = false;

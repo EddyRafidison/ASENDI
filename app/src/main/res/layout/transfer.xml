@@ -53,38 +53,39 @@
              android:layout_below="@id/rel2"
              android:gravity="center_horizontal"
              android:background="@drawable/transf_bg"
-             android:padding="8dp"
+             android:paddingLeft="8dp"
+             android:paddingRight="8dp"
              android:orientation="vertical"
              android:layout_marginTop="2dp"
              android:id="@+id/rel_">
 
             <RelativeLayout
                  android:layout_height="56dp"
-                 android:layout_width="@dimen/field_size"
-                 android:paddingRight="40dp"
-                 android:paddingLeft="40dp">
+                 android:layout_width="@dimen/field_size">
 
                 <EditText
                      android:layout_height="match_parent"
                      android:layout_width="match_parent"
-                     android:paddingRight="40dp"
+                     android:paddingRight="58dp"
                      android:layout_centerVertical="true"
                      android:textSize="15sp"
                      android:textColor="#FDFDFD"
+                     android:layout_marginLeft="5dp"
                      android:ems="10"
                      tools:ignore="Autofill,HardcodedText"
                      android:background="@drawable/edt_bg"
                      android:gravity="center_vertical|center|center_horizontal"
                      android:hint="A-A00Z"
-                     android:layout_margin="4dp"
                      android:lines="1"
-                     android:paddingLeft="10dp"
+                     android:singleLine="true"
+                     android:layout_marginRight="5dp"
+                     android:paddingLeft="58dp"
                      android:inputType="textCapCharacters"
                      android:id="@+id/user_id_dest" />
 
                 <FrameLayout
-                     android:layout_height="30dp"
-                     android:layout_width="30dp"
+                     android:layout_height="50dp"
+                     android:layout_width="50dp"
                      android:clickable="true"
                      android:layout_centerVertical="true"
                      android:layout_alignParentEnd="true"
@@ -98,7 +99,6 @@
                          android:src="@drawable/scan"
                          android:contentDescription="@string/app_name"
                          android:scaleType="fitCenter"
-                         android:background="@drawable/ripple"
                          android:clickable="true"
                          android:focusable="true"
                          tools:ignore="DuplicateSpeakableTextCheck"
@@ -112,25 +112,25 @@
                  android:layout_height="56dp"
                  android:layout_width="@dimen/field_size"
                  android:gravity="center_vertical"
-                 android:paddingRight="51dp"
                  android:orientation="horizontal"
-                 android:paddingLeft="51dp"
                  android:layout_marginTop="10dp">
 
                 <EditText
                      android:layout_height="match_parent"
                      android:layout_width="match_parent"
-                     android:paddingRight="10dp"
+                     android:paddingRight="61dp"
                      android:textSize="15sp"
                      android:textColor="#FDFDFD"
+                     android:layout_marginLeft="5dp"
                      android:ems="10"
                      tools:ignore="Autofill"
                      android:background="@drawable/edt_bg"
                      android:gravity="center_vertical|center|center_horizontal"
                      android:hint="@string/min_am"
-                     android:layout_margin="4dp"
                      android:lines="1"
-                     android:paddingLeft="10dp"
+                     android:singleLine="true"
+                     android:layout_marginRight="5dp"
+                     android:paddingLeft="51dp"
                      android:inputType="numberDecimal"
                      android:id="@+id/value" />
 

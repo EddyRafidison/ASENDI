@@ -5,7 +5,9 @@
      xmlns:tools="http://schemas.android.com/tools"
      android:layout_height="wrap_content"
      android:layout_width="wrap_content"
-     android:background="@color/primary">
+     android:background="@color/primary"
+     android:layout_marginLeft="1dp"
+     android:layout_marginRight="1dp">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
          android:layout_height="match_parent"
@@ -32,12 +34,14 @@
                      android:id="@+id/rel_head">
 
                     <RelativeLayout
-                         android:layout_height="match_parent"
+                         android:layout_height="49dp"
                          android:layout_width="match_parent"
-                         android:layout_marginEnd="50dp"
                          android:background="@drawable/stock_bg"
-                         android:padding="5dp"
-                         android:layout_marginStart="50dp"
+                         android:layout_centerVertical="true"
+                         android:padding="6dp"
+                         android:layout_marginRight="50dp"
+                         android:layout_marginLeft="50dp"
+                         android:layout_marginTop="2dp"
                          android:id="@+id/rel_container">
 
                         <ImageView
@@ -54,18 +58,19 @@
                         <com.elyeproj.loaderviewlibrary.LoaderTextView
                              android:layout_height="match_parent"
                              android:layout_width="match_parent"
+                             android:paddingRight="8dp"
                              app:width_weight="1"
                              android:textSize="25sp"
                              android:textColor="#ff7dfd84"
                              app:height_weight="1"
-                             android:paddingStart="8dp"
-                             app:corners="4"
+                             android:singleLine="true"
+                             app:corners="0"
                              app:custom_color="#D2F5FFFB"
                              android:layout_toEndOf="@id/imgv"
-                             android:paddingEnd="4dp"
                              android:gravity="center_vertical"
                              app:use_gradient="true"
                              android:lines="1"
+                             android:paddingLeft="8dp"
                              android:id="@+id/balance"
                              android:textStyle="bold" />
 
@@ -79,8 +84,8 @@
                      android:divider="#676767"
                      android:background="@android:color/transparent"
                      android:layout_centerHorizontal="true"
-                     android:layout_marginLeft="5dp"
-                     android:layout_marginRight="5dp"
+                     android:layout_marginLeft="2dp"
+                     android:layout_marginRight="2dp"
                      android:layout_marginTop="1dp"
                      tools:ignore="NestedScrolling"
                      android:id="@+id/history_list"
@@ -97,12 +102,10 @@
              android:layout_width="match_parent"
              android:layout_marginBottom="52dp"
              android:background="@drawable/history_bg"
-             android:layout_marginLeft="5dp"
-             android:layout_marginRight="5dp"
              android:layout_marginTop="52dp">
 
             <LinearLayout
-                 android:layout_height="60dp"
+                 android:layout_height="56dp"
                  android:layout_width="match_parent"
                  android:background="@drawable/spinner_bg_"
                  android:layout_centerHorizontal="true"
@@ -114,7 +117,7 @@
                 <Spinner
                      android:layout_height="match_parent"
                      android:layout_width="match_parent"
-                     android:layout_margin="5dp"
+                     android:padding="10dp"
                      android:prompt="@string/filter"
                      android:id="@+id/filter_history">
 
@@ -217,14 +220,15 @@
         <TextView
              android:layout_height="match_parent"
              android:layout_width="match_parent"
+             android:paddingRight="7dp"
+             app:fontPath="fonts/RobotoRegular.ttf"
+             android:textSize="15sp"
+             android:textColor="#FD0"
+             android:singleLine="true"
+             android:focusable="true"
              android:background="@android:color/transparent"
              android:gravity="center|center_vertical|center_horizontal"
-             android:paddingRight="7dp"
-             android:textSize="15sp"
-             android:focusable="true"
              android:lines="1"
-             app:fontPath="fonts/RobotoRegular.ttf"
-             android:textColor="#FD0"
              android:paddingLeft="7dp"
              android:layout_alignParentBottom="true"
              android:text="stat"
