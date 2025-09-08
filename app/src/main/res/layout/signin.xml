@@ -47,7 +47,7 @@
              android:text="@string/slog" />
 
         <LinearLayout
-             android:layout_height="40dp"
+             android:layout_height="50dp"
              android:layout_width="70dp"
              android:gravity="center_vertical"
              android:clickable="true"
@@ -148,15 +148,15 @@
                          android:adjustViewBounds="true"
                          android:contentDescription="@string/app_name"
                          android:scaleType="fitCenter"
+                         android:padding="7dp"
                          android:src="@drawable/lock2"
                          android:background="@android:color/transparent"
-                         android:padding="7dp"
                          android:id="@+id/lock_icn" />
 
                     <EditText
                          android:layout_height="match_parent"
                          android:layout_width="match_parent"
-                         android:paddingRight="10dp"
+                         android:paddingRight="53dp"
                          android:textSize="15sp"
                          android:textColor="#FDFDFD"
                          android:ems="10"
@@ -167,7 +167,7 @@
                          android:textColorHint="#64B5F6"
                          android:lines="1"
                          android:singleLine="true"
-                         android:paddingLeft="10dp"
+                         android:paddingLeft="13dp"
                          android:maxLength="10"
                          android:inputType="numberPassword"
                          android:id="@+id/account_pswd" />
@@ -177,11 +177,11 @@
                 <ImageButton
                      android:layout_height="50dp"
                      android:layout_width="50dp"
-                     android:layout_marginEnd="8dp"
+                     android:layout_marginEnd="3dp"
                      android:adjustViewBounds="true"
                      android:contentDescription="@string/app_name"
                      android:scaleType="fitCenter"
-                     android:src="@drawable/lock_question"
+                     android:src="@drawable/lock_question_padded"
                      android:layout_centerVertical="true"
                      android:layout_alignParentEnd="true"
                      tools:ignore="DuplicateSpeakableTextCheck"

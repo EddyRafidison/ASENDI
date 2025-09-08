@@ -39,6 +39,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListPopupWindow;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -94,6 +96,7 @@ public class HomeContentFragment extends Fragment {
                   isBSopen = false, isNextLoad = false;
   private TextView user_id, stat;
   private LoaderTextView stock;
+  private ProgressBar addPb;
   private EditText user_dest, value, addressPay;
   private FloatingActionButton go;
   private final ActivityResultLauncher<ScanOptions> barcodeLauncher =
@@ -289,9 +292,7 @@ public class HomeContentFragment extends Fragment {
       checkPermissions();
       return true;
     });
-    go.setOnClickListener(v_ -> {
-        showLPEActivity(); 
-    });
+    go.setOnClickListener(v_ -> { showLPEActivity(); });
     send.setOnClickListener(v1 -> {
       String val = value.getText().toString();
       if (user_dest.length() > 2) {
@@ -458,7 +459,7 @@ public class HomeContentFragment extends Fragment {
     });
 
     DrawableCompat.setTint(scan_but.getBackground(), Color.parseColor("#214469"));
-    
+
     scan_but.setOnClickListener(v3 -> {
       ScanOptions options = new ScanOptions();
       options.setCaptureActivity(BarcodeScanner.class);
@@ -499,6 +500,7 @@ public class HomeContentFragment extends Fragment {
           case TopSheetBehavior.STATE_COLLAPSED:
             topsheet_arrow.setImageResource(R.drawable.arrow_down);
             topsheet_profile.setImageResource(R.drawable.topup);
+            removeAddressProgressBar();
             break;
         }
       }
@@ -584,7 +586,7 @@ public class HomeContentFragment extends Fragment {
     // process data loading (else history) here
     return layout;
   }
-  
+
   private String stockMasker() {
     String original = stock.getText().toString();
     StringBuilder filler = new StringBuilder();
@@ -1267,7 +1269,7 @@ public class HomeContentFragment extends Fragment {
       addressPay.setText("");
       if (!op_index.isEmpty()) {
         if (selected_pm == 0) {
-          select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_red));
+          select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_red_padded));
           pm_src.setImageResource(R.drawable.airtel_logo);
           addressPay.setHint(R.string.mm_pm_hint);
           int visibility = txtv.getVisibility();
@@ -1276,7 +1278,7 @@ public class HomeContentFragment extends Fragment {
           }
           addressPay.setInputType(InputType.TYPE_CLASS_PHONE);
         } else {
-          select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_green));
+          select_pm.setBackground(requireActivity().getDrawable(R.drawable.round_bg_green_padded));
           pm_src.setImageResource(R.drawable.tether_logo);
           addressPay.setHint(R.string.pk_pm_hint);
           int visibility = txtv.getVisibility();
@@ -1299,6 +1301,7 @@ public class HomeContentFragment extends Fragment {
   }
 
   private void getLastPAddress() {
+    showAddressProgressBar();
     addressPay.setInputType(InputType.TYPE_NULL);
     addressPay.setText("");
     op_index = "";
@@ -1329,9 +1332,7 @@ public class HomeContentFragment extends Fragment {
                   }
                 }
                 addressPay.requestFocus();
-                InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(
-                    Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(addressPay, InputMethodManager.SHOW_IMPLICIT);
+                removeAddressProgressBar();
               }
 
             } catch (JSONException e) {
@@ -1339,8 +1340,26 @@ public class HomeContentFragment extends Fragment {
                   .makeText(getContext(), requireActivity().getString(R.string.data_error),
                       Toast.LENGTH_SHORT)
                   .show();
+              removeAddressProgressBar();
             }
           });
     }
+  }
+  private void showAddressProgressBar() {
+    RelativeLayout mlayout = requireActivity().findViewById(R.id.cp_layout);
+    if (addPb == null) {
+      addPb = new ProgressBar(requireActivity());
+      addPb.setId(View.generateViewId());
+      RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+          RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+      params.addRule(RelativeLayout.CENTER_IN_PARENT);
+      mlayout.addView(addPb, params);
+    }
+  }
+  private void removeAddressProgressBar() {
+    RelativeLayout mlayout = requireActivity().findViewById(R.id.cp_layout);
+    if (addPb != null)
+      mlayout.removeViewAt(1);
+    addPb = null;
   }
 }

@@ -66,11 +66,10 @@
                 <EditText
                      android:layout_height="match_parent"
                      android:layout_width="match_parent"
-                     android:paddingRight="58dp"
+                     android:paddingRight="55dp"
                      android:layout_centerVertical="true"
                      android:textSize="15sp"
                      android:textColor="#FDFDFD"
-                     android:layout_marginLeft="5dp"
                      android:ems="10"
                      tools:ignore="Autofill,HardcodedText"
                      android:background="@drawable/edt_bg"
@@ -78,7 +77,6 @@
                      android:hint="A-A00Z"
                      android:lines="1"
                      android:singleLine="true"
-                     android:layout_marginRight="5dp"
                      android:paddingLeft="58dp"
                      android:inputType="textCapCharacters"
                      android:id="@+id/user_id_dest" />
@@ -87,16 +85,16 @@
                      android:layout_height="50dp"
                      android:layout_width="50dp"
                      android:clickable="true"
+                     android:layout_marginRight="3dp"
                      android:layout_centerVertical="true"
                      android:layout_alignParentEnd="true"
-                     android:layout_marginRight="8dp"
                      android:focusable="true">
 
                     <ImageButton
                          android:layout_height="match_parent"
                          android:layout_width="match_parent"
                          android:adjustViewBounds="true"
-                         android:src="@drawable/scan"
+                         android:src="@drawable/scan_padded"
                          android:contentDescription="@string/app_name"
                          android:scaleType="fitCenter"
                          android:clickable="true"
@@ -130,7 +128,7 @@
                      android:lines="1"
                      android:singleLine="true"
                      android:layout_marginRight="5dp"
-                     android:paddingLeft="51dp"
+                     android:paddingLeft="61dp"
                      android:inputType="numberDecimal"
                      android:id="@+id/value" />
 

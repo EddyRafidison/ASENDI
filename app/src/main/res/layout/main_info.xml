@@ -36,13 +36,13 @@
                      android:id="@+id/l">
 
                     <ImageButton
-                         android:layout_height="45dp"
-                         android:layout_width="45dp"
+                         android:layout_height="50dp"
+                         android:layout_width="50dp"
                          android:contentDescription="@string/app_name"
                          android:scaleType="fitCenter"
                          android:layout_centerVertical="true"
                          android:layout_alignParentEnd="true"
-                         app:srcCompat="@drawable/copy"
+                         app:srcCompat="@drawable/copy_padded"
                          tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck"
                          android:id="@+id/copy" />
 
@@ -209,17 +209,17 @@
                      android:id="@+id/linel">
 
                     <RelativeLayout
-                         android:layout_height="40dp"
-                         android:layout_width="40dp"
-                         android:background="@drawable/round_bg_red"
+                         android:layout_height="50dp"
+                         android:layout_width="50dp"
+                         android:background="@drawable/round_bg_red_padded"
                          android:clickable="true"
                          android:layout_marginLeft="3dp"
                          android:focusable="true"
                          android:id="@+id/select_pm">
 
                         <ImageView
-                             android:layout_height="35dp"
-                             android:layout_width="35dp"
+                             android:layout_height="match_parent"
+                             android:layout_width="match_parent"
                              android:layout_centerInParent="true"
                              android:src="@drawable/airtel_logo"
                              android:contentDescription="@string/app_name"
@@ -228,10 +228,10 @@
                              android:id="@+id/img_pm" />
 
                         <ImageView
-                             android:layout_height="20dp"
-                             android:layout_width="20dp"
+                             android:layout_height="match_parent"
+                             android:layout_width="match_parent"
                              android:layout_centerInParent="true"
-                             android:src="@drawable/mv"
+                             android:src="@drawable/mv_padded"
                              android:adjustViewBounds="true"
                              android:contentDescription="@string/app_name"
                              android:scaleType="fitCenter"
@@ -267,8 +267,8 @@
                           >
 
                         <ImageButton
-                             android:layout_height="36dp"
-                             android:layout_width="36dp"
+                             android:layout_height="match_parent"
+                             android:layout_width="match_parent"
                              android:adjustViewBounds="true"
                              android:scaleType="fitCenter"
                              android:src="@drawable/go_button"
