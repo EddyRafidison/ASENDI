@@ -230,8 +230,6 @@
              android:gravity="center|center_vertical|center_horizontal"
              android:lines="1"
              android:paddingLeft="7dp"
-             android:layout_alignParentBottom="true"
-             android:text="stat"
              android:id="@+id/stat" />
 
     </RelativeLayout>

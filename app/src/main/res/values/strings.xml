@@ -27,6 +27,8 @@
   <string name="Acc_deleted">Your account has been deleted</string>
    
   <string name="refresh">Refresh</string>
+
+  <string name="notifs">Notifications</string>
    
   <string name="check_vers_failed">Unable to check for updates</string>
    

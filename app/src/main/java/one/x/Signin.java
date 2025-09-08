@@ -518,10 +518,6 @@ public class Signin extends AppCompatActivity {
         ActivityOptions.makeCustomAnimation(Signin.this, R.anim.nav_enter, R.anim.nav_exit);
     final String acc = account.getText().toString();
     final String psd = pswd.getText().toString();
-
-    intent.putExtra("act", acc);
-    intent.putExtra("psd", psd);
-    startActivity(intent, option.toBundle());
     if (!isDownloading) {
       if (account.length() > 0 && pswd.length() > 0) {
         if (Utils.isConnectionAvailable(getApplicationContext()) == false) {

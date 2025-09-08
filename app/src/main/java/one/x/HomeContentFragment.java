@@ -53,6 +53,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -170,6 +171,10 @@ public class HomeContentFragment extends Fragment {
       v.setVisibility(View.INVISIBLE);
     }
     addressPay.setSelectAllOnFocus(true);
+    String statString = requireActivity().getString(R.string.stat_session) + "  "
+        + requireActivity().getString(R.string.stat_clicks) + "  "
+        + requireActivity().getString(R.string.stat_vpc);
+    TooltipCompat.setTooltipText(stat, statString);
     select_pm.setOnClickListener(v9 -> { showPmList(v9); });
     confirm_pm.setOnClickListener(v10 -> {
       if (addressPay.length() > 7) {
@@ -1038,42 +1043,19 @@ public class HomeContentFragment extends Fragment {
   }
 
   private synchronized void setStat(String text) {
-    SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);
-
-    for (int i = 0; i < text.length(); i++) {
-      char c = text.charAt(i);
-      if (c == '|') {
-        spannableStringBuilder.setSpan(
-            new ForegroundColorSpan(Color.WHITE), i, i + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-      }
+    if (!text.isEmpty()) {
+      stat.setText(HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY));
+    } else {
+      String dflt = "0";
+      String S = "<font color='#FFDA1A'>#S</font>&nbsp;<font color='#0CFE54'>" + dflt
+          + "</font>&nbsp;&nbsp;";
+      String C = "<font color='#FFDA1A'>#C</font>&nbsp;<font color='#0CFE54'>" + dflt
+          + "</font>&nbsp;&nbsp;";
+      String ValC =
+          "<font color='#FFDA1A'>#Val/C</font>&nbsp;<font color='#0CFE54'>" + dflt + "</font>";
+      String deflt = S + C + ValC;
+      stat.setText(HtmlCompat.fromHtml(deflt, HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
-
-    String[] symbols = {"#S", "#C", "#Val/C"};
-    int syms = symbols.length;
-    for (int i = 0; i < syms; i++) {
-      String symbol = symbols[i];
-      int indexStart = text.indexOf(symbol);
-      int length = symbol.length();
-      int indexEnd = text.lastIndexOf(symbol) + length;
-
-      spannableStringBuilder.setSpan(new Clickables(stat, symbols, i, string -> {
-        String statString = null;
-        if (string.equals("#S")) {
-          statString = getString(R.string.stat_session);
-        } else if (string.equals("#C")) {
-          statString = getString(R.string.stat_clicks);
-        } else {
-          statString = getString(R.string.stat_vpc);
-        }
-        Toast.makeText(getContext(), statString, Toast.LENGTH_SHORT).show();
-      }, Color.MAGENTA), indexStart, indexEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-    }
-    stat.setFocusable(true);
-    stat.setClickable(true);
-    stat.setText(spannableStringBuilder, TextView.BufferType.SPANNABLE);
-    stat.setMovementMethod(LinkMovementMethod.getInstance());
-    stat.requestFocus();
-    stat.setHighlightColor(Color.YELLOW);
   }
 
   private void checkPermissions() {
@@ -1229,9 +1211,7 @@ public class HomeContentFragment extends Fragment {
   public void onStart() {
     super.onStart();
     // TODO: Implement this method
-    // #S number of active session, #C Number of clicks in session
-    // #Val/C Average value (OV) per click
-    setStat("#S 0  |  #C 0  |  #Val/C 0");
+    setStat("");
     refresh();
   }
 

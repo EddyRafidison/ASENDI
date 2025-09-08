@@ -28,6 +28,8 @@
    
   <string name="refresh">Refresh</string>
    
+   <string name="notifs">Notifications</string>
+   
   <string name="check_vers_failed">Unable to check for updates</string>
    
   <string name="navigation_drawer_open">Open navigation menu</string>

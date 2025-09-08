@@ -27,6 +27,8 @@
   <string name="Acc_deleted">Ihr Konto wurde gelöscht</string>
    
   <string name="refresh">Aktualisieren</string>
+  
+  <string name="notifs">Benachrichtigungen</string>
    
   <string name="check_vers_failed">Update-Prüfung nicht möglich</string>
    

@@ -28,6 +28,8 @@
    
   <string name="refresh">Rafraîchir</string>
    
+   <string name="notifs">Notifications</string>
+   
   <string name="check_vers_failed">Impossible de vérifier la disponibilité des mises à jour</string>
    
   <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>

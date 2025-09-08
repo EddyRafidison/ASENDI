@@ -27,6 +27,8 @@
   <string name="Acc_deleted">Tu cuenta ha sido eliminada</string>
    
   <string name="refresh">Actualizar</string>
+  
+  <string name="notifs">Notificaciones</string>
    
   <string name="check_vers_failed">No se pudo verificar actualizaciones</string>
    
