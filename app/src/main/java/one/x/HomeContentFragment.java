@@ -171,8 +171,8 @@ public class HomeContentFragment extends Fragment {
       v.setVisibility(View.INVISIBLE);
     }
     addressPay.setSelectAllOnFocus(true);
-    String statString = requireActivity().getString(R.string.stat_session) + "  "
-        + requireActivity().getString(R.string.stat_clicks) + "  "
+    String statString = requireActivity().getString(R.string.stat_session) + " | "
+        + requireActivity().getString(R.string.stat_clicks) + " | "
         + requireActivity().getString(R.string.stat_vpc);
     TooltipCompat.setTooltipText(stat, statString);
     select_pm.setOnClickListener(v9 -> { showPmList(v9); });
@@ -1062,9 +1062,11 @@ public class HomeContentFragment extends Fragment {
     } else {
       String dflt = "0";
       String S = "<font color='#FFDA1A'>#S</font>&nbsp;<font color='#0CFE54'>" + dflt
-          + "</font>&nbsp;&nbsp;";
+          + "</font>&nbsp;"
+          + "<font color='#FDFDFD'>|</font>&nbsp;";
       String C = "<font color='#FFDA1A'>#C</font>&nbsp;<font color='#0CFE54'>" + dflt
-          + "</font>&nbsp;&nbsp;";
+          + "</font>&nbsp;"
+          + "<font color='#FDFDFD'>|</font>&nbsp;";
       String ValC =
           "<font color='#FFDA1A'>#Val/C</font>&nbsp;<font color='#0CFE54'>" + dflt + "</font>";
       String deflt = S + C + ValC;

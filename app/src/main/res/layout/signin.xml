@@ -17,7 +17,7 @@
              android:layout_width="95dp"
              android:gravity="center_horizontal"
              android:layout_centerHorizontal="true"
-             android:layout_marginTop="35dp"
+             android:layout_marginTop="40dp"
              android:id="@+id/LinearLayout1">
 
             <ImageView
