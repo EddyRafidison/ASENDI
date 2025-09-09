@@ -536,7 +536,7 @@ public class Signin extends AppCompatActivity {
               showLoginConfirm(acc, psd, intent);
             }
           } else {
-            if (Acc.isEmpty()) {
+            if (Acc.equals("A-A00Z")) {
               // check if credentials correct
               Utils.connectToServer(Signin.this, ONEX.SIGNIN,
                   new String[] {"user", "pswd", "tkn", "recon", "sk"},
@@ -663,8 +663,12 @@ public class Signin extends AppCompatActivity {
                                 getString(R.string.error_pswd), false);
                           }
                         } else {
-                          Utils.showMessage(getApplicationContext(), login,
-                              getString(R.string.account_null), false);
+                          if (msg.contains("forbidden")) {
+                            showAccountRecovery();
+                          } else {
+                            Utils.showMessage(getApplicationContext(), login,
+                                getString(R.string.account_null), false);
+                          }
                         }
                       } catch (JSONException je) {
                         Toast

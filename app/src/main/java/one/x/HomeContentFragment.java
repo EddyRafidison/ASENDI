@@ -667,6 +667,13 @@ public class HomeContentFragment extends Fragment {
                             Utils.showMessage(getContext(), topSheet,
                                 requireActivity().getString(R.string.transfer_not_allowed), false);
                             break;
+                          case "forbidden":
+                            Toast
+                                .makeText(requireActivity(),
+                                    requireActivity().getString(R.string.login_again),
+                                    Toast.LENGTH_SHORT)
+                                .show();
+                            break;
                           default:
                             Utils.showMessage(getContext(), topSheet,
                                 requireActivity().getString(R.string.missing_balance), false);
@@ -858,6 +865,13 @@ public class HomeContentFragment extends Fragment {
                           Utils.showMessage(getContext(), topSheet,
                               requireActivity().getString(R.string.campaign_still_running), false);
                           break;
+                        case "forbidden":
+                          Toast
+                              .makeText(requireActivity(),
+                                  requireActivity().getString(R.string.login_again),
+                                  Toast.LENGTH_SHORT)
+                              .show();
+                          break;
                         default:
                           Utils.showMessage(getContext(), topSheet,
                               requireActivity().getString(R.string.missing_balance), false);
@@ -1027,7 +1041,7 @@ public class HomeContentFragment extends Fragment {
       t = str.charAt(i);
       if (t != '.' && !after) {
         up++;
-        if (up > 7)
+        if (up > 8)
           return rFinal.toString();
       } else if (t == '.') {
         after = true;

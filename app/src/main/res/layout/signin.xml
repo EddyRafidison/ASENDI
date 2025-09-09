@@ -17,7 +17,7 @@
              android:layout_width="95dp"
              android:gravity="center_horizontal"
              android:layout_centerHorizontal="true"
-             android:layout_marginTop="25dp"
+             android:layout_marginTop="35dp"
              android:id="@+id/LinearLayout1">
 
             <ImageView
@@ -168,7 +168,7 @@
                          android:lines="1"
                          android:singleLine="true"
                          android:paddingLeft="13dp"
-                         android:maxLength="10"
+                         android:maxLength="12"
                          android:inputType="numberPassword"
                          android:id="@+id/account_pswd" />
 

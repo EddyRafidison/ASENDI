@@ -61,8 +61,16 @@ public class DeleteAct extends Fragment {
                       Utils.showMessage(getContext(), delete,
                           requireActivity().getString(R.string.err_bal_dlt), false);
                     } else {
-                      Utils.showMessage(getContext(), delete,
-                          requireActivity().getString(R.string.failed), false);
+                      if (auth.contains("forbidden")) {
+                        Toast
+                            .makeText(requireActivity(),
+                                requireActivity().getString(R.string.login_again),
+                                Toast.LENGTH_SHORT)
+                            .show();
+                      } else {
+                        Utils.showMessage(getContext(), delete,
+                            requireActivity().getString(R.string.failed), false);
+                      }
                     }
                   } catch (JSONException je) {
                     Toast

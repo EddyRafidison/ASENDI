@@ -51,8 +51,16 @@ public class ChangeSK extends Fragment {
                       Utils.showMessage(getContext(), change,
                           requireActivity().getString(R.string.error_pswd), false);
                     } else {
-                      Utils.showMessage(getContext(), change,
-                          requireActivity().getString(R.string.failed_update), false);
+                      if (auth.contains("forbidden")) {
+                        Toast
+                            .makeText(requireActivity(),
+                                requireActivity().getString(R.string.login_again),
+                                Toast.LENGTH_SHORT)
+                            .show();
+                      } else {
+                        Utils.showMessage(getContext(), change,
+                            requireActivity().getString(R.string.failed_update), false);
+                      }
                     }
                   } catch (JSONException je) {
                     Toast

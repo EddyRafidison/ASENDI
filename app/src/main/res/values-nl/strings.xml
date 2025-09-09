@@ -18,6 +18,10 @@
    
   <string name="punct">.</string>
   
+  <string name="login_again">Log eerst opnieuw in</string>
+
+  <string name="already_exists">Dit e-mailadres heeft al een account</string>
+  
   <string name="firstname">Voornaam</string>
   
   <string name="lastname">Achternaam</string>

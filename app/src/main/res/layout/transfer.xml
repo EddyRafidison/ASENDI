@@ -129,7 +129,7 @@
                      android:singleLine="true"
                      android:layout_marginRight="5dp"
                      android:paddingLeft="61dp"
-                     android:inputType="numberDecimal"
+                     android:inputType="number|numberDecimal"
                      android:id="@+id/value" />
 
             </LinearLayout>

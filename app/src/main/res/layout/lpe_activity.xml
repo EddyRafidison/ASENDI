@@ -41,7 +41,7 @@
             android:singleLine="true"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:maxLength="10"
+            android:maxLength="12"
             android:textColor="#FDFDFD"
             android:textSize="15sp"
             tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck" />

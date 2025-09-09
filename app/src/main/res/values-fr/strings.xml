@@ -17,6 +17,10 @@
   <string name="fees">Frais : 100</string>
    
   <string name="punct">.</string>
+
+  <string name="login_again">Veuillez vous reconnecter d\'abord</string>
+
+  <string name="already_exists">Cet email a déjà un compte</string>
   
   <string name="firstname">Prénom(s)</string>
   

@@ -18,6 +18,10 @@
    
   <string name="punct">.</string>
   
+  <string name="login_again">Tafadhali ingia tena kwanza</string>
+
+  <string name="already_exists">Barua pepe hii tayari ina akaunti</string>
+  
   <string name="firstname">Jina la kwanza</string>
   
   <string name="lastname">Jina la ukoo</string>

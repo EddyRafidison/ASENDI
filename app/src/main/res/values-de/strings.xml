@@ -18,6 +18,10 @@
    
   <string name="punct">.</string>
   
+  <string name="login_again">Bitte melden Sie sich zuerst erneut an</string>
+
+  <string name="already_exists">Diese E-Mail-Adresse hat bereits ein Konto</string>
+  
   <string name="firstname">Vorname</string>
   
   <string name="lastname">Nachname</string>

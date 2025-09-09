@@ -270,11 +270,19 @@ public class Signup extends AppCompatActivity {
                                                         Toast.LENGTH_SHORT)
                                                     .show();
                                               } else {
-                                                Toast
-                                                    .makeText(getApplicationContext(),
-                                                        getString(R.string.failed),
-                                                        Toast.LENGTH_SHORT)
-                                                    .show();
+                                                if (msg.contains("already")) {
+                                                  Toast
+                                                      .makeText(getApplicationContext(),
+                                                          getString(R.string.already_exists),
+                                                          Toast.LENGTH_SHORT)
+                                                      .show();
+                                                } else {
+                                                  Toast
+                                                      .makeText(getApplicationContext(),
+                                                          getString(R.string.failed),
+                                                          Toast.LENGTH_SHORT)
+                                                      .show();
+                                                }
                                               }
                                             } catch (JSONException je) {
                                               Toast

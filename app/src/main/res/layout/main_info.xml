@@ -271,7 +271,7 @@
                              android:layout_width="match_parent"
                              android:adjustViewBounds="true"
                              android:scaleType="fitCenter"
-                             android:src="@drawable/go_button"
+                             android:src="@drawable/buy_button"
                              android:contentDescription="@string/app_name"
                              android:background="@android:color/transparent"
                              android:clickable="true"

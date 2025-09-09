@@ -41,7 +41,7 @@
              android:lines="1"
              android:singleLine="true"
              android:paddingLeft="10dp"
-             android:maxLength="10"
+             android:maxLength="12"
              android:inputType="numberPassword"
              android:id="@+id/pswdDialog" />
 
