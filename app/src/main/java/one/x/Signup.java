@@ -391,32 +391,20 @@ public class Signup extends AppCompatActivity {
 
   private void checkPermissions() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-      // As the device is Android 13 and above so I want the permission of accessing Audio, Images,
-      // Videos
-      // You can ask permission according to your requirements what you want to access.
       String imagesPermission = android.Manifest.permission.READ_MEDIA_IMAGES;
-      // Check for permissions and request them if needed
       if (ContextCompat.checkSelfPermission(this, imagesPermission)
           == PackageManager.PERMISSION_GRANTED) {
-        // You have the permissions, you can proceed with your media file operations.
-        // Showing dialog when Show Dialog button is clicked.
         filePickerDialog.show();
       } else {
-        // You don't have the permissions. Request them.
         imagesPermissionLauncher.launch(imagesPermission);
       }
     } else {
-      // Android version is below 13 so we are asking normal read and write storage permissions
-      // Check for permissions and request them if needed
       if (ContextCompat.checkSelfPermission(this, readPermission)
               == PackageManager.PERMISSION_GRANTED
           && ContextCompat.checkSelfPermission(this, writePermission)
               == PackageManager.PERMISSION_GRANTED) {
-        // You have the permissions, you can proceed with your file operations.
-        // Show the file picker dialog when needed
         filePickerDialog.show();
       } else {
-        // You don't have the permissions. Request them.
         storagePermissionsLauncher.launch(new String[] {readPermission, writePermission});
       }
     }
@@ -458,7 +446,6 @@ public class Signup extends AppCompatActivity {
   private void showRationaleDialog() {
     if (ActivityCompat.shouldShowRequestPermissionRationale(this, readPermission)
         || ActivityCompat.shouldShowRequestPermissionRationale(this, writePermission)) {
-      // Show a rationale dialog explaining why the permissions are necessary.
       new AlertDialog.Builder(this)
           .setTitle(getString(R.string.requestPermTitle))
           .setMessage(getString(R.string.requestPermText))
@@ -466,20 +453,13 @@ public class Signup extends AppCompatActivity {
                                      + "Ok"
                                      + "</font>",
                                  HtmlCompat.FROM_HTML_MODE_LEGACY),
-              (dialog, which) -> {
-                // Request permissions when the user clicks OK.
-                checkPermissions();
-              })
+              (dialog, which) -> { checkPermissions(); })
           .setNeutralButton(
               HtmlCompat.fromHtml("<font color='red'>" + getString(R.string.cancel) + "</font>",
                   HtmlCompat.FROM_HTML_MODE_LEGACY),
-              (dialog, which) -> {
-                dialog.dismiss();
-                // Handle the case where the user cancels the permission request.
-              })
+              (dialog, which) -> { dialog.dismiss(); })
           .show();
     } else {
-      // Request permissions directly if no rationale is needed.
       checkPermissions();
     }
   }
@@ -494,7 +474,6 @@ public class Signup extends AppCompatActivity {
                                    + "</font>",
                                HtmlCompat.FROM_HTML_MODE_LEGACY),
             (dialog, which) -> {
-              // Request permissions when the user clicks OK.
               Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
                   Uri.parse("package:one.x"));
               getPermResult.launch(intent);
@@ -502,10 +481,7 @@ public class Signup extends AppCompatActivity {
         .setNeutralButton(
             HtmlCompat.fromHtml("<font color='red'>" + getString(R.string.cancel) + "</font>",
                 HtmlCompat.FROM_HTML_MODE_LEGACY),
-            (dialog, which) -> {
-              dialog.dismiss();
-              // Handle the case where the user cancels the permission request.
-            })
+            (dialog, which) -> { dialog.dismiss(); })
         .show();
   }
 }

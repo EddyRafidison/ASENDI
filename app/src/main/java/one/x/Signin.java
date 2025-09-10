@@ -731,7 +731,6 @@ public class Signin extends AppCompatActivity {
   public void setLocale(String localeName) {
     if (!localeName.equals(currentLan)) {
       Context context = LocaleHelper.setLocale(this, localeName);
-      // Resources resources = context.getResources();
       Resources res = context.getResources();
       DisplayMetrics dm = res.getDisplayMetrics();
       Configuration conf = res.getConfiguration();

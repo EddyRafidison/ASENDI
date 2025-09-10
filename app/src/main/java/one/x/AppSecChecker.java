@@ -30,23 +30,20 @@ public class AppSecChecker extends Service {
       boolean isRooted = root.isRooted();
 
       if (isRooted) {
-        // Afficher le Toast sur le thread principal
         new Handler(Looper.getMainLooper()).post(() -> {
           Toast.makeText(getApplicationContext(), getString(R.string.not_secure), Toast.LENGTH_LONG)
               .show();
         });
 
-        // Attendre un peu pour laisser le Toast s'afficher
         try {
-          Thread.sleep(3000); // 3 secondes
+          Thread.sleep(3000); // Wait 3s
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
         if (!ONEX.BASE_URL.equals("http://127.0.0.1:5555")) { // To allow test only
-          // Réinitialiser l'application
           ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            am.clearApplicationUserData(); // tue le processus
+            am.clearApplicationUserData(); // Kill process
           }
         }
       } else {
@@ -55,7 +52,6 @@ public class AppSecChecker extends Service {
         }
       }
 
-      // Arrêter le service proprement
       new Handler(Looper.getMainLooper()).post(() -> {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
           stopForeground(Service.STOP_FOREGROUND_REMOVE);
@@ -97,10 +93,8 @@ public class AppSecChecker extends Service {
     KeyguardManager keyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      // API 23+ : détecte si un verrouillage sécurisé est activé
       return keyguardManager.isDeviceSecure();
     } else {
-      // API 21–22 : fallback moins précis
       return keyguardManager.isKeyguardSecure();
     }
   }

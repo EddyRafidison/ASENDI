@@ -1,20 +1,4 @@
 package com.topsheet;
-// Modified by Eddy HR
-/*
- * Copyright (C) 2015 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -39,57 +23,21 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 
-/**
- * An interaction behavior plugin for a child view of {@link CoordinatorLayout} to make it work as
- * a top sheet.
- */
 public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior<V> {
-  /**
-   * Callback for monitoring events about top sheets.
-   */
   public abstract static class TopSheetCallback {
-    /**
-     * Called when the top sheet changes its state.
-     *
-     * @param topSheet The top sheet view.
-     * @param newState The new state. This will be one of {@link #STATE_DRAGGING},
-     *                 {@link #STATE_SETTLING}, {@link #STATE_EXPANDED},
-     *                 {@link #STATE_COLLAPSED}, or {@link #STATE_HIDDEN}.
-     */
     public abstract void onStateChanged(@NonNull View topSheet, @State int newState);
 
-    /**
-     * Called when the top sheet is being dragged.
-     *
-     * @param topSheet The top sheet view.
-     * @param slideOffset The new offset of this top sheet within its range.
-     */
     public abstract void onSlide(@NonNull View topSheet, float slideOffset);
   }
 
-  /**
-   * The top sheet is dragging.
-   */
   public static final int STATE_DRAGGING = 1;
 
-  /**
-   * The top sheet is settling.
-   */
   public static final int STATE_SETTLING = 2;
 
-  /**
-   * The top sheet is expanded.
-   */
   public static final int STATE_EXPANDED = 3;
 
-  /**
-   * The top sheet is collapsed.
-   */
   public static final int STATE_COLLAPSED = 4;
 
-  /**
-   * The top sheet is hidden.
-   */
   public static final int STATE_HIDDEN = 5;
 
   @IntDef({STATE_EXPANDED, STATE_COLLAPSED, STATE_DRAGGING, STATE_SETTLING, STATE_HIDDEN})
@@ -143,7 +91,6 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
       @NonNull CoordinatorLayout parent, @NonNull V child, @NonNull Parcelable state) {
     SavedState ss = (SavedState) state;
     super.onRestoreInstanceState(parent, child, ss.getSuperState());
-    // Intermediate states are restored as collapsed state
     if (ss.state == STATE_DRAGGING || ss.state == STATE_SETTLING) {
       mState = STATE_COLLAPSED;
     } else {
@@ -155,7 +102,6 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
   public boolean onLayoutChild(
       @NonNull CoordinatorLayout parent, @NonNull V child, int layoutDirection) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-      // Android 11+ : WindowInsetsCompat
       WindowInsetsCompat parentInsets = ViewCompat.getRootWindowInsets(parent);
       WindowInsetsCompat childInsets = ViewCompat.getRootWindowInsets(child);
 
@@ -163,7 +109,6 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
         child.setFitsSystemWindows(true);
       }
     } else {
-      // Android 5.0 à 10 : ViewCompat
       if (ViewCompat.getFitsSystemWindows(parent) && !ViewCompat.getFitsSystemWindows(child)) {
         child.setFitsSystemWindows(true);
       }

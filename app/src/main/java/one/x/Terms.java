@@ -14,9 +14,7 @@ public class Terms extends Fragment {
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View layout = inflater.inflate(R.layout.textlayout, container, false);
-    // Inflate the layout for this fragment
     text = layout.findViewById(R.id.textdata);
-    // load data here
     Utils.requestTP(getActivity(),
         "terms"
             + "&l=" + ONEX.TPLANG,

@@ -30,7 +30,6 @@ public class ItemTypefaceSpan extends TypefaceSpan {
     Typeface styled = Typeface.create(tf, oldStyle);
     paint.setTypeface(styled);
 
-    // Optionnel : améliore le rendu
     paint.setFlags(paint.getFlags() | Paint.SUBPIXEL_TEXT_FLAG);
   }
 }

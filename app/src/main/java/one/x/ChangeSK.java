@@ -19,7 +19,6 @@ public class ChangeSK extends Fragment {
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View layout = inflater.inflate(R.layout.secretkey, container, false);
-    // Inflate the layout for this fragment
     pswd = layout.findViewById(R.id.pswd);
     newSk = layout.findViewById(R.id.new_sk);
     change = layout.findViewById(R.id.update_sk);

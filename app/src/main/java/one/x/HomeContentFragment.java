@@ -337,7 +337,6 @@ public class HomeContentFragment extends Fragment {
     filePickerDialog.setCancelable(true);
     filePickerDialog.setNegativeBtnName(getString(R.string.cancel));
     filePickerDialog.setDialogSelectionListener(files -> {
-      // files is the array of the paths of files selected by the Application User.
       String path = files[0];
       Bitmap qrc = BitmapFactory.decodeFile(path);
       user_dest.setText(Utils.getDestQRCode(requireContext(), qrc));
@@ -419,18 +418,13 @@ public class HomeContentFragment extends Fragment {
           stock.setTransformationMethod(null);
           qr_dest.setImageBitmap(Utils.qr(requireActivity(), user));
         }
-        // TODO Auto-generated method stub
       }
 
       @Override
-      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        // TODO Auto-generated method stub
-      }
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
       @Override
-      public void afterTextChanged(Editable s) {
-        // TODO Auto-generated method stub
-      }
+      public void afterTextChanged(Editable s) {}
     });
 
     value.addTextChangedListener(new TextWatcher() {
@@ -992,7 +986,7 @@ public class HomeContentFragment extends Fragment {
                           }
                         }
                       }
-                      // Check min stat
+                      // Check mini stat
                       Utils.connectToServer(getActivity(), ONEX.GET_STAT,
                           new String[] {"user", "pswd", "tkn"},
                           new String[] {user, pswd, Utils.getTkn(requireContext())}, false,
@@ -1077,36 +1071,23 @@ public class HomeContentFragment extends Fragment {
   private void checkPermissions() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
       if (codeClick == 3) {
-        // As the device is Android 13 and above so I want the permission of accessing Audio,
-        // Images, Videos You can ask permission according to your requirements what you want to
-        // access.
         String imagesPermission = android.Manifest.permission.READ_MEDIA_IMAGES;
-        // Check for permissions and request them if needed
         if (ContextCompat.checkSelfPermission(requireActivity(), imagesPermission)
             == PackageManager.PERMISSION_GRANTED) {
-          // You have the permissions, you can proceed with your media file operations.
-          // Showing dialog when Show Dialog button is clicked.
           switchAction();
         } else {
-          // You don't have the permissions. Request them.
           imagesPermissionLauncher.launch(imagesPermission);
         }
       } else {
-        // No permission needed for Android 13
         switchAction();
       }
     } else {
-      // Android version is below 13 so we are asking normal read and write storage permissions
-      // Check for permissions and request them if needed
       if (ContextCompat.checkSelfPermission(requireActivity(), readPermission)
               == PackageManager.PERMISSION_GRANTED
           && ContextCompat.checkSelfPermission(requireActivity(), writePermission)
               == PackageManager.PERMISSION_GRANTED) {
-        // You have the permissions, you can proceed with your file operations.
-        // Show the file picker dialog when needed
         switchAction();
       } else {
-        // You don't have the permissions. Request them.
         storagePermissionsLauncher.launch(new String[] {readPermission, writePermission});
       }
     }
@@ -1173,7 +1154,6 @@ public class HomeContentFragment extends Fragment {
     if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), readPermission)
         || ActivityCompat.shouldShowRequestPermissionRationale(
             requireActivity(), writePermission)) {
-      // Show a rationale dialog explaining why the permissions are necessary.
       new AlertDialog.Builder(requireActivity())
           .setTitle(getString(R.string.requestPermTitle))
           .setMessage(getString(R.string.requestPermText))
@@ -1181,20 +1161,13 @@ public class HomeContentFragment extends Fragment {
                                      + "Ok"
                                      + "</font>",
                                  HtmlCompat.FROM_HTML_MODE_LEGACY),
-              (dialog, which) -> {
-                // Request permissions when the user clicks OK.
-                checkPermissions();
-              })
+              (dialog, which) -> { checkPermissions(); })
           .setNeutralButton(
               HtmlCompat.fromHtml("<font color='red'>" + getString(R.string.cancel) + "</font>",
                   HtmlCompat.FROM_HTML_MODE_LEGACY),
-              (dialog, which) -> {
-                dialog.dismiss();
-                // Handle the case where the user cancels the permission request.
-              })
+              (dialog, which) -> { dialog.dismiss(); })
           .show();
     } else {
-      // Request permissions
       checkPermissions();
     }
   }
@@ -1209,7 +1182,6 @@ public class HomeContentFragment extends Fragment {
                                    + "</font>",
                                HtmlCompat.FROM_HTML_MODE_LEGACY),
             (dialog, which) -> {
-              // Request permissions when the user clicks OK.
               Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
                   Uri.parse("package:one.x"));
               getPermResult.launch(intent);
@@ -1217,16 +1189,12 @@ public class HomeContentFragment extends Fragment {
         .setNeutralButton(
             HtmlCompat.fromHtml("<font color='red'>" + getString(R.string.cancel) + "</font>",
                 HtmlCompat.FROM_HTML_MODE_LEGACY),
-            (dialog, which) -> {
-              dialog.dismiss();
-              // Handle the case where the user cancels the permission request.
-            })
+            (dialog, which) -> { dialog.dismiss(); })
         .show();
   }
   @Override
   public void onStart() {
     super.onStart();
-    // TODO: Implement this method
     setStat("");
     refresh();
   }

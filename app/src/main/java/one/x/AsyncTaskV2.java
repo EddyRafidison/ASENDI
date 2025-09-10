@@ -14,7 +14,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public abstract class AsyncTaskV2<Params, Progress, Result> {
-  // This handler will be used to communicate with main thread
   private final Handler handler = new Handler(Looper.getMainLooper());
   private final AtomicBoolean cancelled = new AtomicBoolean(false);
 
@@ -22,11 +21,8 @@ public abstract class AsyncTaskV2<Params, Progress, Result> {
   private Future<Result> resultFuture;
   private ExecutorService executor;
 
-  // Base class must implement this method
   protected abstract Result doInBackground(Params params);
 
-  // Methods with default implementation
-  // Base class can optionally override these methods.
   protected void onPreExecute() {}
 
   protected void onPostExecute(Result result) {}
@@ -43,8 +39,6 @@ public abstract class AsyncTaskV2<Params, Progress, Result> {
       Callable<Result> backgroundCallableTask = () -> doInBackground(params);
       // Execute the background task
       resultFuture = executor.submit(backgroundCallableTask);
-
-      // On the worker thread — wait for the background task to complete
       executor.submit(this::getResult);
     } finally {
       if (executor != null) {
@@ -57,13 +51,9 @@ public abstract class AsyncTaskV2<Params, Progress, Result> {
     return () -> {
       try {
         if (isCancelled()) {
-          // This will block the worker thread, till the result is available
           result = resultFuture.get();
-
-          // Post the result to main thread
           handler.post(() -> onPostExecute(result));
         } else {
-          // User cancelled the operation, ignore the result
           handler.post(this::onCancelled);
         }
       } catch (InterruptedException | ExecutionException ignored) {

@@ -1,7 +1,5 @@
 package one.x;
 
-// modified from github
-
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -15,7 +13,7 @@ public class CheckNetwork {
     this.context = context;
   }
 
-  // Network Check
+  // Network check
   public void registerNetworkCallback() {
     try {
       ConnectivityManager connectivityManager =

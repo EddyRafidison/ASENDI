@@ -19,7 +19,6 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.ViewfinderView;
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
-/** Custom Scanner Activity extending from Activity to display a custom layout form scanner view. */
 public class BarcodeScanner extends Activity implements DecoratedBarcodeView.TorchListener {
   private CaptureManager capture;
   private DecoratedBarcodeView barcodeScannerView;
@@ -49,8 +48,6 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
 
     viewfinderView = findViewById(R.id.zxing_viewfinder_view);
 
-    // if the device does not have flashlight in its camera,
-    // then remove the switch flashlight button...
     if (!hasFlash()) {
       flashLayout.setVisibility(View.GONE);
     }
@@ -85,7 +82,6 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
   @Deprecated
   public void onBackPressed() {
     super.onBackPressed();
-    // TODO: Implement this method
     finish();
   }
 
@@ -106,11 +102,6 @@ public class BarcodeScanner extends Activity implements DecoratedBarcodeView.Tor
     return barcodeScannerView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
   }
 
-  /**
-   * Check if the device's camera has a Flashlight.
-   *
-   * @return true if there is Flashlight, otherwise false.
-   */
   private boolean hasFlash() {
     return getApplicationContext().getPackageManager().hasSystemFeature(
         PackageManager.FEATURE_CAMERA_FLASH);

@@ -69,7 +69,6 @@ public class HomeActivity
     notif_badge = BadgeDrawable.create(this);
     notif_badge.setBackgroundColor(Color.BLUE);
     notif_badge.setBadgeTextColor(Color.WHITE);
-    // load data from server here
     Intent intent = getIntent();
     if (intent != null) {
       user = intent.getStringExtra("act");
@@ -462,14 +461,10 @@ public class HomeActivity
 
   private void quitDevice() {
     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-    // Setting Alert Dialog Title
     alertDialogBuilder.setTitle(getString(R.string.off));
-    // Icon Of Alert Dialog
     alertDialogBuilder.setIcon(R.mipmap.ic_launcher);
-    // Setting Alert Dialog Message
     alertDialogBuilder.setMessage(getString(R.string.off_msg));
     alertDialogBuilder.setCancelable(true);
-
     alertDialogBuilder.setPositiveButton(
         HtmlCompat.fromHtml("<font color='yellow'>" + getString(R.string.yes) + "</font>",
             HtmlCompat.FROM_HTML_MODE_LEGACY),
@@ -575,9 +570,9 @@ public class HomeActivity
                       "" + ONEX.TPLANG, Utils.getTkn(getApplicationContext())},
                   false, HomeActivity.this);
               // Must send last notif time to server to avoid overloading data
-              // Notif is translated from the server
+              // Notifs are translated from the server
               // Load only feed available in the day to avoid outdated notifs
-              //  Only the last new notifs after the date time sent will be loaded from server
+              // Only the last new notifs after the date time sent will be loaded from server
             }
           } catch (Exception ignored) {
           }

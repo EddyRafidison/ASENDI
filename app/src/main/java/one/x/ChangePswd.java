@@ -20,7 +20,6 @@ public class ChangePswd extends Fragment {
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View layout = inflater.inflate(R.layout.password, container, false);
-    // Inflate the layout for this fragment
     curpswd = layout.findViewById(R.id.current_pswd);
     newpswd1 = layout.findViewById(R.id.new_pswd1);
     newpswd2 = layout.findViewById(R.id.new_pswd2);

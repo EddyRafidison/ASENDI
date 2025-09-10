@@ -14,20 +14,20 @@ public class StockHiding extends PasswordTransformationMethod {
     private final CharSequence mSource;
 
     public PasswordCharSequence(CharSequence source) {
-      mSource = source; // Store char sequence
+      mSource = source;
     }
 
     public char charAt(int index) {
-      return '×'; // This is the important part
+      return '×';
     }
 
     public int length() {
-      return mSource.length(); // Return default
+      return mSource.length();
     }
 
     @NonNull
     public CharSequence subSequence(int start, int end) {
-      return mSource.subSequence(start, end); // Return default
+      return mSource.subSequence(start, end);
     }
   }
 }

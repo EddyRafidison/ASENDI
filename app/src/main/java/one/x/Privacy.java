@@ -12,9 +12,7 @@ public class Privacy extends Fragment {
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View layout = inflater.inflate(R.layout.textlayout, container, false);
-    // Inflate the layout for this fragment
     LoaderTextView text = layout.findViewById(R.id.textdata);
-    // load data here
     Utils.requestTP(getActivity(),
         "privacy"
             + "&l=" + ONEX.TPLANG,

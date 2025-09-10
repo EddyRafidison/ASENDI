@@ -19,7 +19,6 @@ public class DeleteAct extends Fragment {
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View layout = inflater.inflate(R.layout.delete_acct, container, false);
-    // Inflate the layout for this fragment
     pswd = layout.findViewById(R.id.pswd_);
     delete = layout.findViewById(R.id.dlt_btn);
     Bundle bundle = getArguments();

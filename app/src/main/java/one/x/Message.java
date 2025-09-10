@@ -19,7 +19,6 @@ public class Message extends Fragment {
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View layout = inflater.inflate(R.layout.message, container, false);
-    // Inflate the layout for this fragment
     text = layout.findViewById(R.id.message);
     subject = layout.findViewById(R.id.subject);
     sendMsg = layout.findViewById(R.id.sendmsg);
