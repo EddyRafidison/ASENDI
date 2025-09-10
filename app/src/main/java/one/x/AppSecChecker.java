@@ -42,7 +42,7 @@ public class AppSecChecker extends Service {
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
-        if (!ONEX.BASE_URL.equals("http://127.0.0.1:5555")) {
+        if (!ONEX.BASE_URL.equals("http://127.0.0.1:5555")) { // To allow test only
           // Réinitialiser l'application
           ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

@@ -196,7 +196,7 @@ public class Utils {
   }
 
   public static boolean isConnectionAvailable(Context context) {
-    if (Objects.equals(ONEX.BASE_URL, "http://127.0.0.1:5555")) {
+    if (Objects.equals(ONEX.BASE_URL, "http://127.0.0.1:5555")) { //  To allow test only
       ONEX.isNetworkConnected = true;
     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
       return ONEX.isNetworkConnected;

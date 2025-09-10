@@ -548,8 +548,8 @@ public class HomeActivity
       PackageManager pm = getPackageManager();
       PackageInfo info = pm.getPackageInfo(this.getPackageName(), 0);
       String versionName = info.versionName;
-      infoT.setText("V." + versionName + " - ©"
-          + "20" + versionName.substring(0, 2));
+      infoT.setText(versionName + " - ©"
+          + "20" + versionName.substring(6, 8));
     } catch (Exception e) {
       e.printStackTrace();
       Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
