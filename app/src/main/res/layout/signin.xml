@@ -39,9 +39,8 @@
              android:gravity="top|center_vertical|center|center_horizontal"
              android:layout_centerHorizontal="true"
              android:textSize="12sp"
-             android:lines="1"
-             android:singleLine="true"
-             android:textColor="#fffffefe"
+             android:maxLines="1"
+             android:textColor="#FDFDFD"
              android:focusable="true"
              android:id="@+id/myapp"
              android:text="@string/slog" />

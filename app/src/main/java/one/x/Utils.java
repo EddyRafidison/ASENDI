@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInstaller;
@@ -31,6 +32,7 @@ import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.InputFilter;
 import android.util.Base64;
@@ -43,12 +45,14 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.ListPopupWindow;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.core.text.HtmlCompat;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -108,16 +112,14 @@ public class Utils {
       Bitmap qrBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
       Canvas canvas = new Canvas(qrBitmap);
 
-      // Générer un QR code classique (pixels noirs/blancs)
       for (int x = 0; x < size; x++) {
         for (int y = 0; y < size; y++) {
           qrBitmap.setPixel(x, y, matrix.get(x, y) ? Color.BLACK : Color.WHITE);
         }
       }
 
-      // Ajouter le logo au centre si présent
       if (logo != null) {
-        int overlaySize = size / 5; // taille du logo = 20% du QR
+        int overlaySize = size / 5;
         Bitmap scaledLogo = Bitmap.createScaledBitmap(logo, overlaySize, overlaySize, true);
 
         int left = (size - overlaySize) / 2;
@@ -414,18 +416,6 @@ public class Utils {
     return sp.getString("tkn", "");
   }
 
-  public static void saveLastDldedApp(Context ctx, String d) {
-    SharedPreferences sp = ctx.getSharedPreferences("datavalues", Context.MODE_PRIVATE);
-    SharedPreferences.Editor se = sp.edit();
-    se.putString("ld", d);
-    se.apply();
-  }
-
-  public static String getLastDldedApp(Context ctx) {
-    SharedPreferences sp = ctx.getSharedPreferences("datavalues", Context.MODE_PRIVATE);
-    return sp.getString("ld", "0");
-  }
-
   public static void clearAccFromApp(Context ctx) {
     SharedPreferences sp = ctx.getSharedPreferences("datavalues", Context.MODE_PRIVATE);
     SharedPreferences.Editor se = sp.edit();
@@ -494,67 +484,54 @@ public class Utils {
     snackbar.show();
   }
 
-  public static void copyApkToExternal(Context ctx) {
-    FileInputStream input;
-    FileOutputStream output;
-    try {
-      input = new FileInputStream(new File(ctx.getFilesDir(), "OneX.apk"));
-      output = new FileOutputStream(new File(ctx.getExternalFilesDir(null), "OneX.apk"));
-      byte[] data = new byte[4096];
-      int count;
-      while ((count = input.read(data)) != -1) {
-        output.write(data, 0, count);
+  public static void installUpdate(
+      Context context, int currentVersion, ActivityResultLauncher<Intent> launcher) {
+    File f = new File(context.getExternalFilesDir(null), "OneX.apk");
+    if (f.exists()) {
+      try {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+          if (!context.getPackageManager().canRequestPackageInstalls()) {
+            Intent install = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES)
+                                 .setData(Uri.parse("package:one.x"));
+            launcher.launch(install);
+          }
+        }
+        SelfUpdater updater = new SelfUpdater(context, f, currentVersion);
+        updater.updateIfNeeded();
+      } catch (Exception ex) {
+        try {
+          Uri apkUri;
+          Intent intent;
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            apkUri = FileProvider.getUriForFile(context, "one.x.fileprovider", f);
+            intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+            intent.setData(apkUri);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+          } else {
+            apkUri = Uri.fromFile(f);
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          }
+          context.startActivity(intent);
+        } catch (Exception e) {
+          Toast.makeText(context, context.getString(R.string.error_file), Toast.LENGTH_SHORT)
+              .show();
+        }
       }
-      output.close();
-      input.close();
-    } catch (IOException ignored) {
-    }
-  }
-
-  public static void installUpdate(Context context) {
-    try {
-      PackageInstaller packageInstaller = context.getPackageManager().getPackageInstaller();
-      int sessionId = packageInstaller.createSession(
-          new PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL));
-      PackageInstaller.Session session = packageInstaller.openSession(sessionId);
-
-      long sizeBytes = 0;
-      File f = new File(context.getExternalFilesDir(null), "OneX.apk");
-      InputStream inputStream = new FileInputStream(f);
-      OutputStream out;
-      out = session.openWrite("onex_session_install", 0, sizeBytes);
-
-      byte[] buffer = new byte[65536];
-      int c;
-      while ((c = inputStream.read(buffer)) != -1) {
-        out.write(buffer, 0, c);
-      }
-      session.fsync(out);
-      inputStream.close();
-      out.close();
-
-      Intent intent = new Intent(context, Signin.class);
-      PendingIntent pendingIntent = PendingIntent.getBroadcast(
-          context, 1337111117, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-      session.commit(pendingIntent.getIntentSender());
-      session.close();
-    } catch (IOException ignored) {
     }
   }
   public static String getCountryCode(Context context) {
     String countryCode = null;
 
-    // via TelephonyManager
     TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
     if (tm != null) {
-      countryCode = tm.getSimCountryIso(); // Essaye SIM
+      countryCode = tm.getSimCountryIso();
       if (countryCode == null || countryCode.isEmpty()) {
-        countryCode = tm.getNetworkCountryIso(); // Essaye réseau
+        countryCode = tm.getNetworkCountryIso();
       }
     }
 
-    // fallback via géolocalisation
     if (countryCode == null || countryCode.isEmpty()) {
       LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
       if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -602,5 +579,26 @@ public class Utils {
       }
     }
     return indexes;
+  }
+
+  public static void restoreText(Context context, String text, String color) {
+    Activity activity = getActivity(context);
+    if (activity != null) {
+      TextView myapp = activity.findViewById(R.id.myapp);
+      if (myapp != null) {
+        myapp.setTextColor(Color.parseColor(color));
+        myapp.setText(text);
+      }
+    }
+  }
+
+  public static Activity getActivity(Context context) {
+    if (context == null)
+      return null;
+    if (context instanceof Activity)
+      return (Activity) context;
+    if (context instanceof ContextWrapper)
+      return getActivity(((ContextWrapper) context).getBaseContext());
+    return null;
   }
 }

@@ -21,6 +21,8 @@
   <string name="login_again">Effettua prima di nuovo l\'accesso</string>
 
   <string name="already_exists">Questa email ha già un account</string>
+
+  <string name="installing">Installazione aggiornamento in corso</string>
   
   <string name="firstname">Nome</string>
   

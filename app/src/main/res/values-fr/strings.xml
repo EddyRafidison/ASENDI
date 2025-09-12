@@ -21,6 +21,8 @@
   <string name="login_again">Veuillez vous reconnecter d\'abord</string>
 
   <string name="already_exists">Cet email a déjà un compte</string>
+
+  <string name="installing">Installer mise à jour en cours</string>
   
   <string name="firstname">Prénom(s)</string>
   

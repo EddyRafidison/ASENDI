@@ -21,6 +21,8 @@
   <string name="login_again">Bitte melden Sie sich zuerst erneut an</string>
 
   <string name="already_exists">Diese E-Mail-Adresse hat bereits ein Konto</string>
+
+  <string name="installing">Update wird installiert</string>
   
   <string name="firstname">Vorname</string>
   

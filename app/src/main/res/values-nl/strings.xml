@@ -21,6 +21,8 @@
   <string name="login_again">Log eerst opnieuw in</string>
 
   <string name="already_exists">Dit e-mailadres heeft al een account</string>
+
+  <string name="installing">Update wordt geïnstalleerd</string>
   
   <string name="firstname">Voornaam</string>
   

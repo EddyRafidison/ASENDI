@@ -115,8 +115,7 @@ public class Signin extends AppCompatActivity {
     login = findViewById(R.id.login);
     Button signup = findViewById(R.id.signup);
     myapp = findViewById(R.id.myapp);
-    myapp.setMovementMethod(LinkMovementMethod.getInstance());
-    myapp.setHighlightColor(Color.WHITE);
+
     ImageButton recover_pswd = findViewById(R.id.recover_pswd);
 
     CurrentLang.setText(("" + ONEX.TPLANG).toUpperCase());
@@ -140,29 +139,9 @@ public class Signin extends AppCompatActivity {
         }
       }
     };
+
     getOnBackPressedDispatcher().addCallback(this, onback);
-    if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
-      Utils.showNoConnectionAlert(getApplicationContext(), login);
-    } else {
-      PackageManager manager = getPackageManager();
-      try {
-        PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
-        final int versionCode = (int) PackageInfoCompat.getLongVersionCode(info);
-        Utils.connectToServer(
-            Signin.this, ONEX.CHECKAPP, new String[] {}, new String[] {}, true, response -> {
-              try {
-                processApk(response, versionCode);
-              } catch (IOException e) {
-                throw new RuntimeException(e);
-              }
-            });
-      } catch (PackageManager.NameNotFoundException e) {
-        Toast
-            .makeText(
-                getApplicationContext(), getString(R.string.check_vers_failed), Toast.LENGTH_SHORT)
-            .show();
-      }
-    }
+
     DrawableCompat.setTint(recover_pswd.getBackground(), Color.TRANSPARENT);
     DrawableCompat.setTint(login.getBackground(), Color.parseColor("#4AA1FF"));
     DrawableCompat.setTint(signup.getBackground(), Color.parseColor("#D32F2F"));
@@ -205,6 +184,36 @@ public class Signin extends AppCompatActivity {
     } else {
       pswd.requestFocus();
     }
+    if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
+      Utils.showNoConnectionAlert(getApplicationContext(), login);
+    } else {
+      try {
+        PackageManager pm = getPackageManager();
+        PackageInfo ApkInfo;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+          ApkInfo = pm.getPackageInfo(this.getPackageName(), PackageManager.PackageInfoFlags.of(0));
+        } else {
+          ApkInfo = pm.getPackageInfo(this.getPackageName(), 0);
+        }
+
+        if (ApkInfo == null) {
+          Toast
+              .makeText(getApplicationContext(), getString(R.string.check_vers_failed),
+                  Toast.LENGTH_SHORT)
+              .show();
+        } else {
+          int versionCode = (int) PackageInfoCompat.getLongVersionCode(ApkInfo);
+          processApk(versionCode);
+        }
+
+      } catch (Exception e) {
+        Toast
+            .makeText(
+                getApplicationContext(), getString(R.string.check_vers_failed), Toast.LENGTH_SHORT)
+            .show();
+      }
+    }
   }
 
   private void exitApp() {
@@ -212,95 +221,67 @@ public class Signin extends AppCompatActivity {
   }
 
   private void processApk(final JSONObject response, final int versionCode) throws IOException {
+    File apkf = new File(getExternalFilesDir(null), "OneX.apk");
     try {
       vers = response.getString("version");
       final String size = response.getString("size");
       if (!vers.isEmpty() && !size.isEmpty()) {
         final int v = Integer.parseInt(vers);
         final int fs = Math.round(Float.parseFloat(size));
-        final String dv = Utils.getLastDldedApp(getApplicationContext());
-        final int Dv = Integer.parseInt(dv);
         if (v > versionCode) {
-          File apkf = new File(getFilesDir(), "OneX.apk");
-          if (apkf.exists()) {
-            if (v == Dv) {
-              final String strrr = getString(R.string.install);
-              SpannableStringBuilder ssb_ = new SpannableStringBuilder(strrr);
-              ssb_.setSpan(new Clickables(myapp, new String[] {strrr}, 0, string -> {
-                if (string.equals(strrr)) {
-                  try {
-                    Utils.copyApkToExternal(getApplicationContext());
-                    final File appfile =
-                        new File(getExternalFilesDir(null) + File.separator + "OneX.apk");
-                    if (appfile.exists()) {
-                      try {
-                        Uri apkUri;
-                        Intent intent;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                          apkUri = FileProvider.getUriForFile(
-                              Signin.this, "one.x.fileprovider", appfile);
-                          intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-                          intent.setData(apkUri);
-                          intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        } else {
-                          apkUri = Uri.fromFile(appfile);
-                          intent = new Intent(Intent.ACTION_VIEW);
-                          intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
-                          intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        }
-                        startActivity(intent);
-                      } catch (Exception e) {
-                        Utils.installUpdate(getApplicationContext());
-                      }
-                    } else {
-                      Toast
-                          .makeText(getApplicationContext(), getString(R.string.error_file),
-                              Toast.LENGTH_SHORT)
-                          .show();
-                    }
-                  } catch (Exception e) {
-                    Toast
-                        .makeText(getApplicationContext(), getString(R.string.error_file),
-                            Toast.LENGTH_SHORT)
-                        .show();
-                  }
+          final String strr1 = getString(R.string.app_update_available);
+          final String strr2 = getString(R.string.download_vers) + " " + vers + " (~" + fs + "MB)";
+          SpannableStringBuilder ssb = new SpannableStringBuilder(strr1);
+          ssb.setSpan(new Clickables(myapp, new String[] {strr1}, 0, string -> {
+            if (string.equals(strr1)) {
+              SpannableStringBuilder ssb1 = new SpannableStringBuilder(strr2);
+              ssb1.setSpan(new Clickables(myapp, new String[] {strr2}, 0, string1 -> {
+                if (string1.equals(strr2)) {
+                  downloadUpdate();
                 }
-              }, Color.GREEN), 0, ssb_.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-              myapp.setText(ssb_, TextView.BufferType.SPANNABLE);
-            } else {
-              apkf.delete();
-              Utils.saveLastDldedApp(getApplicationContext(), "" + versionCode);
-              processApk(response, versionCode);
+              }, Color.GREEN), 0, ssb1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+              myapp.setText(ssb1, TextView.BufferType.SPANNABLE);
             }
-          } else {
-            final String strr1 = getString(R.string.app_update_available);
-            final String strr2 =
-                getString(R.string.download_vers) + " " + vers + " (~" + fs + "MB)";
-            SpannableStringBuilder ssb = new SpannableStringBuilder(strr1);
-            ssb.setSpan(new Clickables(myapp, new String[] {strr1}, 0, string -> {
-              if (string.equals(strr1)) {
-                SpannableStringBuilder ssb1 = new SpannableStringBuilder(strr2);
-                ssb1.setSpan(new Clickables(myapp, new String[] {strr2}, 0, string1 -> {
-                  if (string1.equals(strr2)) {
-                    checkPermissions();
-                  }
-                }, Color.GREEN), 0, ssb1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                myapp.setText(ssb1, TextView.BufferType.SPANNABLE);
-              }
-            }, Color.GREEN), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            myapp.setText(ssb, TextView.BufferType.SPANNABLE);
-          }
-        } else if (v == versionCode) {
-          File apkF = new File(getFilesDir(), "OneX.apk");
-          Utils.saveLastDldedApp(getApplicationContext(), "" + v);
-          if (apkF.exists()) {
-            apkF.delete();
-          }
+          }, Color.GREEN), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+          myapp.setText(ssb, TextView.BufferType.SPANNABLE);
         }
       }
     } catch (JSONException je) {
       Toast.makeText(getApplicationContext(), getString(R.string.data_error), Toast.LENGTH_SHORT)
           .show();
+    }
+  }
+
+  private void showInstallText(int versionCode) {
+    final String strrr = getString(R.string.install);
+    SpannableStringBuilder ssb_ = new SpannableStringBuilder(strrr);
+    ssb_.setSpan(new Clickables(myapp, new String[] {strrr}, 0, string -> {
+      if (string.equals(strrr)) {
+        Utils.installUpdate(getApplicationContext(), versionCode, getInstallPermResult);
+      }
+    }, Color.GREEN), 0, ssb_.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    myapp.setText(ssb_, TextView.BufferType.SPANNABLE);
+    myapp.setMovementMethod(LinkMovementMethod.getInstance());
+    myapp.setHighlightColor(Color.parseColor("#FDFDFD"));
+  }
+
+  private void processApk(int versionCode) {
+    File apkF = new File(getExternalFilesDir(null), "OneX.apk");
+    if (apkF.exists()) {
+      if (!SelfUpdater.removeIfOldApp(getApplicationContext(), apkF, versionCode)) {
+        showInstallText(versionCode);
+      }
+    } else {
+      myapp.setTextColor(Color.parseColor("#FDFDFD"));
+      myapp.setText(getString(R.string.slog));
+      Utils.connectToServer(
+          Signin.this, ONEX.CHECKAPP, new String[] {}, new String[] {}, true, response -> {
+            try {
+              processApk(response, versionCode);
+            } catch (IOException e) {
+              throw new RuntimeException(e);
+            }
+          });
     }
   }
 
@@ -393,7 +374,7 @@ public class Signin extends AppCompatActivity {
             int fileLength = connection.getContentLength();
             // download the file
             input = connection.getInputStream();
-            output = new FileOutputStream(new File(getFilesDir(), "OneX.apk"));
+            output = new FileOutputStream(new File(getExternalFilesDir(null), "OneX.apk"));
             byte[] data = new byte[4096];
             long total = 0;
             int count;
@@ -445,51 +426,8 @@ public class Signin extends AppCompatActivity {
         } else {
           if (isDownloading) {
             isDownloading = false;
-            Utils.saveLastDldedApp(getApplicationContext(), vers);
-            final String strr = getString(R.string.install);
-            SpannableStringBuilder ssb = new SpannableStringBuilder(strr);
-            ssb.setSpan(new Clickables(myapp, new String[] {strr}, 0, string -> {
-              if (string.equals(strr)) {
-                try {
-                  Utils.copyApkToExternal(getApplicationContext());
-                  final File appfile =
-                      new File(getExternalFilesDir(null) + File.separator + "OneX.apk");
-                  if (appfile.exists()) {
-                    try {
-                      Uri apkUri;
-                      Intent intent;
-                      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        apkUri =
-                            FileProvider.getUriForFile(Signin.this, "one.x.fileprovider", appfile);
-                        intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-                        intent.setData(apkUri);
-                        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                      } else {
-                        apkUri = Uri.fromFile(appfile);
-                        intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                      }
-                      startActivity(intent);
-                    } catch (Exception e) {
-                      Utils.installUpdate(getApplicationContext());
-                    }
-                  } else {
-                    Toast
-                        .makeText(getApplicationContext(), getString(R.string.error_file),
-                            Toast.LENGTH_SHORT)
-                        .show();
-                  }
-                } catch (Exception e) {
-                  Toast
-                      .makeText(getApplicationContext(), getString(R.string.error_file),
-                          Toast.LENGTH_SHORT)
-                      .show();
-                }
-              }
-            }, Color.GREEN), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            myapp.setText(ssb, TextView.BufferType.SPANNABLE);
+            final int versionCode = Integer.parseInt(vers);
+            showInstallText(versionCode);
           }
         }
       }
@@ -501,14 +439,7 @@ public class Signin extends AppCompatActivity {
     }.execute(null);
   }
 
-  private void checkPermissions() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      if (!getPackageManager().canRequestPackageInstalls()) {
-        Intent inst = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES)
-                          .setData(Uri.parse("package:one.x"));
-        getInstallPermResult.launch(inst);
-      }
-    }
+  private void downloadUpdate() {
     downloadApp(ONEX.LATEST_APK);
   }
 
