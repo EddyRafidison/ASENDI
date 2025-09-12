@@ -498,7 +498,10 @@ public class Utils {
         SelfUpdater updater = new SelfUpdater(context, f, currentVersion);
         updater.updateIfNeeded();
       } catch (Exception ex) {
-        Toast.makeText(context, context.getString(R.string.error_file), Toast.LENGTH_SHORT).show();
+        Toast
+            .makeText(
+                context, getActivity(context).getString(R.string.error_file), Toast.LENGTH_SHORT)
+            .show();
       }
     }
   }
