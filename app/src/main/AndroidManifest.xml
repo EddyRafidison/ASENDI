@@ -28,8 +28,5 @@
 <activity android:name=".BarcodeScanner" tools:replace="android:screenOrientation" android:screenOrientation="portrait" android:exported="true" tools:ignore="LockedOrientationActivity"/>
 <activity android:name=".NotSecureDialog" android:exported="true" android:theme="@style/AppTheme.Dialog" android:excludeFromRecents="true" android:taskAffinity="" android:launchMode="singleInstance" android:showOnLockScreen="true" android:turnScreenOn="true" android:showWhenLocked="true"/>
 <service android:name=".AppSecChecker" android:exported="false"/>
-<provider android:name="androidx.core.content.FileProvider" android:authorities="one.x.fileprovider" android:exported="false" android:grantUriPermissions="true">
-<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"/>
-</provider>
 </application>
 </manifest>

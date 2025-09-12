@@ -2,23 +2,15 @@ apply plugin: 'com.android.application'
 
 def cal = Calendar.getInstance()
 def yy = cal.get(Calendar.YEAR) % 100
-def M  = cal.get(Calendar.MONTH) + 1
-def d  = cal.get(Calendar.DAY_OF_MONTH)
-def H  = cal.get(Calendar.HOUR_OF_DAY)
-def m = "$M".toInteger()
-def D = "$d".toInteger()
-def h = "$H".toInteger()
+def M  = String.format("%02d", cal.get(Calendar.MONTH) + 1)
+def d  = String.format("%02d", cal.get(Calendar.DAY_OF_MONTH))
+def H  = String.format("%02d", cal.get(Calendar.HOUR_OF_DAY))
+def m  = String.format("%02d", cal.get(Calendar.MINUTE))
 
-if(m<10)
-M="0"+"$M"
+def firstDigitOfMinute = m.substring(0, 1)
 
-if(D<10)
-d="0"+"$d"
-
-if(h<10)
-H="0"+"$H"
-
-def rawCode = "$yy$M$d$H".toInteger()
+def rawCodeStr = "$yy$M$d$H$firstDigitOfMinute"
+def rawCode = rawCodeStr.toInteger()
 def name = rawCode.toString()
 
 android {

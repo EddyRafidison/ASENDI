@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -538,10 +539,17 @@ public class HomeActivity
   }
 
   private void appInfo(View v) {
+    final TextView infoT = v.findViewById(R.id.app_info);
     try {
-      final TextView infoT = v.findViewById(R.id.app_info);
       PackageManager pm = getPackageManager();
-      PackageInfo info = pm.getPackageInfo(this.getPackageName(), 0);
+      PackageInfo info;
+
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        info = pm.getPackageInfo(this.getPackageName(), PackageManager.PackageInfoFlags.of(0));
+      } else {
+        info = pm.getPackageInfo(this.getPackageName(), 0);
+      }
+
       String versionName = info.versionName;
       infoT.setText(versionName + " - ©"
           + "20" + versionName.substring(6, 8));

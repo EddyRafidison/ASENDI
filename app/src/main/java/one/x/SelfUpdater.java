@@ -32,12 +32,15 @@ public class SelfUpdater {
   public void updateIfNeeded() {
     try {
       removeIfOldApp(context, apkFile, currentVersion);
-      installApk(context);
-    } catch (Exception ignored) {
+      if (apkFile.exists()) {
+        installApk();
+      }
+    } catch (Exception e) {
+      Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
     }
   }
 
-  private void installApk(Context context) throws IOException {
+  private void installApk() throws IOException {
     Utils.restoreText(context, context.getString(R.string.installing), "#0BCCD8");
     ParcelFileDescriptor apkDescriptor =
         ParcelFileDescriptor.open(apkFile, ParcelFileDescriptor.MODE_READ_ONLY);
@@ -48,7 +51,7 @@ public class SelfUpdater {
     int sessionId = packageInstaller.createSession(params);
     PackageInstaller.Session session = packageInstaller.openSession(sessionId);
 
-    try (OutputStream out = session.openWrite("self_update", 0, -1);
+    try (OutputStream out = session.openWrite("onex_update", 0, -1);
         InputStream in = new FileInputStream(apkDescriptor.getFileDescriptor())) {
       byte[] buffer = new byte[65536];
       int c;

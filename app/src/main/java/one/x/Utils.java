@@ -52,7 +52,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.core.text.HtmlCompat;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -499,25 +498,7 @@ public class Utils {
         SelfUpdater updater = new SelfUpdater(context, f, currentVersion);
         updater.updateIfNeeded();
       } catch (Exception ex) {
-        try {
-          Uri apkUri;
-          Intent intent;
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            apkUri = FileProvider.getUriForFile(context, "one.x.fileprovider", f);
-            intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-            intent.setData(apkUri);
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-          } else {
-            apkUri = Uri.fromFile(f);
-            intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          }
-          context.startActivity(intent);
-        } catch (Exception e) {
-          Toast.makeText(context, context.getString(R.string.error_file), Toast.LENGTH_SHORT)
-              .show();
-        }
+        Toast.makeText(context, context.getString(R.string.error_file), Toast.LENGTH_SHORT).show();
       }
     }
   }
