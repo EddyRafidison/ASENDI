@@ -483,8 +483,8 @@ public class Utils {
     snackbar.show();
   }
 
-  public static void installUpdate(Activity activity, int currentVersion,
-      ActivityResultLauncher<Intent> launcher, PackageInstaller.Session ps) {
+  public static void installUpdate(
+      Activity activity, int currentVersion, ActivityResultLauncher<Intent> launcher) {
     File f = new File(activity.getExternalFilesDir(null), "OneX.apk");
     if (f.exists()) {
       try {
@@ -496,7 +496,7 @@ public class Utils {
           }
         }
         SelfUpdater updater = new SelfUpdater(activity, f, currentVersion);
-        updater.updateIfNeeded(ps);
+        updater.updateIfNeeded();
       } catch (Exception ex) {
         Toast.makeText(activity, activity.getString(R.string.error_file), Toast.LENGTH_SHORT)
             .show();

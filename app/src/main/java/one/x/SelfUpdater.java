@@ -2,7 +2,9 @@ package one.x;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
@@ -27,6 +29,7 @@ public class SelfUpdater {
   private final Activity activity;
   private final File apkFile;
   private int currentVersion;
+  private static final String PACKAGE_INSTALLED_ACTION = "one.x.SESSION_API_PACKAGE_INSTALLED";
 
   public SelfUpdater(Activity activity, File apkFile, int currentVersion) {
     this.activity = activity;
@@ -34,11 +37,37 @@ public class SelfUpdater {
     this.currentVersion = currentVersion;
   }
 
-  public void updateIfNeeded(PackageInstaller.Session ps) {
+  public void updateIfNeeded() {
     try {
       removeIfOldApp(activity, apkFile, currentVersion);
       if (apkFile.exists()) {
-        installApk(apkFile, ps);
+        PackageInstaller.Session session = null;
+        try {
+          PackageInstaller packageInstaller = activity.getPackageManager().getPackageInstaller();
+          PackageInstaller.SessionParams params =
+              new PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL);
+          int sessionId = packageInstaller.createSession(params);
+          session = packageInstaller.openSession(sessionId);
+          installApk(apkFile, session);
+          Context context = activity;
+          Intent intent = new Intent(context, Signin.class);
+          intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          intent.setAction(PACKAGE_INSTALLED_ACTION);
+          int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            flags |= PendingIntent.FLAG_MUTABLE;
+          }
+          PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, flags);
+          IntentSender statusReceiver = pendingIntent.getIntentSender();
+          session.commit(statusReceiver);
+        } catch (IOException e) {
+          throw new RuntimeException("Couldn't install package", e);
+        } catch (RuntimeException e) {
+          if (session != null) {
+            session.abandon();
+          }
+          throw e;
+        }
       }
     } catch (Exception e) {
       Toast.makeText(activity, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -79,13 +108,18 @@ public class SelfUpdater {
   public static void restartApp(Activity activity) {
     Intent restartIntent =
         activity.getPackageManager().getLaunchIntentForPackage(activity.getPackageName());
+
+    restartIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
     PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, restartIntent,
         PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-    AlarmManager mgr = (AlarmManager) activity.getSystemService(activity.ALARM_SERVICE);
-    mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, pendingIntent);
+    AlarmManager mgr = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
+    mgr.setExactAndAllowWhileIdle(
+        AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 2000, pendingIntent);
 
-    System.exit(0);
+    activity.finishAffinity();
+    Runtime.getRuntime().exit(0);
   }
 
   public static boolean removeIfOldApp(Activity activity, File file, int versionCode) {

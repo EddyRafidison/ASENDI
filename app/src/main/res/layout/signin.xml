@@ -33,10 +33,10 @@
         </LinearLayout>
 
         <TextView
-             android:layout_height="wrap_content"
+             android:layout_height="50dp"
              android:layout_width="wrap_content"
              android:layout_below="@id/LinearLayout1"
-             android:gravity="top|center_vertical|center|center_horizontal"
+             android:gravity="center_vertical|center|center_horizontal"
              android:layout_centerHorizontal="true"
              android:textSize="12sp"
              android:maxLines="1"

@@ -73,12 +73,12 @@ public class Signin extends AppCompatActivity {
           -> {
 
           });
-  private static final String PACKAGE_INSTALLED_ACTION = "one.x.SESSION_API_PACKAGE_INSTALLED";
   private EditText account, pswd;
   private Button login;
   private TextView myapp, CurrentLang;
   private String vers = "", currentLan = "";
   private int dld = 0;
+  private static final String PACKAGE_INSTALLED_ACTION = "one.x.SESSION_API_PACKAGE_INSTALLED";
   private boolean isDownloading = false, doubleBackToExitPressedOnce = false;
 
   @SuppressLint("ResourceAsColor")
@@ -187,7 +187,12 @@ public class Signin extends AppCompatActivity {
       String message = extras.getString(PackageInstaller.EXTRA_STATUS_MESSAGE);
       switch (status) {
         case PackageInstaller.STATUS_PENDING_USER_ACTION:
-          Intent confirmIntent = (Intent) extras.get(Intent.EXTRA_INTENT);
+          Intent confirmIntent;
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            confirmIntent = extras.getParcelable(Intent.EXTRA_INTENT, Intent.class);
+          } else {
+            confirmIntent = (Intent) extras.get(Intent.EXTRA_INTENT);
+          }
           startActivity(confirmIntent);
           break;
         case PackageInstaller.STATUS_SUCCESS:
@@ -282,29 +287,7 @@ public class Signin extends AppCompatActivity {
     SpannableStringBuilder ssb_ = new SpannableStringBuilder(strrr);
     ssb_.setSpan(new Clickables(myapp, new String[] {strrr}, 0, string -> {
       if (string.equals(strrr)) {
-        PackageInstaller.Session session = null;
-        try {
-          PackageInstaller packageInstaller = getPackageManager().getPackageInstaller();
-          PackageInstaller.SessionParams params =
-              new PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL);
-          int sessionId = packageInstaller.createSession(params);
-          session = packageInstaller.openSession(sessionId);
-
-          Context context = Signin.this;
-          Intent intent = new Intent(context, Signin.class);
-          intent.setAction(PACKAGE_INSTALLED_ACTION);
-          PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-          IntentSender statusReceiver = pendingIntent.getIntentSender();
-          Utils.installUpdate(this, versionCode, getInstallPermResult, session);
-          session.commit(statusReceiver);
-        } catch (IOException e) {
-          throw new RuntimeException("Couldn't install package", e);
-        } catch (RuntimeException e) {
-          if (session != null) {
-            session.abandon();
-          }
-          throw e;
-        }
+        Utils.installUpdate(this, versionCode, getInstallPermResult);
       }
     }, Color.GREEN), 0, ssb_.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     myapp.setText(ssb_, TextView.BufferType.SPANNABLE);
