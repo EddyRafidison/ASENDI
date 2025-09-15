@@ -22,17 +22,11 @@
 <category android:name="android.intent.category.LAUNCHER"/>
 </intent-filter>
 </activity>
-<activity android:name=".Signin" android:theme="@style/SignInUpTheme" android:windowSoftInputMode="stateHidden|adjustPan" android:exported="true"/>
+<activity android:name=".Signin" android:theme="@style/SignInUpTheme" android:windowSoftInputMode="stateHidden|adjustPan" android:exported="true" android:launchMode="singleTop"/>
 <activity android:name=".Signup" android:theme="@style/SignInUpTheme" android:windowSoftInputMode="stateHidden|adjustPan" android:exported="true"/>
 <activity android:name=".HomeActivity" android:theme="@style/AppTheme" android:windowSoftInputMode="stateHidden|adjustPan" android:exported="true"/>
 <activity android:name=".BarcodeScanner" tools:replace="android:screenOrientation" android:screenOrientation="portrait" android:exported="true" tools:ignore="LockedOrientationActivity"/>
 <activity android:name=".NotSecureDialog" android:exported="true" android:theme="@style/AppTheme.Dialog" android:excludeFromRecents="true" android:taskAffinity="" android:launchMode="singleInstance" android:showOnLockScreen="true" android:turnScreenOn="true" android:showWhenLocked="true"/>
 <service android:name=".AppSecChecker" android:exported="false"/>
-<receiver android:name=".UpdateReceiver"
-    android:exported="true">
-    <intent-filter>
-        <action android:name="android.content.pm.PackageInstaller.ACTION_SESSION_COMMITTED" />
-    </intent-filter>
-</receiver>
 </application>
 </manifest>

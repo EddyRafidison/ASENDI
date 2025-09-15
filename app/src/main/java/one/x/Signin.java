@@ -3,9 +3,12 @@ package one.x;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -48,6 +51,8 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.text.HtmlCompat;
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,6 +73,7 @@ public class Signin extends AppCompatActivity {
           -> {
 
           });
+  private static final String PACKAGE_INSTALLED_ACTION = "one.x.SESSION_API_PACKAGE_INSTALLED";
   private EditText account, pswd;
   private Button login;
   private TextView myapp, CurrentLang;
@@ -173,6 +179,26 @@ public class Signin extends AppCompatActivity {
     super.attachBaseContext(CommonTools.getInstance(base));
   }
 
+  @Override
+  protected void onNewIntent(Intent intent) {
+    Bundle extras = intent.getExtras();
+    if (PACKAGE_INSTALLED_ACTION.equals(intent.getAction())) {
+      int status = extras.getInt(PackageInstaller.EXTRA_STATUS);
+      String message = extras.getString(PackageInstaller.EXTRA_STATUS_MESSAGE);
+      switch (status) {
+        case PackageInstaller.STATUS_PENDING_USER_ACTION:
+          Intent confirmIntent = (Intent) extras.get(Intent.EXTRA_INTENT);
+          startActivity(confirmIntent);
+          break;
+        case PackageInstaller.STATUS_SUCCESS:
+          SelfUpdater.restartApp(this);
+          break;
+        default:
+          Utils.restoreText(this, getString(R.string.slog), "#FDFDFD");
+      }
+    }
+  }
+
   @SuppressLint("SetTextI18n")
   @Override
   protected void onStart() {
@@ -256,7 +282,29 @@ public class Signin extends AppCompatActivity {
     SpannableStringBuilder ssb_ = new SpannableStringBuilder(strrr);
     ssb_.setSpan(new Clickables(myapp, new String[] {strrr}, 0, string -> {
       if (string.equals(strrr)) {
-        Utils.installUpdate(getApplicationContext(), versionCode, getInstallPermResult);
+        PackageInstaller.Session session = null;
+        try {
+          PackageInstaller packageInstaller = getPackageManager().getPackageInstaller();
+          PackageInstaller.SessionParams params =
+              new PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL);
+          int sessionId = packageInstaller.createSession(params);
+          session = packageInstaller.openSession(sessionId);
+
+          Context context = Signin.this;
+          Intent intent = new Intent(context, Signin.class);
+          intent.setAction(PACKAGE_INSTALLED_ACTION);
+          PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+          IntentSender statusReceiver = pendingIntent.getIntentSender();
+          Utils.installUpdate(this, versionCode, getInstallPermResult, session);
+          session.commit(statusReceiver);
+        } catch (IOException e) {
+          throw new RuntimeException("Couldn't install package", e);
+        } catch (RuntimeException e) {
+          if (session != null) {
+            session.abandon();
+          }
+          throw e;
+        }
       }
     }, Color.GREEN), 0, ssb_.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     myapp.setText(ssb_, TextView.BufferType.SPANNABLE);
@@ -267,7 +315,7 @@ public class Signin extends AppCompatActivity {
   private void processApk(int versionCode) {
     File apkF = new File(getExternalFilesDir(null), "OneX.apk");
     if (apkF.exists()) {
-      if (!SelfUpdater.removeIfOldApp(getApplicationContext(), apkF, versionCode)) {
+      if (!SelfUpdater.removeIfOldApp(this, apkF, versionCode)) {
         showInstallText(versionCode);
       }
     } else {

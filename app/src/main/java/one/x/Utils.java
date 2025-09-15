@@ -483,24 +483,22 @@ public class Utils {
     snackbar.show();
   }
 
-  public static void installUpdate(
-      Context context, int currentVersion, ActivityResultLauncher<Intent> launcher) {
-    File f = new File(context.getExternalFilesDir(null), "OneX.apk");
+  public static void installUpdate(Activity activity, int currentVersion,
+      ActivityResultLauncher<Intent> launcher, PackageInstaller.Session ps) {
+    File f = new File(activity.getExternalFilesDir(null), "OneX.apk");
     if (f.exists()) {
       try {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-          if (!context.getPackageManager().canRequestPackageInstalls()) {
+          if (!activity.getPackageManager().canRequestPackageInstalls()) {
             Intent install = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES)
                                  .setData(Uri.parse("package:one.x"));
             launcher.launch(install);
           }
         }
-        SelfUpdater updater = new SelfUpdater(context, f, currentVersion);
-        updater.updateIfNeeded();
+        SelfUpdater updater = new SelfUpdater(activity, f, currentVersion);
+        updater.updateIfNeeded(ps);
       } catch (Exception ex) {
-        Toast
-            .makeText(
-                context, getActivity(context).getString(R.string.error_file), Toast.LENGTH_SHORT)
+        Toast.makeText(activity, activity.getString(R.string.error_file), Toast.LENGTH_SHORT)
             .show();
       }
     }
@@ -565,8 +563,7 @@ public class Utils {
     return indexes;
   }
 
-  public static void restoreText(Context context, String text, String color) {
-    Activity activity = getActivity(context);
+  public static void restoreText(Activity activity, String text, String color) {
     if (activity != null) {
       TextView myapp = activity.findViewById(R.id.myapp);
       if (myapp != null) {
@@ -574,15 +571,5 @@ public class Utils {
         myapp.setText(text);
       }
     }
-  }
-
-  public static Activity getActivity(Context context) {
-    if (context == null)
-      return null;
-    if (context instanceof Activity)
-      return (Activity) context;
-    if (context instanceof ContextWrapper)
-      return getActivity(((ContextWrapper) context).getBaseContext());
-    return null;
   }
 }
