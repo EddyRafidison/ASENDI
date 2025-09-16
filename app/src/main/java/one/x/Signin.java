@@ -73,13 +73,41 @@ public class Signin extends AppCompatActivity {
           -> {
 
           });
+  private static final String PACKAGE_INSTALLED_ACTION = "one.x.SESSION_API_PACKAGE_INSTALLED";
   private EditText account, pswd;
   private Button login;
   private TextView myapp, CurrentLang;
   private String vers = "", currentLan = "";
   private int dld = 0;
-  private static final String PACKAGE_INSTALLED_ACTION = "one.x.SESSION_API_PACKAGE_INSTALLED";
   private boolean isDownloading = false, doubleBackToExitPressedOnce = false;
+
+  @Override
+  protected void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    if (intent == null || intent.getAction() == null)
+      return;
+    if (PACKAGE_INSTALLED_ACTION.equals(intent.getAction())) {
+      Bundle extras = intent.getExtras();
+      if (extras == null)
+        return;
+      int status = extras.getInt(PackageInstaller.EXTRA_STATUS);
+      String message = extras.getString(PackageInstaller.EXTRA_STATUS_MESSAGE);
+      switch (status) {
+        case PackageInstaller.STATUS_PENDING_USER_ACTION:
+          Intent confirmIntent;
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            confirmIntent = extras.getParcelable(Intent.EXTRA_INTENT, Intent.class);
+          } else {
+            confirmIntent = (Intent) extras.get(Intent.EXTRA_INTENT);
+          }
+          startActivity(confirmIntent);
+          break;
+        case PackageInstaller.STATUS_SUCCESS:
+          break;
+        default:
+      }
+    }
+  }
 
   @SuppressLint("ResourceAsColor")
   @Override
@@ -106,6 +134,7 @@ public class Signin extends AppCompatActivity {
       ONEX.COUNTRY = getData.getStringExtra("loc");
       ONEX.CURRENCY = getData.getStringExtra("curr");
       currentLan = getData.getStringExtra("lang");
+      ONEX.CURRENT_LANG = currentLan;
     } else {
       finish();
     }
@@ -177,31 +206,6 @@ public class Signin extends AppCompatActivity {
   @Override
   protected void attachBaseContext(Context base) {
     super.attachBaseContext(CommonTools.getInstance(base));
-  }
-
-  @Override
-  protected void onNewIntent(Intent intent) {
-    Bundle extras = intent.getExtras();
-    if (PACKAGE_INSTALLED_ACTION.equals(intent.getAction())) {
-      int status = extras.getInt(PackageInstaller.EXTRA_STATUS);
-      String message = extras.getString(PackageInstaller.EXTRA_STATUS_MESSAGE);
-      switch (status) {
-        case PackageInstaller.STATUS_PENDING_USER_ACTION:
-          Intent confirmIntent;
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            confirmIntent = extras.getParcelable(Intent.EXTRA_INTENT, Intent.class);
-          } else {
-            confirmIntent = (Intent) extras.get(Intent.EXTRA_INTENT);
-          }
-          startActivity(confirmIntent);
-          break;
-        case PackageInstaller.STATUS_SUCCESS:
-          SelfUpdater.restartApp(this);
-          break;
-        default:
-          Utils.restoreText(this, getString(R.string.slog), "#FDFDFD");
-      }
-    }
   }
 
   @SuppressLint("SetTextI18n")
@@ -287,7 +291,9 @@ public class Signin extends AppCompatActivity {
     SpannableStringBuilder ssb_ = new SpannableStringBuilder(strrr);
     ssb_.setSpan(new Clickables(myapp, new String[] {strrr}, 0, string -> {
       if (string.equals(strrr)) {
-        Utils.installUpdate(this, versionCode, getInstallPermResult);
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(
+            () -> { Utils.installUpdate(Signin.this, versionCode, getInstallPermResult); });
       }
     }, Color.GREEN), 0, ssb_.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     myapp.setText(ssb_, TextView.BufferType.SPANNABLE);

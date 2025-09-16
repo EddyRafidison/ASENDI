@@ -3,6 +3,8 @@ apply plugin: 'com.android.application'
 def versionPropsFile = file('version.properties')
 def AppVersionCode
 def AppVersionName
+def currentYear = java.time.LocalDate.now().getYear()
+println "Year : $currentYear"
 
 if (versionPropsFile.canRead()) {
     def Properties versionProps = new Properties()
@@ -27,7 +29,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 34
         versionCode AppVersionCode
-        versionName "build-" + AppVersionName
+        versionName "build-" + currentYear +"." + AppVersionName
         multiDexEnabled true
     }
     buildTypes {

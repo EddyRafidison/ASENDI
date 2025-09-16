@@ -551,8 +551,7 @@ public class HomeActivity
       }
 
       String versionName = info.versionName;
-      infoT.setText(versionName + " - ©"
-          + "20" + versionName.substring(6, 8));
+      infoT.setText(versionName + " - ©" + versionName.substring(6, 10));
     } catch (Exception e) {
       e.printStackTrace();
       Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();

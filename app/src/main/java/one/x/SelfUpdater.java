@@ -51,6 +51,9 @@ public class SelfUpdater {
           installApk(apkFile, session);
           Context context = activity;
           Intent intent = new Intent(context, Signin.class);
+          intent.putExtra("loc", ONEX.COUNTRY);
+          intent.putExtra("curr", ONEX.CURRENCY);
+          intent.putExtra("lang", ONEX.CURRENT_LANG);
           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
           intent.setAction(PACKAGE_INSTALLED_ACTION);
           int flags = PendingIntent.FLAG_UPDATE_CURRENT;
@@ -103,23 +106,6 @@ public class SelfUpdater {
 
       session.fsync(packageInSession);
     }
-  }
-
-  public static void restartApp(Activity activity) {
-    Intent restartIntent =
-        activity.getPackageManager().getLaunchIntentForPackage(activity.getPackageName());
-
-    restartIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-    PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, restartIntent,
-        PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-
-    AlarmManager mgr = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
-    mgr.setExactAndAllowWhileIdle(
-        AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 2000, pendingIntent);
-
-    activity.finishAffinity();
-    Runtime.getRuntime().exit(0);
   }
 
   public static boolean removeIfOldApp(Activity activity, File file, int versionCode) {

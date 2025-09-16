@@ -3,6 +3,7 @@ package one.x;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -89,14 +90,12 @@ public class SplashActivity extends AppCompatActivity {
         finish();
       }
       scheduler.schedule(() -> {
-        // Lancer l'activité Signin
         Intent signinIntent = new Intent(SplashActivity.this, Signin.class);
         signinIntent.putExtra("loc", loc);
         signinIntent.putExtra("curr", curr);
         startActivity(signinIntent);
         finish();
 
-        // Démarrer le service AppSecChecker
         Intent serviceIntent = new Intent(SplashActivity.this, AppSecChecker.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
           startForegroundService(serviceIntent);
