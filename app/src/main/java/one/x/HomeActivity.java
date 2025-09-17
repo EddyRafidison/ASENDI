@@ -47,550 +47,552 @@ import org.json.JSONObject;
 
 public class HomeActivity
     extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-                                         DrawerLayout.DrawerListener, ServerListener {
-  private final List<CharSequence> notif_list = new ArrayList<>();
-  private DrawerLayout drawerLayout;
-  private NavigationView navigationView;
-  private Toolbar toolbar;
-  private BadgeDrawable notif_badge;
-  private String user, pswd;
-  private CharSequence titlefrag;
-  private boolean isYesClicked = false, isOnCreate = false, doubleBackToExitPressedOnce = false;
+    DrawerLayout.DrawerListener, ServerListener {
+    private final List<CharSequence> notif_list = new ArrayList<>();
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
+    private BadgeDrawable notif_badge;
+    private String user, pswd;
+    private CharSequence titlefrag;
+    private boolean isYesClicked = false, isOnCreate = false, doubleBackToExitPressedOnce = false;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_home);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
 
-    if (!isOnCreate) {
-      isOnCreate = true;
+        if (!isOnCreate) {
+            isOnCreate = true;
+        }
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.settings_menu);
+        notif_badge = BadgeDrawable.create(this);
+        notif_badge.setBackgroundColor(Color.BLUE);
+        notif_badge.setBadgeTextColor(Color.WHITE);
+        Intent intent = getIntent();
+        if (intent != null) {
+            user = intent.getStringExtra("act");
+            pswd = intent.getStringExtra("psd");
+            refreshFeed();
+        }
+        OnBackPressedCallback onback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    if (doubleBackToExitPressedOnce) {
+                        try {
+                            ONEX.TIMER.cancel();
+                            ONEX.TIMER.purge();
+                        } catch (Exception ignored) {
+                        }
+                        try {
+                            ONEX.TIMER2.cancel();
+                            ONEX.TIMER2.purge();
+                        } catch (Exception ignored) {
+                        }
+                        exitApp();
+                        return;
+                    }
+                    doubleBackToExitPressedOnce = true;
+                    Toast
+                    .makeText(HomeActivity.this, getString(R.string.click_twice_exit), Toast.LENGTH_SHORT)
+                    .show();
+
+                    new Handler(Looper.getMainLooper())
+                    .postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, onback);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+
+                switch (id) {
+                case R.id.refresh:
+                    refreshData();
+                    break;
+                case R.id.notif:
+                    Utils.showCommonNotif(HomeActivity.this, notif_list);
+                    break;
+                default:
+                    return false;
+                }
+                return false;
+            }
+        });
+        setupDrawer();
+        CheckNetwork network_ = new CheckNetwork(getApplicationContext());
+        network_.registerNetworkCallback();
+        Intent getCredentials = getIntent();
+        ONEX.ID = getCredentials.getStringExtra("act");
+        ONEX.PSWD = getCredentials.getStringExtra("psd");
+        String[] vuln_pswd = new String[] {"0123", "01234", "012345", "0123456", "012345678",
+                                           "0123456789", "1234", "12345", "123456", "1234567", "12345678", "123456789", "1234567890",
+                                           "0000", "00000", "000000", "0000000", "00000000", "000000000", "0000000000", "1111", "2222",
+                                           "3333", "4444", "5555", "6666", "7777", "8888", "9999"
+                                          };
+        for (String p : vuln_pswd) {
+            assert ONEX.PSWD != null;
+            if (ONEX.PSWD.equals(p)) {
+                Utils.showMessage(
+                    getApplicationContext(), toolbar, getString(R.string.weak_security_pswd), false);
+            }
+        }
     }
-    toolbar = findViewById(R.id.toolbar);
-    toolbar.inflateMenu(R.menu.settings_menu);
-    notif_badge = BadgeDrawable.create(this);
-    notif_badge.setBackgroundColor(Color.BLUE);
-    notif_badge.setBadgeTextColor(Color.WHITE);
-    Intent intent = getIntent();
-    if (intent != null) {
-      user = intent.getStringExtra("act");
-      pswd = intent.getStringExtra("psd");
-      refreshFeed();
+
+    private void refreshData() {
+        try {
+            Utils.connectToServer(HomeActivity.this, ONEX.FEED, new String[] {"user", "pswd"},
+                                  new String[] {user, pswd}, true, HomeActivity.this);
+            // restart Fragment here
+            if (titlefrag.equals(getString(R.string.home))) {
+                showHomeFragment(String.valueOf(titlefrag));
+            } else {
+                if (titlefrag.equals(getString(R.string.modpassword))) {
+                    showPswdFragment(String.valueOf(titlefrag));
+                }
+                if (titlefrag.equals(getString(R.string.modsecretkey))) {
+                    showSKFragment(String.valueOf(titlefrag));
+                }
+                if (titlefrag.equals(getString(R.string.terms))) {
+                    showTermsFragment(String.valueOf(titlefrag));
+                }
+                if (titlefrag.equals(getString(R.string.privacy))) {
+                    showPrivacyFragment(String.valueOf(titlefrag));
+                }
+                if (titlefrag.equals(getString(R.string.delete))) {
+                    showDeleteActFragment(String.valueOf(titlefrag));
+                }
+                if (titlefrag.equals(getString(R.string.mail_us))) {
+                    showMsgFragment(String.valueOf(titlefrag));
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), getString(R.string.errorFragment), Toast.LENGTH_LONG)
+            .show();
+        }
     }
-    OnBackPressedCallback onback = new OnBackPressedCallback(true) {
-      @Override
-      public void handleOnBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-          drawerLayout.closeDrawer(GravityCompat.START);
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+    }
+
+    @OptIn(markerClass = ExperimentalBadgeUtils.class)
+    private void setBadgeCount(int c) {
+        if (c == 0) {
+            notif_badge.setVisible(false);
         } else {
-          if (doubleBackToExitPressedOnce) {
-            try {
-              ONEX.TIMER.cancel();
-              ONEX.TIMER.purge();
-            } catch (Exception ignored) {
-            }
-            try {
-              ONEX.TIMER2.cancel();
-              ONEX.TIMER2.purge();
-            } catch (Exception ignored) {
-            }
-            exitApp();
-            return;
-          }
-          doubleBackToExitPressedOnce = true;
-          Toast
-              .makeText(HomeActivity.this, getString(R.string.click_twice_exit), Toast.LENGTH_SHORT)
-              .show();
-
-          new Handler(Looper.getMainLooper())
-              .postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
+            notif_badge.setVisible(true);
+            notif_badge.setNumber(c);
         }
-      }
-    };
-    getOnBackPressedDispatcher().addCallback(this, onback);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @SuppressLint("NonConstantResourceId")
-      @Override
-      public boolean onMenuItemClick(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-          case R.id.refresh:
-            refreshData();
-            break;
-          case R.id.notif:
-            Utils.showCommonNotif(HomeActivity.this, notif_list);
-            break;
-          default:
-            return false;
-        }
-        return false;
-      }
-    });
-    setupDrawer();
-    CheckNetwork network_ = new CheckNetwork(getApplicationContext());
-    network_.registerNetworkCallback();
-    Intent getCredentials = getIntent();
-    ONEX.ID = getCredentials.getStringExtra("act");
-    ONEX.PSWD = getCredentials.getStringExtra("psd");
-    String[] vuln_pswd = new String[] {"0123", "01234", "012345", "0123456", "012345678",
-        "0123456789", "1234", "12345", "123456", "1234567", "12345678", "123456789", "1234567890",
-        "0000", "00000", "000000", "0000000", "00000000", "000000000", "0000000000", "1111", "2222",
-        "3333", "4444", "5555", "6666", "7777", "8888", "9999"};
-    for (String p : vuln_pswd) {
-      assert ONEX.PSWD != null;
-      if (ONEX.PSWD.equals(p)) {
-        Utils.showMessage(
-            getApplicationContext(), toolbar, getString(R.string.weak_security_pswd), false);
-      }
+        BadgeUtils.attachBadgeDrawable(notif_badge, toolbar, R.id.notif);
     }
-  }
 
-  private void refreshData() {
-    try {
-      Utils.connectToServer(HomeActivity.this, ONEX.FEED, new String[] {"user", "pswd"},
-          new String[] {user, pswd}, true, HomeActivity.this);
-      // restart Fragment here
-      if (titlefrag.equals(getString(R.string.home))) {
-        showHomeFragment(String.valueOf(titlefrag));
-      } else {
-        if (titlefrag.equals(getString(R.string.modpassword))) {
-          showPswdFragment(String.valueOf(titlefrag));
-        }
-        if (titlefrag.equals(getString(R.string.modsecretkey))) {
-          showSKFragment(String.valueOf(titlefrag));
-        }
-        if (titlefrag.equals(getString(R.string.terms))) {
-          showTermsFragment(String.valueOf(titlefrag));
-        }
-        if (titlefrag.equals(getString(R.string.privacy))) {
-          showPrivacyFragment(String.valueOf(titlefrag));
-        }
-        if (titlefrag.equals(getString(R.string.delete))) {
-          showDeleteActFragment(String.valueOf(titlefrag));
-        }
-        if (titlefrag.equals(getString(R.string.mail_us))) {
-          showMsgFragment(String.valueOf(titlefrag));
-        }
-      }
-    } catch (Exception e) {
-      Toast.makeText(getApplicationContext(), getString(R.string.errorFragment), Toast.LENGTH_LONG)
-          .show();
+    private void setupDrawer() {
+        drawerLayout = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        drawerLayout.addDrawerListener(this);
+
+        setupNavigationView();
     }
-  }
 
-  @Override
-  protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
-  }
-
-  @OptIn(markerClass = ExperimentalBadgeUtils.class)
-  private void setBadgeCount(int c) {
-    if (c == 0) {
-      notif_badge.setVisible(false);
-    } else {
-      notif_badge.setVisible(true);
-      notif_badge.setNumber(c);
+    private void setupNavigationView() {
+        navigationView = findViewById(R.id.navigation_view);
+        Menu menu = navigationView.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem menuItem = menu.getItem(i);
+            SpannableString spanString = new SpannableString(menuItem.getTitle());
+            Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/ralewayRegular.ttf");
+            spanString.setSpan(new ItemTypefaceSpan("", typeface), 0, spanString.length(),
+                               Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            menuItem.setTitle(spanString);
+        }
+        navigationView.setNavigationItemSelectedListener(this);
+        setDefaultMenuItem();
+        setupHeader();
     }
-    BadgeUtils.attachBadgeDrawable(notif_badge, toolbar, R.id.notif);
-  }
 
-  private void setupDrawer() {
-    drawerLayout = findViewById(R.id.drawer_layout);
-    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-        R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-    drawerLayout.addDrawerListener(toggle);
-    toggle.syncState();
-
-    drawerLayout.addDrawerListener(this);
-
-    setupNavigationView();
-  }
-
-  private void setupNavigationView() {
-    navigationView = findViewById(R.id.navigation_view);
-    Menu menu = navigationView.getMenu();
-    for (int i = 0; i < menu.size(); i++) {
-      MenuItem menuItem = menu.getItem(i);
-      SpannableString spanString = new SpannableString(menuItem.getTitle());
-      Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/ralewayRegular.ttf");
-      spanString.setSpan(new ItemTypefaceSpan("", typeface), 0, spanString.length(),
-          Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-      menuItem.setTitle(spanString);
+    private void setDefaultMenuItem() {
+        MenuItem menuItem = navigationView.getMenu().getItem(0);
+        onNavigationItemSelected(menuItem);
+        menuItem.setChecked(true);
     }
-    navigationView.setNavigationItemSelectedListener(this);
-    setDefaultMenuItem();
-    setupHeader();
-  }
 
-  private void setDefaultMenuItem() {
-    MenuItem menuItem = navigationView.getMenu().getItem(0);
-    onNavigationItemSelected(menuItem);
-    menuItem.setChecked(true);
-  }
-
-  private void setupHeader() {
-    View header = navigationView.getHeaderView(0);
-    appInfo(header);
-    header.findViewById(R.id.pieces_img)
+    private void setupHeader() {
+        View header = navigationView.getHeaderView(0);
+        appInfo(header);
+        header.findViewById(R.id.pieces_img)
         .setOnClickListener(view
-            -> Toast.makeText(HomeActivity.this, getString(R.string.app_name), Toast.LENGTH_SHORT)
-                .show());
-  }
+                            -> Toast.makeText(HomeActivity.this, getString(R.string.app_name), Toast.LENGTH_SHORT)
+                            .show());
+    }
 
-  private void exitApp() {
-    finishAffinity();
-  }
+    private void exitApp() {
+        finishAffinity();
+    }
 
-  @SuppressLint("NonConstantResourceId")
-  @Override
-  public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-    final String titleA = "" + menuItem.getTitle();
-    switch (menuItem.getItemId()) {
-      case R.id.dashboard:
-        showHomeFragment(titleA);
-        break;
-      case R.id.modpassword:
-        showPswdFragment(titleA);
-        try {
-          ONEX.TIMER2.cancel();
-        } catch (Exception ignored) {
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        final String titleA = "" + menuItem.getTitle();
+        switch (menuItem.getItemId()) {
+        case R.id.dashboard:
+            showHomeFragment(titleA);
+            break;
+        case R.id.modpassword:
+            showPswdFragment(titleA);
+            try {
+                ONEX.TIMER2.cancel();
+            } catch (Exception ignored) {
+            }
+            break;
+        case R.id.modkeysecret:
+            showSKFragment(titleA);
+            try {
+                ONEX.TIMER2.cancel();
+            } catch (Exception ignored) {
+            }
+            break;
+        case R.id.terms:
+            try {
+                ONEX.TIMER2.cancel();
+            } catch (Exception ignored) {
+            }
+            showTermsFragment(titleA);
+            break;
+        case R.id.privacy:
+            showPrivacyFragment(titleA);
+            try {
+                ONEX.TIMER2.cancel();
+            } catch (Exception ignored) {
+            }
+            break;
+        case R.id.mail_us:
+            showMsgFragment(titleA);
+            try {
+                ONEX.TIMER2.cancel();
+            } catch (Exception ignored) {
+            }
+            break;
+        case R.id.delete:
+            showDeleteActFragment(titleA);
+            try {
+                ONEX.TIMER2.cancel();
+            } catch (Exception ignored) {
+            }
+            break;
+        case R.id.off:
+            quitDevice();
+            break;
+        default:
+            return true;
         }
-        break;
-      case R.id.modkeysecret:
-        showSKFragment(titleA);
-        try {
-          ONEX.TIMER2.cancel();
-        } catch (Exception ignored) {
-        }
-        break;
-      case R.id.terms:
-        try {
-          ONEX.TIMER2.cancel();
-        } catch (Exception ignored) {
-        }
-        showTermsFragment(titleA);
-        break;
-      case R.id.privacy:
-        showPrivacyFragment(titleA);
-        try {
-          ONEX.TIMER2.cancel();
-        } catch (Exception ignored) {
-        }
-        break;
-      case R.id.mail_us:
-        showMsgFragment(titleA);
-        try {
-          ONEX.TIMER2.cancel();
-        } catch (Exception ignored) {
-        }
-        break;
-      case R.id.delete:
-        showDeleteActFragment(titleA);
-        try {
-          ONEX.TIMER2.cancel();
-        } catch (Exception ignored) {
-        }
-        break;
-      case R.id.off:
-        quitDevice();
-        break;
-      default:
+
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    drawerLayout.closeDrawer(GravityCompat.START);
-    return true;
-  }
+    private void showHomeFragment(String title) {
+        titlefrag = title(title);
+        if (!isOnCreate) {
+            if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
+                Utils.showNoConnectionAlert(getApplicationContext(), drawerLayout);
+            } else {
+                // refresh checks for internet
+                Fragment fragment = new HomeContentFragment();
+                Bundle mBundle = new Bundle();
+                mBundle.putString("act", user);
+                mBundle.putString("psd", pswd);
+                fragment.setArguments(mBundle);
+                getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
+                .replace(R.id.home_content, fragment)
+                .commit();
+            }
+        } else {
+            Fragment fragment = new HomeContentFragment();
+            Bundle mBundle = new Bundle();
+            mBundle.putString("act", user);
+            mBundle.putString("psd", pswd);
+            fragment.setArguments(mBundle);
+            getSupportFragmentManager()
+            .beginTransaction()
+            .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
+            .replace(R.id.home_content, fragment)
+            .commit();
+            isOnCreate = false;
+        }
+        setTitle(titlefrag);
+        toolbar.setTitle(titlefrag);
+    }
 
-  private void showHomeFragment(String title) {
-    titlefrag = title(title);
-    if (!isOnCreate) {
-      if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
-        Utils.showNoConnectionAlert(getApplicationContext(), drawerLayout);
-      } else {
-        // refresh checks for internet
-        Fragment fragment = new HomeContentFragment();
+    private void showPrivacyFragment(String title) {
+        titlefrag = title(title);
+        if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
+            Utils.showNoConnectionAlert(getApplicationContext(), drawerLayout);
+        } else {
+            Fragment fragment = new Privacy();
+            getSupportFragmentManager()
+            .beginTransaction()
+            .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
+            .replace(R.id.home_content, fragment)
+            .commit();
+            setTitle(titlefrag);
+            toolbar.setTitle(titlefrag);
+        }
+    }
+
+    private void showTermsFragment(String title) {
+        titlefrag = title(title);
+        if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
+            Utils.showNoConnectionAlert(getApplicationContext(), drawerLayout);
+        } else {
+            Fragment fragment = new Terms();
+            getSupportFragmentManager()
+            .beginTransaction()
+            .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
+            .replace(R.id.home_content, fragment)
+            .commit();
+            setTitle(titlefrag);
+            toolbar.setTitle(titlefrag);
+        }
+    }
+
+    private void showPswdFragment(String title) {
+        titlefrag = title(title);
+        Fragment fragment = new ChangePswd();
         Bundle mBundle = new Bundle();
         mBundle.putString("act", user);
         mBundle.putString("psd", pswd);
         fragment.setArguments(mBundle);
         getSupportFragmentManager()
-            .beginTransaction()
-            .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
-            .replace(R.id.home_content, fragment)
-            .commit();
-      }
-    } else {
-      Fragment fragment = new HomeContentFragment();
-      Bundle mBundle = new Bundle();
-      mBundle.putString("act", user);
-      mBundle.putString("psd", pswd);
-      fragment.setArguments(mBundle);
-      getSupportFragmentManager()
-          .beginTransaction()
-          .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
-          .replace(R.id.home_content, fragment)
-          .commit();
-      isOnCreate = false;
+        .beginTransaction()
+        .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
+        .replace(R.id.home_content, fragment)
+        .commit();
+        setTitle(titlefrag);
+        toolbar.setTitle(titlefrag);
     }
-    setTitle(titlefrag);
-    toolbar.setTitle(titlefrag);
-  }
 
-  private void showPrivacyFragment(String title) {
-    titlefrag = title(title);
-    if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
-      Utils.showNoConnectionAlert(getApplicationContext(), drawerLayout);
-    } else {
-      Fragment fragment = new Privacy();
-      getSupportFragmentManager()
-          .beginTransaction()
-          .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
-          .replace(R.id.home_content, fragment)
-          .commit();
-      setTitle(titlefrag);
-      toolbar.setTitle(titlefrag);
+    private void showSKFragment(String title) {
+        titlefrag = title(title);
+        Fragment fragment = new ChangeSK();
+        Bundle mBundle = new Bundle();
+        mBundle.putString("act", user);
+        mBundle.putString("psd", pswd);
+        fragment.setArguments(mBundle);
+        getSupportFragmentManager()
+        .beginTransaction()
+        .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
+        .replace(R.id.home_content, fragment)
+        .commit();
+        setTitle(titlefrag);
+        toolbar.setTitle(titlefrag);
     }
-  }
 
-  private void showTermsFragment(String title) {
-    titlefrag = title(title);
-    if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
-      Utils.showNoConnectionAlert(getApplicationContext(), drawerLayout);
-    } else {
-      Fragment fragment = new Terms();
-      getSupportFragmentManager()
-          .beginTransaction()
-          .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
-          .replace(R.id.home_content, fragment)
-          .commit();
-      setTitle(titlefrag);
-      toolbar.setTitle(titlefrag);
+    private void showMsgFragment(String title) {
+        titlefrag = title(title);
+        Fragment fragment = new Message();
+        Bundle mBundle = new Bundle();
+        mBundle.putString("act", user);
+        mBundle.putString("psd", pswd);
+        fragment.setArguments(mBundle);
+        getSupportFragmentManager()
+        .beginTransaction()
+        .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
+        .replace(R.id.home_content, fragment)
+        .commit();
+        setTitle(titlefrag);
+        toolbar.setTitle(titlefrag);
     }
-  }
 
-  private void showPswdFragment(String title) {
-    titlefrag = title(title);
-    Fragment fragment = new ChangePswd();
-    Bundle mBundle = new Bundle();
-    mBundle.putString("act", user);
-    mBundle.putString("psd", pswd);
-    fragment.setArguments(mBundle);
-    getSupportFragmentManager()
+    private void showDeleteActFragment(String title) {
+        titlefrag = title(title);
+        Fragment fragment = new DeleteAct();
+        Bundle mBundle = new Bundle();
+        mBundle.putString("act", user);
+        mBundle.putString("psd", pswd);
+        fragment.setArguments(mBundle);
+        getSupportFragmentManager()
         .beginTransaction()
         .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
         .replace(R.id.home_content, fragment)
         .commit();
-    setTitle(titlefrag);
-    toolbar.setTitle(titlefrag);
-  }
+        setTitle(titlefrag);
+        toolbar.setTitle(titlefrag);
+    }
 
-  private void showSKFragment(String title) {
-    titlefrag = title(title);
-    Fragment fragment = new ChangeSK();
-    Bundle mBundle = new Bundle();
-    mBundle.putString("act", user);
-    mBundle.putString("psd", pswd);
-    fragment.setArguments(mBundle);
-    getSupportFragmentManager()
-        .beginTransaction()
-        .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
-        .replace(R.id.home_content, fragment)
-        .commit();
-    setTitle(titlefrag);
-    toolbar.setTitle(titlefrag);
-  }
+    private Spannable title(String s) {
+        Spannable ss = new SpannableStringBuilder(s);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/RobotoRegular.ttf");
+        ss.setSpan(
+            new ItemTypefaceSpan("", typeface), 0, ss.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        ss.setSpan(
+            new ForegroundColorSpan(Color.WHITE), 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return ss;
+    }
 
-  private void showMsgFragment(String title) {
-    titlefrag = title(title);
-    Fragment fragment = new Message();
-    Bundle mBundle = new Bundle();
-    mBundle.putString("act", user);
-    mBundle.putString("psd", pswd);
-    fragment.setArguments(mBundle);
-    getSupportFragmentManager()
-        .beginTransaction()
-        .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
-        .replace(R.id.home_content, fragment)
-        .commit();
-    setTitle(titlefrag);
-    toolbar.setTitle(titlefrag);
-  }
+    @Override
+    public void onDrawerSlide(@NonNull View view, float v) {}
 
-  private void showDeleteActFragment(String title) {
-    titlefrag = title(title);
-    Fragment fragment = new DeleteAct();
-    Bundle mBundle = new Bundle();
-    mBundle.putString("act", user);
-    mBundle.putString("psd", pswd);
-    fragment.setArguments(mBundle);
-    getSupportFragmentManager()
-        .beginTransaction()
-        .setCustomAnimations(R.anim.nav_enter, R.anim.nav_exit)
-        .replace(R.id.home_content, fragment)
-        .commit();
-    setTitle(titlefrag);
-    toolbar.setTitle(titlefrag);
-  }
+    @Override
+    public void onDrawerOpened(@NonNull View view) {}
 
-  private Spannable title(String s) {
-    Spannable ss = new SpannableStringBuilder(s);
-    Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/RobotoRegular.ttf");
-    ss.setSpan(
-        new ItemTypefaceSpan("", typeface), 0, ss.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-    ss.setSpan(
-        new ForegroundColorSpan(Color.WHITE), 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-    return ss;
-  }
+    @Override
+    public void onDrawerClosed(@NonNull View view) {}
 
-  @Override
-  public void onDrawerSlide(@NonNull View view, float v) {}
+    @Override
+    public void onDrawerStateChanged(int i) {}
 
-  @Override
-  public void onDrawerOpened(@NonNull View view) {}
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 
-  @Override
-  public void onDrawerClosed(@NonNull View view) {}
-
-  @Override
-  public void onDrawerStateChanged(int i) {}
-
-  @Override
-  public void onStart() {
-    super.onStart();
-  }
-
-  private void quitDevice() {
-    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-    alertDialogBuilder.setTitle(getString(R.string.off));
-    alertDialogBuilder.setIcon(R.mipmap.ic_launcher);
-    alertDialogBuilder.setMessage(getString(R.string.off_msg));
-    alertDialogBuilder.setCancelable(true);
-    alertDialogBuilder.setPositiveButton(
-        HtmlCompat.fromHtml("<font color='yellow'>" + getString(R.string.yes) + "</font>",
-            HtmlCompat.FROM_HTML_MODE_LEGACY),
+    private void quitDevice() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(getString(R.string.off));
+        alertDialogBuilder.setIcon(R.mipmap.ic_launcher);
+        alertDialogBuilder.setMessage(getString(R.string.off_msg));
+        alertDialogBuilder.setCancelable(true);
+        alertDialogBuilder.setPositiveButton(
+            HtmlCompat.fromHtml("<font color='yellow'>" + getString(R.string.yes) + "</font>",
+                                HtmlCompat.FROM_HTML_MODE_LEGACY),
         (arg0, arg1) -> {
-          isYesClicked = true;
-          arg0.cancel();
+            isYesClicked = true;
+            arg0.cancel();
         });
-    alertDialogBuilder.setNeutralButton(
-        HtmlCompat.fromHtml("<font color='#848482'>" + getString(R.string.cancel) + "</font>",
-            HtmlCompat.FROM_HTML_MODE_LEGACY),
+        alertDialogBuilder.setNeutralButton(
+            HtmlCompat.fromHtml("<font color='#848482'>" + getString(R.string.cancel) + "</font>",
+                                HtmlCompat.FROM_HTML_MODE_LEGACY),
         (dialog, which) -> {
-          isYesClicked = false;
-          dialog.cancel();
+            isYesClicked = false;
+            dialog.cancel();
         });
-    alertDialogBuilder.setOnCancelListener(di -> {
-      if (isYesClicked) {
-        try {
-          ONEX.TIMER.cancel();
-          ONEX.TIMER.purge();
-        } catch (Exception ignored) {
-        }
-        try {
-          ONEX.TIMER2.cancel();
-          ONEX.TIMER2.purge();
-        } catch (Exception ignored) {
-        }
-        Utils.clearAccFromApp(getApplicationContext());
-        finish();
-      }
-    });
-    AlertDialog alertDialog = alertDialogBuilder.create();
-    alertDialog.show();
-  }
-
-  @Override
-  public void OnDataLoaded(JSONObject response) {
-    notif_list.clear();
-    List<String> lastNotifs = Utils.getLastNotifs(getApplicationContext());
-    String content = null;
-    try {
-      JSONArray jSONArray = response.getJSONArray("feed");
-      int jsonArrLength = jSONArray.length();
-      for (int i = 0; i < jsonArrLength; i++) {
-        JSONObject obj = jSONArray.getJSONObject(i);
-        String cont = obj.getString("content");
-        String dtime = obj.getString("dtime");
-        String ptime =
-            dtime.substring(0, 2) + ":" + dtime.substring(2, 4) + "." + dtime.substring(4, 6);
-        content = cont + "<br><i>(" + getString(R.string.bc_time) + " " + ptime + ")</i>";
-        if (!lastNotifs.contains(content)) {
-          Utils.saveLastNotifs(getApplicationContext(), content);
-          if (i == jsonArrLength - 1) {
-            Utils.saveLastNotifTime(getApplicationContext(), dtime);
-          }
-        }
-      }
-      lastNotifs = Utils.getLastNotifs(getApplicationContext());
-      if (lastNotifs != null || !lastNotifs.isEmpty()) {
-        int ns = lastNotifs.size();
-        for (String notif : lastNotifs) {
-          notif_list.add(HtmlCompat.fromHtml(content, HtmlCompat.FROM_HTML_MODE_LEGACY));
-        }
-      }
-      int notif_size = jsonArrLength;
-      setBadgeCount(notif_size);
-    } catch (JSONException je) {
-      Toast.makeText(getApplicationContext(), getString(R.string.data_error), Toast.LENGTH_SHORT)
-          .show();
-    }
-    refreshFeed();
-  }
-
-  private void appInfo(View v) {
-    final TextView infoT = v.findViewById(R.id.app_info);
-    try {
-      PackageManager pm = getPackageManager();
-      PackageInfo info;
-
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        info = pm.getPackageInfo(this.getPackageName(), PackageManager.PackageInfoFlags.of(0));
-      } else {
-        info = pm.getPackageInfo(this.getPackageName(), 0);
-      }
-
-      String versionName = info.versionName;
-      infoT.setText(versionName + " - ©" + versionName.substring(6, 10));
-    } catch (Exception e) {
-      e.printStackTrace();
-      Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-    }
-  }
-
-  private void refreshFeed() {
-    ONEX.TIMER = new Timer();
-    final Handler handler = new Handler(Looper.getMainLooper());
-    TimerTask doAsynchronousTask = new TimerTask() {
-      @Override
-      public void run() {
-        handler.post(() -> {
-          try {
-            if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
-              Utils.showNoConnectionAlert(getApplicationContext(), drawerLayout);
-              ONEX.ISCONNECTED = false;
-            } else {
-              ONEX.ISCONNECTED = true;
-              Utils.connectToServer(HomeActivity.this, ONEX.FEED,
-                  new String[] {"user", "pswd", "time", "lang", "tkn"},
-                  new String[] {user, pswd, Utils.getLastNotifTime(getApplicationContext()),
-                      "" + ONEX.TPLANG, Utils.getTkn(getApplicationContext())},
-                  false, HomeActivity.this);
-              // Must send last notif time to server to avoid overloading data
-              // Notifs are translated from the server
-              // Load only feed available in the day to avoid outdated notifs
-              // Only the last new notifs after the date time sent will be loaded from server
+        alertDialogBuilder.setOnCancelListener(di -> {
+            if (isYesClicked) {
+                try {
+                    ONEX.TIMER.cancel();
+                    ONEX.TIMER.purge();
+                } catch (Exception ignored) {
+                }
+                try {
+                    ONEX.TIMER2.cancel();
+                    ONEX.TIMER2.purge();
+                } catch (Exception ignored) {
+                }
+                Utils.clearAccFromApp(getApplicationContext());
+                finish();
             }
-          } catch (Exception ignored) {
-          }
         });
-      }
-    };
-    if (ONEX.TIMER != null) {
-      ONEX.TIMER.cancel();
-      ONEX.TIMER = null;
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
-    ONEX.TIMER = new Timer();
-    ONEX.TIMER.schedule(doAsynchronousTask, 3000);
-  }
+
+    @Override
+    public void OnDataLoaded(JSONObject response) {
+        notif_list.clear();
+        List<String> lastNotifs = Utils.getLastNotifs(getApplicationContext());
+        String content = null;
+        try {
+            JSONArray jSONArray = response.getJSONArray("feed");
+            int jsonArrLength = jSONArray.length();
+            for (int i = 0; i < jsonArrLength; i++) {
+                JSONObject obj = jSONArray.getJSONObject(i);
+                String cont = obj.getString("content");
+                String dtime = obj.getString("dtime");
+                String ptime =
+                    dtime.substring(0, 2) + ":" + dtime.substring(2, 4) + "." + dtime.substring(4, 6);
+                content = cont + "<br><i>(" + getString(R.string.bc_time) + " " + ptime + ")</i>";
+                if (!lastNotifs.contains(content)) {
+                    Utils.saveLastNotifs(getApplicationContext(), content);
+                    if (i == jsonArrLength - 1) {
+                        Utils.saveLastNotifTime(getApplicationContext(), dtime);
+                    }
+                }
+            }
+            lastNotifs = Utils.getLastNotifs(getApplicationContext());
+            if (lastNotifs != null || !lastNotifs.isEmpty()) {
+                int ns = lastNotifs.size();
+                for (String notif : lastNotifs) {
+                    notif_list.add(HtmlCompat.fromHtml(content, HtmlCompat.FROM_HTML_MODE_LEGACY));
+                }
+            }
+            int notif_size = jsonArrLength;
+            setBadgeCount(notif_size);
+        } catch (JSONException je) {
+            Toast.makeText(getApplicationContext(), getString(R.string.data_error), Toast.LENGTH_SHORT)
+            .show();
+        }
+        refreshFeed();
+    }
+
+    private void appInfo(View v) {
+        final TextView infoT = v.findViewById(R.id.app_info);
+        try {
+            PackageManager pm = getPackageManager();
+            PackageInfo info;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                info = pm.getPackageInfo(this.getPackageName(), PackageManager.PackageInfoFlags.of(0));
+            } else {
+                info = pm.getPackageInfo(this.getPackageName(), 0);
+            }
+
+            String versionName = info.versionName;
+            infoT.setText(versionName + " - ©" + versionName.substring(6, 10));
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void refreshFeed() {
+        ONEX.TIMER = new Timer();
+        final Handler handler = new Handler(Looper.getMainLooper());
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(() -> {
+                    try {
+                        if (Utils.isConnectionAvailable(getApplicationContext()) == false) {
+                            Utils.showNoConnectionAlert(getApplicationContext(), drawerLayout);
+                            ONEX.ISCONNECTED = false;
+                        } else {
+                            ONEX.ISCONNECTED = true;
+                            Utils.connectToServer(HomeActivity.this, ONEX.FEED,
+                                                  new String[] {"user", "pswd", "time", "lang", "tkn"},
+                                                  new String[] {user, pswd, Utils.getLastNotifTime(getApplicationContext()),
+                                                                "" + ONEX.TPLANG, Utils.getTkn(getApplicationContext())
+                                                               },
+                                                  false, HomeActivity.this);
+                            // Must send last notif time to server to avoid overloading data
+                            // Notifs are translated from the server
+                            // Load only feed available in the day to avoid outdated notifs
+                            // Only the last new notifs after the date time sent will be loaded from server
+                        }
+                    } catch (Exception ignored) {
+                    }
+                });
+            }
+        };
+        if (ONEX.TIMER != null) {
+            ONEX.TIMER.cancel();
+            ONEX.TIMER = null;
+        }
+        ONEX.TIMER = new Timer();
+        ONEX.TIMER.schedule(doAsynchronousTask, 3000);
+    }
 }

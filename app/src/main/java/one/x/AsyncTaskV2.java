@@ -14,70 +14,70 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public abstract class AsyncTaskV2<Params, Progress, Result> {
-  private final Handler handler = new Handler(Looper.getMainLooper());
-  private final AtomicBoolean cancelled = new AtomicBoolean(false);
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private final AtomicBoolean cancelled = new AtomicBoolean(false);
 
-  private Result result;
-  private Future<Result> resultFuture;
-  private ExecutorService executor;
+    private Result result;
+    private Future<Result> resultFuture;
+    private ExecutorService executor;
 
-  protected abstract Result doInBackground(Params params);
+    protected abstract Result doInBackground(Params params);
 
-  protected void onPreExecute() {}
+    protected void onPreExecute() {}
 
-  protected void onPostExecute(Result result) {}
+    protected void onPostExecute(Result result) {}
 
-  protected void onProgressUpdate(Progress progress) {}
+    protected void onProgressUpdate(Progress progress) {}
 
-  protected void onCancelled() {}
+    protected void onCancelled() {}
 
-  @MainThread
-  public final void execute(@Nullable Params params) {
-    onPreExecute();
-    try {
-      executor = Executors.newSingleThreadExecutor();
-      Callable<Result> backgroundCallableTask = () -> doInBackground(params);
-      // Execute the background task
-      resultFuture = executor.submit(backgroundCallableTask);
-      executor.submit(this::getResult);
-    } finally {
-      if (executor != null) {
-        executor.shutdown();
-      }
-    }
-  }
-
-  private Runnable getResult() {
-    return () -> {
-      try {
-        if (isCancelled()) {
-          result = resultFuture.get();
-          handler.post(() -> onPostExecute(result));
-        } else {
-          handler.post(this::onCancelled);
+    @MainThread
+    public final void execute(@Nullable Params params) {
+        onPreExecute();
+        try {
+            executor = Executors.newSingleThreadExecutor();
+            Callable<Result> backgroundCallableTask = () -> doInBackground(params);
+            // Execute the background task
+            resultFuture = executor.submit(backgroundCallableTask);
+            executor.submit(this::getResult);
+        } finally {
+            if (executor != null) {
+                executor.shutdown();
+            }
         }
-      } catch (InterruptedException | ExecutionException ignored) {
-      }
-    };
-  }
-
-  @WorkerThread
-  public final void publishProgress(Progress progress) {
-    if (isCancelled()) {
-      handler.post(() -> onProgressUpdate(progress));
     }
-  }
 
-  @MainThread
-  public final void cancel(boolean mayInterruptIfRunning) {
-    cancelled.set(true);
-    if (resultFuture != null) {
-      resultFuture.cancel(mayInterruptIfRunning);
+    private Runnable getResult() {
+        return () -> {
+            try {
+                if (isCancelled()) {
+                    result = resultFuture.get();
+                    handler.post(() -> onPostExecute(result));
+                } else {
+                    handler.post(this::onCancelled);
+                }
+            } catch (InterruptedException | ExecutionException ignored) {
+            }
+        };
     }
-  }
 
-  @AnyThread
-  public final boolean isCancelled() {
-    return !cancelled.get();
-  }
+    @WorkerThread
+    public final void publishProgress(Progress progress) {
+        if (isCancelled()) {
+            handler.post(() -> onProgressUpdate(progress));
+        }
+    }
+
+    @MainThread
+    public final void cancel(boolean mayInterruptIfRunning) {
+        cancelled.set(true);
+        if (resultFuture != null) {
+            resultFuture.cancel(mayInterruptIfRunning);
+        }
+    }
+
+    @AnyThread
+    public final boolean isCancelled() {
+        return !cancelled.get();
+    }
 }

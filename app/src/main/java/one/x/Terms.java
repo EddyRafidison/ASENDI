@@ -8,17 +8,17 @@ import androidx.fragment.app.Fragment;
 import com.elyeproj.loaderviewlibrary.LoaderTextView;
 
 public class Terms extends Fragment {
-  private LoaderTextView text;
+    private LoaderTextView text;
 
-  @Override
-  public View onCreateView(
-      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View layout = inflater.inflate(R.layout.textlayout, container, false);
-    text = layout.findViewById(R.id.textdata);
-    Utils.requestTP(getActivity(),
-        "terms"
-            + "&l=" + ONEX.TPLANG,
-        text);
-    return layout;
-  }
+    @Override
+    public View onCreateView(
+        LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View layout = inflater.inflate(R.layout.textlayout, container, false);
+        text = layout.findViewById(R.id.textdata);
+        Utils.requestTP(getActivity(),
+                        "terms"
+                        + "&l=" + ONEX.TPLANG,
+                        text);
+        return layout;
+    }
 }

@@ -12,119 +12,119 @@ import com.google.android.material.button.MaterialButton;
 import org.json.JSONException;
 
 public class ChangePswd extends Fragment {
-  private EditText curpswd, newpswd1, newpswd2;
-  private MaterialButton change;
-  private String user, pswd;
+    private EditText curpswd, newpswd1, newpswd2;
+    private MaterialButton change;
+    private String user, pswd;
 
-  @Override
-  public View onCreateView(
-      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View layout = inflater.inflate(R.layout.password, container, false);
-    curpswd = layout.findViewById(R.id.current_pswd);
-    newpswd1 = layout.findViewById(R.id.new_pswd1);
-    newpswd2 = layout.findViewById(R.id.new_pswd2);
-    change = layout.findViewById(R.id.update_pswd);
-    curpswd.requestFocus();
-    Bundle bundle = getArguments();
-    assert bundle != null;
-    pswd = bundle.getString("psd");
-    user = bundle.getString("act");
-    change.setOnClickListener(v -> {
-      final String e1 = curpswd.getText().toString();
-      final String e2 = newpswd1.getText().toString();
-      final String e3 = newpswd2.getText().toString();
-      if (!e1.isEmpty() && !e2.isEmpty() && !e3.isEmpty()) {
-        if (e2.equals(e3)) {
-          if (e2.length() > 3) {
-            if (Utils.isConnectionAvailable(requireContext()) == false) {
-              Utils.showNoConnectionAlert(requireContext(), change);
-            } else {
-              if (e1.equals(pswd)) {
-                Utils.connectToServer(getActivity(), ONEX.MPC,
-                    new String[] {"user", "pswd1", "pswd2", "tkn"},
-                    new String[] {user, e1, e2, Utils.getTkn(requireContext())}, true, response -> {
-                      try {
-                        String auth = response.getString("auth");
-                        if (auth.equals("updated")) {
-                          Utils.showMessage(getContext(), change,
-                              requireActivity().getString(R.string.successed_update), true);
-                          curpswd.setText("");
-                          newpswd1.setText("");
-                          newpswd2.setText("");
-                          Utils.clearAccFromApp(requireContext());
-                          Utils.saveCredentials(requireContext(), user, e2);
-                          Utils.setPswdChangedStatus(requireContext(), true);
-                          try {
-                            try {
-                              ONEX.TIMER.cancel();
-                              ONEX.TIMER.purge();
-                            } catch (Exception ignored) {
-                            }
-                            try {
-                              ONEX.TIMER2.cancel();
-                              ONEX.TIMER2.purge();
-                            } catch (Exception ignored) {
-                            }
-                            new CountDownTimer(3000, 3000) {
-                              @Override
-                              public void onTick(long l) {}
-
-                              @Override
-                              public void onFinish() {
-                                requireActivity().finish();
-                              }
-                            }.start();
-                          } catch (Exception ignored) {
-                          }
-                        } else if (auth.equals("incorrect")) {
-                          Utils.showMessage(getContext(), change,
-                              requireActivity().getString(R.string.error_pswd), false);
+    @Override
+    public View onCreateView(
+        LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View layout = inflater.inflate(R.layout.password, container, false);
+        curpswd = layout.findViewById(R.id.current_pswd);
+        newpswd1 = layout.findViewById(R.id.new_pswd1);
+        newpswd2 = layout.findViewById(R.id.new_pswd2);
+        change = layout.findViewById(R.id.update_pswd);
+        curpswd.requestFocus();
+        Bundle bundle = getArguments();
+        assert bundle != null;
+        pswd = bundle.getString("psd");
+        user = bundle.getString("act");
+        change.setOnClickListener(v -> {
+            final String e1 = curpswd.getText().toString();
+            final String e2 = newpswd1.getText().toString();
+            final String e3 = newpswd2.getText().toString();
+            if (!e1.isEmpty() && !e2.isEmpty() && !e3.isEmpty()) {
+                if (e2.equals(e3)) {
+                    if (e2.length() > 3) {
+                        if (Utils.isConnectionAvailable(requireContext()) == false) {
+                            Utils.showNoConnectionAlert(requireContext(), change);
                         } else {
-                          if (auth.contains("forbidden")) {
-                            Toast
-                                .makeText(requireActivity(),
-                                    requireActivity().getString(R.string.login_again),
-                                    Toast.LENGTH_SHORT)
+                            if (e1.equals(pswd)) {
+                                Utils.connectToServer(getActivity(), ONEX.MPC,
+                                                      new String[] {"user", "pswd1", "pswd2", "tkn"},
+                                new String[] {user, e1, e2, Utils.getTkn(requireContext())}, true, response -> {
+                                    try {
+                                        String auth = response.getString("auth");
+                                        if (auth.equals("updated")) {
+                                            Utils.showMessage(getContext(), change,
+                                                              requireActivity().getString(R.string.successed_update), true);
+                                            curpswd.setText("");
+                                            newpswd1.setText("");
+                                            newpswd2.setText("");
+                                            Utils.clearAccFromApp(requireContext());
+                                            Utils.saveCredentials(requireContext(), user, e2);
+                                            Utils.setPswdChangedStatus(requireContext(), true);
+                                            try {
+                                                try {
+                                                    ONEX.TIMER.cancel();
+                                                    ONEX.TIMER.purge();
+                                                } catch (Exception ignored) {
+                                                }
+                                                try {
+                                                    ONEX.TIMER2.cancel();
+                                                    ONEX.TIMER2.purge();
+                                                } catch (Exception ignored) {
+                                                }
+                                                new CountDownTimer(3000, 3000) {
+                                                    @Override
+                                                    public void onTick(long l) {}
+
+                                                    @Override
+                                                    public void onFinish() {
+                                                        requireActivity().finish();
+                                                    }
+                                                } .start();
+                                            } catch (Exception ignored) {
+                                            }
+                                        } else if (auth.equals("incorrect")) {
+                                            Utils.showMessage(getContext(), change,
+                                                              requireActivity().getString(R.string.error_pswd), false);
+                                        } else {
+                                            if (auth.contains("forbidden")) {
+                                                Toast
+                                                .makeText(requireActivity(),
+                                                          requireActivity().getString(R.string.login_again),
+                                                          Toast.LENGTH_SHORT)
+                                                .show();
+                                            } else {
+                                                Utils.showMessage(getContext(), change,
+                                                                  requireActivity().getString(R.string.failed_update), false);
+                                            }
+                                        }
+                                    } catch (JSONException je) {
+                                        Toast
+                                        .makeText(getContext(),
+                                                  requireActivity().getString(R.string.data_error),
+                                                  Toast.LENGTH_SHORT)
+                                        .show();
+                                    }
+                                });
+                            } else {
+                                Toast
+                                .makeText(getContext(), requireActivity().getString(R.string.error_pswd),
+                                          Toast.LENGTH_SHORT)
                                 .show();
-                          } else {
-                            Utils.showMessage(getContext(), change,
-                                requireActivity().getString(R.string.failed_update), false);
-                          }
+                            }
                         }
-                      } catch (JSONException je) {
+                    } else {
                         Toast
-                            .makeText(getContext(),
-                                requireActivity().getString(R.string.data_error),
-                                Toast.LENGTH_SHORT)
-                            .show();
-                      }
-                    });
-              } else {
-                Toast
-                    .makeText(getContext(), requireActivity().getString(R.string.error_pswd),
-                        Toast.LENGTH_SHORT)
+                        .makeText(getActivity(), requireActivity().getString(R.string.tooShortPswd),
+                                  Toast.LENGTH_SHORT)
+                        .show();
+                    }
+                } else {
+                    Toast
+                    .makeText(getActivity(), requireActivity().getString(R.string.not_matched_pswd),
+                              Toast.LENGTH_SHORT)
                     .show();
-              }
-            }
-          } else {
-            Toast
-                .makeText(getActivity(), requireActivity().getString(R.string.tooShortPswd),
-                    Toast.LENGTH_SHORT)
+                }
+            } else {
+                Toast
+                .makeText(getActivity(), requireActivity().getString(R.string.check_entries),
+                          Toast.LENGTH_SHORT)
                 .show();
-          }
-        } else {
-          Toast
-              .makeText(getActivity(), requireActivity().getString(R.string.not_matched_pswd),
-                  Toast.LENGTH_SHORT)
-              .show();
-        }
-      } else {
-        Toast
-            .makeText(getActivity(), requireActivity().getString(R.string.check_entries),
-                Toast.LENGTH_SHORT)
-            .show();
-      }
-    });
-    return layout;
-  }
+            }
+        });
+        return layout;
+    }
 }

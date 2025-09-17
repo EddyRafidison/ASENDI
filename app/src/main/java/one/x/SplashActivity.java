@@ -26,100 +26,100 @@ import java.util.concurrent.TimeUnit;
 import one.x.helper.LocaleHelper;
 
 public class SplashActivity extends AppCompatActivity {
-  private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-  private final ActivityResultLauncher<String> notifPermissionLauncher =
-      registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+    private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    private final ActivityResultLauncher<String> notifPermissionLauncher =
+    registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
         if (isGranted) {
-          gotoNext();
-        } else {
-          Toast
-              .makeText(
-                  getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
-              .show();
-          finish();
-        }
-      });
-  private final ActivityResultLauncher<String> locPermissionLauncher =
-      registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-        if (isGranted) {
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(
-                    getApplicationContext(), Manifest.permission.POST_NOTIFICATIONS)
-                != PackageManager.PERMISSION_GRANTED) {
-              notifPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
-            }
-          } else {
             gotoNext();
-          }
         } else {
-          Toast
-              .makeText(
-                  getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
-              .show();
-          finish();
-        }
-      });
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
-    splashScreen.setKeepOnScreenCondition(() -> true);
-
-    if (Build.VERSION.SDK_INT >= 23) {
-      if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-          != PackageManager.PERMISSION_GRANTED) {
-        locPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION);
-      } else {
-        gotoNext();
-      }
-    } else {
-      gotoNext();
-    }
-  }
-
-  private void gotoNext() {
-    final String loc = Utils.getCountryCode(getApplicationContext());
-    if (!loc.isEmpty()) {
-      Locale locale = new Locale("", loc);
-      final String curr = Currency.getInstance(locale).getCurrencyCode();
-      if (curr == null || curr.isEmpty()) {
-        Toast.makeText(getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
+            Toast
+            .makeText(
+                getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
             .show();
-        finish();
-      }
-      scheduler.schedule(() -> {
-        Intent signinIntent = new Intent(SplashActivity.this, Signin.class);
-        signinIntent.putExtra("loc", loc);
-        signinIntent.putExtra("curr", curr);
-        startActivity(signinIntent);
-        finish();
-
-        Intent serviceIntent = new Intent(SplashActivity.this, AppSecChecker.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-          startForegroundService(serviceIntent);
-        } else {
-          startService(serviceIntent);
+            finish();
         }
-      }, 3, TimeUnit.SECONDS);
-    } else {
-      Toast.makeText(getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
-          .show();
-      finish();
-    }
-  }
+    });
+    private final ActivityResultLauncher<String> locPermissionLauncher =
+    registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (ContextCompat.checkSelfPermission(
+                            getApplicationContext(), Manifest.permission.POST_NOTIFICATIONS)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    notifPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+                }
+            } else {
+                gotoNext();
+            }
+        } else {
+            Toast
+            .makeText(
+                getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
+            .show();
+            finish();
+        }
+    });
 
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    if (scheduler != null) {
-      scheduler.shutdown();
-    }
-  }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-  @Override
-  protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
-  }
+        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
+        splashScreen.setKeepOnScreenCondition(() -> true);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                locPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION);
+            } else {
+                gotoNext();
+            }
+        } else {
+            gotoNext();
+        }
+    }
+
+    private void gotoNext() {
+        final String loc = Utils.getCountryCode(getApplicationContext());
+        if (!loc.isEmpty()) {
+            Locale locale = new Locale("", loc);
+            final String curr = Currency.getInstance(locale).getCurrencyCode();
+            if (curr == null || curr.isEmpty()) {
+                Toast.makeText(getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
+                .show();
+                finish();
+            }
+            scheduler.schedule(() -> {
+                Intent signinIntent = new Intent(SplashActivity.this, Signin.class);
+                signinIntent.putExtra("loc", loc);
+                signinIntent.putExtra("curr", curr);
+                startActivity(signinIntent);
+                finish();
+
+                Intent serviceIntent = new Intent(SplashActivity.this, AppSecChecker.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(serviceIntent);
+                } else {
+                    startService(serviceIntent);
+                }
+            }, 3, TimeUnit.SECONDS);
+        } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_location), Toast.LENGTH_SHORT)
+            .show();
+            finish();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (scheduler != null) {
+            scheduler.shutdown();
+        }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+    }
 }

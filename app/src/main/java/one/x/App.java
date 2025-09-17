@@ -14,15 +14,15 @@ import io.github.inflationx.viewpump.ViewPump;
 import one.x.helper.LocaleHelper;
 
 public class App extends Application {
-  @Override
-  public void onCreate() {
-    super.onCreate();
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-    ViewPump.init(ViewPump.builder()
-            .addInterceptor(new CalligraphyInterceptor(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath("fonts/ralewayRegular.ttf")
-                    .setFontAttrId(R.attr.fontPath)
-                    .build()))
-            .build());
-  }
+        ViewPump.init(ViewPump.builder()
+                      .addInterceptor(new CalligraphyInterceptor(new CalligraphyConfig.Builder()
+                                      .setDefaultFontPath("fonts/ralewayRegular.ttf")
+                                      .setFontAttrId(R.attr.fontPath)
+                                      .build()))
+                      .build());
+    }
 }
