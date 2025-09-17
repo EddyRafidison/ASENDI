@@ -220,8 +220,13 @@ public class HomeContentFragment extends Fragment {
     historylist = layout.findViewById(R.id.history_list);
     user = Utils.getAccount(requireContext());
     user_qr = Utils.qr(requireActivity(), user);
+    dest_qr = Utils.qr(requireActivity(), "B-A11Z");
+    if(user_qr != null){
     qr.setImageBitmap(user_qr);
-    qr_dest.setImageBitmap(user_qr);
+    }
+      if (dest_qr != null) {
+    qr_dest.setImageBitmap(dest_qr);
+    }
 
     vib = (Vibrator) requireActivity().getSystemService(Vibrator.class);
 
@@ -416,7 +421,10 @@ public class HomeContentFragment extends Fragment {
         } else {
           stock.setText(stockShower());
           stock.setTransformationMethod(null);
-          qr_dest.setImageBitmap(Utils.qr(requireActivity(), user));
+          dest_qr = Utils.qr(requireActivity(), "B-A11Z");
+          if(dest_qr != null) {
+          qr_dest.setImageBitmap(dest_qr);
+          }
         }
       }
 

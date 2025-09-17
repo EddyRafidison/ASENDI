@@ -74,7 +74,7 @@
                      tools:ignore="Autofill,HardcodedText"
                      android:background="@drawable/edt_bg"
                      android:gravity="center_vertical|center|center_horizontal"
-                     android:hint="A-A00Z"
+                     android:hint="B-A11Z"
                      android:lines="1"
                      android:singleLine="true"
                      android:paddingLeft="58dp"
